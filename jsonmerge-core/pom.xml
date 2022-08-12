@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>net.obvj</groupId>
+        <artifactId>jsonmerge</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>jsonmerge-core</artifactId>
+    <name>JSON Merge Core</name>
+    <description>
+        Utility for merging JSON objects supporting multiple JSON providers
+    </description>
+
+    <properties>
+        <commons-lang.version>3.12.0</commons-lang.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <commons-text.version>1.9</commons-text.version>
+        <json-path.version>2.7.0</json-path.version>
+        <performetrics.version>2.3.0</performetrics.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>${commons-text.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>${json-path.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.obvj</groupId>
+            <artifactId>performetrics</artifactId>
+            <version>${performetrics.version}</version>
+        </dependency>
+
+    </dependencies>
+</project>

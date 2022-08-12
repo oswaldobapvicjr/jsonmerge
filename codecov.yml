@@ -1,0 +1,13 @@
+coverage:
+  precision: 2
+  round: down
+  range: "70...90"
+  status:
+    project: # measures the overall project coverage compared against the base
+      default:
+        target: auto # will use the coverage from the base commit to compare against
+        threshold: 5% # allow the coverage to drop, still posting a success status
+    patch: # measures lines adjusted in the pull request (or single commit)
+      default:
+        target: auto
+        threshold: 5%
