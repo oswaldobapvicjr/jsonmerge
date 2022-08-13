@@ -19,7 +19,7 @@ import com.jayway.jsonpath.spi.mapper.JsonSmartMappingProvider;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import net.minidev.json.parser.JSONParser;
-import net.obvj.jsonmerge.util.JsonSmartJsonProvider;
+import net.obvj.jsonmerge.provider.JsonSmartJsonProvider;
 
 /**
  * Unit tests for the {@link JSONObjectConfigurationMerger}.

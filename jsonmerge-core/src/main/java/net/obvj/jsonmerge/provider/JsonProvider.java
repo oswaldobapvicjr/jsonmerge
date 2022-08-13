@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.obvj.jsonmerge.util;
+package net.obvj.jsonmerge.provider;
 
 import java.util.Map;
 import java.util.Set;

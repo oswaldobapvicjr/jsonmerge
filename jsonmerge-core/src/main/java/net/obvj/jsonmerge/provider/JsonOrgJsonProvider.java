@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package net.obvj.jsonmerge.util;
+package net.obvj.jsonmerge.provider;
 
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Spliterator;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
- * A specialized {@link JsonProvider} implementation for {@code json-smart}.
+ * A specialized {@link JsonProvider} implementation for {@code json.org}.
  *
  * @author oswaldo.bapvic.jr (Oswaldo Junior)
  * @since 1.0.0
@@ -33,7 +37,7 @@ import net.minidev.json.JSONObject;
  * @see JSONObject
  * @see JSONArray
  */
-public class JsonSmartJsonProvider implements JsonProvider
+public class JsonOrgJsonProvider implements JsonProvider
 {
 
     private JSONObject toJsonObject(final Object jsonObject)
@@ -73,7 +77,14 @@ public class JsonSmartJsonProvider implements JsonProvider
     @Override
     public Object newJsonObject(final Object sourceJsonObject)
     {
-        return new JSONObject((JSONObject) sourceJsonObject);
+        JSONObject source = toJsonObject(sourceJsonObject);
+        JSONObject target = new JSONObject();
+        source.keySet().forEach((String key) ->
+        {
+            Object value = source.opt(key);
+            target.put(key, value);
+        });
+        return target;
     }
 
     @Override
@@ -85,22 +96,22 @@ public class JsonSmartJsonProvider implements JsonProvider
     @Override
     public Object newJsonArray(final Object sourceJsonArray)
     {
-        JSONArray array = new JSONArray();
-        array.addAll((JSONArray) sourceJsonArray);
-        return array;
+        return new JSONArray(toJsonArray(sourceJsonArray));
     }
 
     @Override
     public Set<Entry<String, Object>> entrySet(final Object jsonObject)
     {
-        return toJsonObject(jsonObject).entrySet();
+        JSONObject json = toJsonObject(jsonObject);
+        return json.keySet().stream().collect(Collectors.toMap(Function.identity(), json::opt)).entrySet();
     }
 
     @Override
     public Object get(final Object jsonObject, final String key)
     {
-        return toJsonObject(jsonObject).get(key);
+        return toJsonObject(jsonObject).opt(key);
     }
+
 
     @Override
     public void put(final Object jsonObject, final String key, final Object value)
@@ -111,13 +122,17 @@ public class JsonSmartJsonProvider implements JsonProvider
     @Override
     public void putIfAbsent(final Object jsonObject, final String key, final Object value)
     {
-        toJsonObject(jsonObject).putIfAbsent(key, value);
+        JSONObject json = toJsonObject(jsonObject);
+        if (json.opt(key) == null)
+        {
+            json.put(key, value);
+        }
     }
 
     @Override
     public void add(final Object jsonArray, final Object element)
     {
-        toJsonArray(jsonArray).add(element);
+        toJsonArray(jsonArray).put(element);
     }
 
     @Override
@@ -129,13 +144,21 @@ public class JsonSmartJsonProvider implements JsonProvider
     @Override
     public boolean arrayContains(final Object jsonArray, final Object element)
     {
-        return toJsonArray(jsonArray).contains(element);
+        return stream(jsonArray).anyMatch(arrayElement -> similarObjects(arrayElement, element));
+    }
+
+    private boolean similarObjects(Object first, Object second)
+    {
+        return first.equals(second)
+                || (first instanceof JSONObject && ((JSONObject) first).similar(second))
+                || (first instanceof JSONArray && ((JSONArray) first).similar(second));
     }
 
     @Override
     public Stream<Object> stream(final Object jsonArray)
     {
-        return toJsonArray(jsonArray).stream();
+        Spliterator<Object> spliterator = toJsonArray(jsonArray).spliterator();
+        return StreamSupport.stream(spliterator, false);
     }
 
 }
