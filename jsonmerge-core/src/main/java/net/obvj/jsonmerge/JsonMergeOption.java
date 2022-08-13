@@ -30,11 +30,10 @@ import com.jayway.jsonpath.InvalidPathException;
 import net.obvj.jsonmerge.util.JsonPathExpression;
 
 /**
- * An object that configures how to merge JSON objects.
+ * An object that configures how to merge JSON documents.
  *
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
- * @see GenericJsonConfigurationMerger
  */
 public class JsonMergeOption
 {
@@ -70,8 +69,8 @@ public class JsonMergeOption
      * {@code "$.params"} array.
      * <p>
      * In other words, if two JSON documents contain different objects identified by the same
-     * key inside that array, then only the object from the highest-precedence object will be
-     * selected.
+     * key inside that array, then only the object from the highest-precedence JSON document
+     * will be selected.
      * <p>
      * A {@code JsonPath} expression can be specified using either dot- or bracket-notation,
      * but complex expressions containing filters, script, subscript, or union operations, are
@@ -80,7 +79,7 @@ public class JsonMergeOption
      * @param jsonPath a {@code JsonPath} expression that identifies the array; not empty
      * @param key      the key to be considered unique for objects inside an array
      *
-     * @return a new {@link JsonMergeOption} with the specified pair of distinct path and key
+     * @return a new {@code JsonMergeOption} with the specified pair of distinct path and key
      *
      * @throws IllegalArgumentException if one of the parameters is null or blank
      * @throws InvalidPathException     if the specified JsonPath expression is invalid
@@ -127,8 +126,8 @@ public class JsonMergeOption
      * during the merge of the {@code "$.files"} array.
      * <p>
      * In other words, if two JSON documents contain different objects identified by the same
-     * keys inside that array, then only the object from the highest-precedence object will be
-     * selected.
+     * keys inside that array, then only the object from the highest-precedence JSON document
+     * will be selected.
      * <p>
      * A {@code JsonPath} expression can be specified using either dot- or bracket-notation,
      * but complex expressions containing filters, script, subscript, or union operations, are

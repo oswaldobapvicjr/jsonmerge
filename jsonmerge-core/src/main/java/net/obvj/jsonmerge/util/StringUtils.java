@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 obvj.net
+ * Copyright 2022 obvj.net
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,9 +36,7 @@ public class StringUtils
      * otherwise, throws an {@link IllegalArgumentException}.
      * <p>
      * This method is designed primarily for doing parameter validation in methods and
-     * constructors with multiple parameters, as demonstrated below:
-     * <p>
-     * <blockquote>
+     * constructors with multiple parameters, as demonstrated below: <blockquote>
      *
      * <pre>
      * public Foo(Bar bar)
@@ -55,7 +53,7 @@ public class StringUtils
      * @return {@code string}, trimmed, if not {@code null} or blank
      *
      * @throws IllegalArgumentException if {@code string} is {@code null} or blank
-     * @since 2.3.0
+     * @since 1.0.0
      */
     public static String requireNonBlankAndTrim(String string, String message)
     {

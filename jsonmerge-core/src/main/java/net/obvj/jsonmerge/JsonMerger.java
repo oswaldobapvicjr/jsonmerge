@@ -40,23 +40,26 @@ import net.obvj.jsonmerge.util.JsonProvider;
  * which must be specified via constructor.
  * <p>
  * The resulting JSON document from the merge operation shall contain all exclusive
- * objects from source documents and in case of In case of key collisions (i.e., the same
- * key appears in both documents), the following rules will be applied:
+ * objects from source documents. In case of key collision (i.e., the same key appears in
+ * both documents), the following rules will be applied:
  * <ul>
  * <li>for simple values, such as strings, numbers and boolean values, the value from the
- * highest-precedence document will be selected;</li>
+ * highest-precedence JSON document will be selected;</li>
  * <li>if the value is a JSON object in <b>both</b> JSON sources, the two objects will be
  * merged recursively; if the types are not compatible (e.g.: JSON object in one side and
- * simple value or array in the other), then a copy of the object from the
+ * simple value or JSON array in the other), then a copy of the object from the
  * highest-precedence document will be selected as fallback;</li>
- * <li>if the value is a JSON array in <b>both</b> JSON sources, then all elements from
+ * <li>if the value is a JSON array in <b>both</b> JSON documents, then all elements from
  * both two arrays will be copied <b>distinctively</b> (i.e., repeated elements will not
- * be copied to the resulting JSON document); if the types are not compatible (e.g.: JSON
- * array in one side and simple value or complex object in the other), then a copy of the
- * object from the highest-precedence document will be selected as fallback</li>
+ * be copied to the resulting JSON); if the types are not compatible (e.g.: JSON array in
+ * one side and simple value or complex object in the other), then a copy of the object
+ * from the highest-precedence document will be selected as fallback</li>
  * </ul>
  * <p>
  * <b>Note: </b> For advanced merge options, refer to {@link JsonMergeOption}.
+ *
+ * @param <T> the type that represents the actual JSON document at the specified
+ *            {@link JsonProvider}
  *
  * @see JsonProvider
  * @see JsonMergeOption
@@ -89,6 +92,14 @@ public class JsonMerger<T>
                 .collect(toMap(Pair::getLeft, Pair::getRight));
     }
 
+    /**
+     * Combines two JSON documents.
+     *
+     * @param json1        the first JSON document
+     * @param json2        the second JSON document
+     * @param mergeOptions an array of options on how to merge the documents (optional)
+     * @return a new JSON document from the combination of {@code json1} and {@code json2}
+     */
     public T merge(T json1, T json2, JsonMergeOption... mergeOptions)
     {
         Map<JsonPathExpression, List<String>> keys = parseDistinctKeys(mergeOptions);
