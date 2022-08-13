@@ -34,8 +34,9 @@ import org.json.JSONObject;
  * @author oswaldo.bapvic.jr (Oswaldo Junior)
  * @since 1.0.0
  *
- * @see JSONObject
- * @see JSONArray
+ * @see <a href="https://github.com/stleary/JSON-java">JSON-java Project home</a>
+ * @see org.json.JSONObject
+ * @see org.json.JSONArray
  */
 public class JsonOrgJsonProvider implements JsonProvider
 {
