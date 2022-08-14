@@ -52,7 +52,7 @@ public class GsonJsonProvider implements JsonProvider
         return (JsonArray) jsonArray;
     }
 
-    private JsonElement toJsonElement(final Object object)
+    JsonElement toJsonElement(final Object object)
     {
         return object instanceof JsonElement ? (JsonElement) object : gson.toJsonTree(object);
     }
