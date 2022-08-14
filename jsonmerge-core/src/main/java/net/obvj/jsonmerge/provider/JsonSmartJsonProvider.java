@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.obvj.jsonmerge.util;
+package net.obvj.jsonmerge.provider;
 
 import java.util.Map.Entry;
 import java.util.Set;
@@ -30,8 +30,9 @@ import net.minidev.json.JSONObject;
  * @author oswaldo.bapvic.jr (Oswaldo Junior)
  * @since 1.0.0
  *
- * @see JSONObject
- * @see JSONArray
+ * @see <a href="https://github.com/netplex/json-smart-v2">json-smart Project home</a>
+ * @see net.minidev.json.JSONObject
+ * @see net.minidev.json.JSONArray
  */
 public class JsonSmartJsonProvider implements JsonProvider
 {

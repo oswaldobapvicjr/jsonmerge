@@ -1,6 +1,7 @@
-package net.obvj.jsonmerge.util;
+package net.obvj.jsonmerge.provider;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import org.junit.jupiter.api.Test;
 

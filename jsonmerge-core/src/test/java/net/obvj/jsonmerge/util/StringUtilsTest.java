@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
  * Unit tests for the {@link StringUtils} class.
  *
  * @author oswaldo.bapvic.jr
+ * @since 1.0.0
  */
 class StringUtilsTest
 {

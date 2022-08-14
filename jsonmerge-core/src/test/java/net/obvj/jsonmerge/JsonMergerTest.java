@@ -4,30 +4,20 @@ import static java.util.Arrays.asList;
 import static net.obvj.jsonmerge.JsonMergeOption.distinctKey;
 import static net.obvj.jsonmerge.JsonMergeOption.distinctKeys;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.ParseContext;
-import com.jayway.jsonpath.spi.mapper.JsonSmartMappingProvider;
-
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.obvj.jsonmerge.util.JsonSmartJsonProvider;
+import net.obvj.jsonmerge.provider.JsonProvider;
 
 /**
- * Unit tests for the {@link JSONObjectConfigurationMerger}.
+ * Unit tests for the {@link OConfigurationMerger}.
  *
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
  */
-class JsonMergerTest
+abstract class JsonMergerTest<O>
 {
 
     private static final String JSON_1
@@ -144,89 +134,37 @@ class JsonMergerTest
             + "  ]\r\n"
             + "}";
 
-
-    private static Configuration configuration = Configuration.builder()
-            .jsonProvider(new com.jayway.jsonpath.spi.json.JsonSmartJsonProvider())
-            .mappingProvider(new JsonSmartMappingProvider()).build();
-
-    private static ParseContext context = JsonPath.using(configuration);
-
-    private final JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonSmartJsonProvider());
+    private final JsonMerger<O> merger = new JsonMerger<O>(getProvider());
 
     /*
      * Utility methods - START
      */
 
-    JSONObject fromString(String string)
-    {
-        try
-        {
-            JSONParser parser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
-            return parser.parse(string, JSONObject.class);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to parse JSON string");
-        }
-    }
+    abstract JsonProvider getProvider();
 
-    private static JSONObject fromFile(String path)
-    {
-        try
-        {
-            JSONParser parser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
-            URL resource = JsonMergerTest.class.getClassLoader().getResource(path);
-            return parser.parse(resource.openStream(), JSONObject.class);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to load JSON file", e);
-        }
-    }
+    abstract O fromString(String string);
 
-    private static Object get(JSONObject object, String jsonPath)
-    {
-        return context.parse(object).read(jsonPath);
-    }
+    abstract O fromFile(String path);
 
-    private static void assertArray(List<?> expected, JSONArray array)
-    {
-        assertArray(expected, array, true);
-    }
+    abstract Object get(O object, String jsonPath);
 
-    private static void assertArray(List<?> expected, JSONArray array, boolean exactSize)
-    {
-        if (exactSize)
-        {
-            assertEquals(expected.size(), array.size());
-        }
-        assertTrue(array.containsAll(expected));
-    }
+    abstract void assertArray(List<?> expected, O result, String jsonPath);
 
-    private static void assertArray(List<?> expected, JSONObject result, String jsonPath)
-    {
-        assertArray(expected, result, jsonPath, true);
-    }
-
-    private static void assertArray(List<?> expected, JSONObject result, String jsonPath, boolean exactSize)
-    {
-        JSONArray array = (JSONArray) get(result, jsonPath);
-        assertArray(expected, array, exactSize);
-    }
+    abstract void assertArray(List<?> expected, O result, String jsonPath, boolean exactSize);
 
     /*
-     * Utility methods - START
+     * Test methods - START
      */
 
     @Test
     void merge_json1HighWithJson2Low_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_1), fromString(JSON_2));
+        O result = merger.merge(fromString(JSON_1), fromString(JSON_2));
 
-        assertEquals("value1", result.getAsString("string")); // from JSON_1
-        assertEquals("alt1", result.getAsString("alt")); // from JSON_1
-        assertEquals(9876, result.getAsNumber("number")); // from JSON_2
-        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY, (JSONArray) result.get("array"));
+        assertEquals("value1", get(result, "string")); // from JSON_1
+        assertEquals("alt1", get(result, "alt")); // from JSON_1
+        assertEquals(9876, get(result, "number")); // from JSON_2
+        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY, result, "array");
 
         assertEquals("Json1ObjectA", get(result, "$.object.a")); // from JSON_1
         assertEquals("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
@@ -236,12 +174,12 @@ class JsonMergerTest
     @Test
     void merge_json1LowWithJson2High_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_2), fromString(JSON_1));
+        O result = merger.merge(fromString(JSON_2), fromString(JSON_1));
 
-        assertEquals("value2", result.getAsString("string")); // from JSON_2
-        assertEquals("alt1", result.getAsString("alt")); // from JSON_1
-        assertEquals(9876, result.getAsNumber("number")); // from JSON_2
-        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY, (JSONArray) result.get("array"));
+        assertEquals("value2", get(result, "string")); // from JSON_2
+        assertEquals("alt1", get(result, "alt")); // from JSON_1
+        assertEquals(9876, get(result, "number")); // from JSON_2
+        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY, result, "array");
 
         assertEquals("Json2ObjectA", get(result, "$.object.a")); // from JSON_2
         assertEquals("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
@@ -251,7 +189,7 @@ class JsonMergerTest
     @Test
     void merge_json3HighWithJson4Low_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_3), fromString(JSON_4));
+        O result = merger.merge(fromString(JSON_3), fromString(JSON_4));
 
         assertEquals(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS, result, "$.agents[*].description");
@@ -260,7 +198,7 @@ class JsonMergerTest
     @Test
     void merge_json3LowWithJson4High_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_4), fromString(JSON_3));
+        O result = merger.merge(fromString(JSON_4), fromString(JSON_3));
 
         assertEquals(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS, result, "$.agents[*].description");
@@ -269,42 +207,42 @@ class JsonMergerTest
     @Test
     void merge_json3HighWithJson4LowAndDistinctKey_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_3), fromString(JSON_4),
+        O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
                 distinctKey("$.agents", "class"));
 
-        assertEquals(Boolean.TRUE, result.get("enabled")); // from JSON_4
+        assertEquals(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json3Agent1", "Json3Agent2"), result, "$.agents[*].description");
     }
 
     @Test
     void merge_json3LowWithJson4HighAndDistinctKey_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_4), fromString(JSON_3),
+        O result = merger.merge(fromString(JSON_4), fromString(JSON_3),
                 distinctKey("$.agents", "class"));
 
-        assertEquals(Boolean.TRUE, result.get("enabled")); // from JSON_4
+        assertEquals(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json4Agent1", "Json3Agent2"), result, "$.agents[*].description");
     }
 
     @Test
     void merge_json5HighWithJson6Low_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_5), fromString(JSON_6));
+        O result = merger.merge(fromString(JSON_5), fromString(JSON_6));
 
-        assertEquals(asList("0123-4567-8888"), get(result, "$.phoneNumbers[?(@.type=='mobile')].number"));
-        assertEquals(asList("0123-4567-8910"), get(result, "$.phoneNumbers[?(@.type=='home')].number"));
-        assertEquals(asList("0123-4567-9999"), get(result, "$.phoneNumbers[?(@.type=='work')].number"));
+        assertArray(asList("0123-4567-8888"), result, "$.phoneNumbers[?(@.type=='mobile')].number");
+        assertArray(asList("0123-4567-8910"), result, "$.phoneNumbers[?(@.type=='home')].number");
+        assertArray(asList("0123-4567-9999"), result, "$.phoneNumbers[?(@.type=='work')].number");
         assertEquals("630-0192", get(result, "$.address.postalCode"));
     }
 
     @Test
     void merge_json5LowWithJson6High_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_6), fromString(JSON_5));
+        O result = merger.merge(fromString(JSON_6), fromString(JSON_5));
 
-        assertEquals(asList("0123-4567-8888"), get(result, "$.phoneNumbers[?(@.type=='mobile')].number"));
-        assertEquals(asList("0123-4567-8910"), get(result, "$.phoneNumbers[?(@.type=='home')].number"));
-        assertEquals(asList("0123-4567-9999"), get(result, "$.phoneNumbers[?(@.type=='work')].number"));
+        assertArray(asList("0123-4567-8888"), result, "$.phoneNumbers[?(@.type=='mobile')].number");
+        assertArray(asList("0123-4567-8910"), result, "$.phoneNumbers[?(@.type=='home')].number");
+        assertArray(asList("0123-4567-9999"), result, "$.phoneNumbers[?(@.type=='work')].number");
         assertEquals("630-0192", get(result, "$.address.postalCode"));
     }
 
@@ -327,69 +265,69 @@ class JsonMergerTest
     @Test
     void merge_json8HighWithJson9LowAndDistinctKey_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_8), fromString(JSON_9),
+        O result = merger.merge(fromString(JSON_8), fromString(JSON_9),
                 distinctKey("$.array", "name"));
 
-        assertEquals(asList("Json8Value1"), get(result, "$.array[?(@.name=='name1')].value"));
+        assertArray(asList("Json8Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
     }
 
     @Test
     void merge_json8LowWithJson9HighAndDistinctKey_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_9), fromString(JSON_8),
+        O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
                 distinctKey("$.array", "name"));
 
-        assertEquals(asList("Json9Value1"), get(result, "$.array[?(@.name=='name1')].value"));
+        assertArray(asList("Json9Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
     }
 
     @Test
     void merge_json8LowWithJson9HighAndUnknownDistinctKey_success()
     {
-        JSONObject result = merger.merge(fromString(JSON_9), fromString(JSON_8),
+        O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
                 distinctKey("$.array", "unknown"));
 
         // No exception expected, but the merge will consider no distinct key
-        assertTrue(((JSONArray) get(result, "$.array[?(@.name=='name1')].value"))
-                .containsAll(asList("Json9Value1", "Json8Value1")));
+        assertArray(asList("Json9Value1", "Json8Value1"), result,
+                "$.array[?(@.name=='name1')].value");
     }
 
     @Test
     void merge_jsonFilesWithTwoDistinctKeys_success()
     {
-        JSONObject config = merger.merge(
+        O result = merger.merge(
                 fromFile("testfiles/drive2.json"),
                 fromFile("testfiles/drive1.json"),
                 distinctKeys("$.files", "id", "version"));
 
-        assertEquals(asList("1", "2", "3"),
-                get(config, "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version"));
+        assertArray(asList("1", "2", "3"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
 
-        assertEquals(asList("1", "2"),
-                get(config, "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version"));
+        assertArray(asList("1", "2"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
 
         // drive2.json
-        assertEquals(asList("2017-07-07T10:14:59"),
-                get(config, "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002' && @.version=='1')].date"));
+        assertArray(asList("2017-07-07T10:14:59"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002' && @.version=='1')].date");
     }
 
     @Test
     void merge_jsonFilesWithTwoDistinctKeysAlt_success()
     {
-        JSONObject config = merger.merge(
+        O result = merger.merge(
                 fromFile("testfiles/drive1.json"),
                 fromFile("testfiles/drive2.json"),
                 distinctKeys("$.files", "id", "version"));
 
-        assertEquals(asList("1", "2", "3"),
-                get(config, "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version"));
+        assertArray(asList("1", "2", "3"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
 
-        assertEquals(asList("1", "2"),
-                get(config, "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version"));
+        assertArray(asList("1", "2"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
 
         // drive1.json
-        assertEquals(asList("2022-08-06T09:51:40"),
-                get(config, "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002' && @.version=='1')].date"));
+        assertArray(asList("2022-08-06T09:51:40"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002' && @.version=='1')].date");
     }
 }
