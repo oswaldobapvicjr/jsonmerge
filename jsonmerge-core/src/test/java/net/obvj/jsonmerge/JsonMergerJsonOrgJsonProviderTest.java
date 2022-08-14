@@ -75,6 +75,12 @@ class JsonMergerJsonOrgJsonProviderTest extends JsonMergerTest<JSONObject>
     }
 
     @Override
+    void assertElement(Object expected, Object actual)
+    {
+        assertEquals(expected, actual);
+    }
+
+    @Override
     void assertArray(List<?> expected, JSONObject result, String jsonPath)
     {
         assertArray(expected, result, jsonPath, true);
@@ -91,7 +97,7 @@ class JsonMergerJsonOrgJsonProviderTest extends JsonMergerTest<JSONObject>
     {
         if (exactSize)
         {
-            assertEquals(expected.size(), array.length());
+            assertElement(expected.size(), array.length());
         }
 
         expected.forEach(expectedElement ->

@@ -3,7 +3,6 @@ package net.obvj.jsonmerge;
 import static java.util.Arrays.asList;
 import static net.obvj.jsonmerge.JsonMergeOption.distinctKey;
 import static net.obvj.jsonmerge.JsonMergeOption.distinctKeys;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
@@ -148,6 +147,8 @@ abstract class JsonMergerTest<O>
 
     abstract Object get(O object, String jsonPath);
 
+    abstract void assertElement(Object expected, Object actual);
+
     abstract void assertArray(List<?> expected, O result, String jsonPath);
 
     abstract void assertArray(List<?> expected, O result, String jsonPath, boolean exactSize);
@@ -161,14 +162,14 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_1), fromString(JSON_2));
 
-        assertEquals("value1", get(result, "string")); // from JSON_1
-        assertEquals("alt1", get(result, "alt")); // from JSON_1
-        assertEquals(9876, get(result, "number")); // from JSON_2
+        assertElement("value1", get(result, "string")); // from JSON_1
+        assertElement("alt1", get(result, "alt")); // from JSON_1
+        assertElement(9876, get(result, "number")); // from JSON_2
         assertArray(EXPECTED_JSON_1_JSON_2_ARRAY, result, "array");
 
-        assertEquals("Json1ObjectA", get(result, "$.object.a")); // from JSON_1
-        assertEquals("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
-        assertEquals("Json2ObjectC", get(result, "$.object.c")); // from JSON_2
+        assertElement("Json1ObjectA", get(result, "$.object.a")); // from JSON_1
+        assertElement("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
+        assertElement("Json2ObjectC", get(result, "$.object.c")); // from JSON_2
     }
 
     @Test
@@ -176,14 +177,14 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_2), fromString(JSON_1));
 
-        assertEquals("value2", get(result, "string")); // from JSON_2
-        assertEquals("alt1", get(result, "alt")); // from JSON_1
-        assertEquals(9876, get(result, "number")); // from JSON_2
+        assertElement("value2", get(result, "string")); // from JSON_2
+        assertElement("alt1", get(result, "alt")); // from JSON_1
+        assertElement(9876, get(result, "number")); // from JSON_2
         assertArray(EXPECTED_JSON_1_JSON_2_ARRAY, result, "array");
 
-        assertEquals("Json2ObjectA", get(result, "$.object.a")); // from JSON_2
-        assertEquals("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
-        assertEquals("Json2ObjectC", get(result, "$.object.c")); // from JSON_2
+        assertElement("Json2ObjectA", get(result, "$.object.a")); // from JSON_2
+        assertElement("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
+        assertElement("Json2ObjectC", get(result, "$.object.c")); // from JSON_2
     }
 
     @Test
@@ -191,7 +192,7 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_3), fromString(JSON_4));
 
-        assertEquals(Boolean.TRUE, get(result, "enabled")); // from JSON_4
+        assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS, result, "$.agents[*].description");
     }
 
@@ -200,7 +201,7 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_4), fromString(JSON_3));
 
-        assertEquals(Boolean.TRUE, get(result, "enabled")); // from JSON_4
+        assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS, result, "$.agents[*].description");
     }
 
@@ -210,7 +211,7 @@ abstract class JsonMergerTest<O>
         O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
                 distinctKey("$.agents", "class"));
 
-        assertEquals(Boolean.TRUE, get(result, "enabled")); // from JSON_4
+        assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json3Agent1", "Json3Agent2"), result, "$.agents[*].description");
     }
 
@@ -220,7 +221,7 @@ abstract class JsonMergerTest<O>
         O result = merger.merge(fromString(JSON_4), fromString(JSON_3),
                 distinctKey("$.agents", "class"));
 
-        assertEquals(Boolean.TRUE, get(result, "enabled")); // from JSON_4
+        assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json4Agent1", "Json3Agent2"), result, "$.agents[*].description");
     }
 
@@ -232,7 +233,7 @@ abstract class JsonMergerTest<O>
         assertArray(asList("0123-4567-8888"), result, "$.phoneNumbers[?(@.type=='mobile')].number");
         assertArray(asList("0123-4567-8910"), result, "$.phoneNumbers[?(@.type=='home')].number");
         assertArray(asList("0123-4567-9999"), result, "$.phoneNumbers[?(@.type=='work')].number");
-        assertEquals("630-0192", get(result, "$.address.postalCode"));
+        assertElement("630-0192", get(result, "$.address.postalCode"));
     }
 
     @Test
@@ -243,13 +244,13 @@ abstract class JsonMergerTest<O>
         assertArray(asList("0123-4567-8888"), result, "$.phoneNumbers[?(@.type=='mobile')].number");
         assertArray(asList("0123-4567-8910"), result, "$.phoneNumbers[?(@.type=='home')].number");
         assertArray(asList("0123-4567-9999"), result, "$.phoneNumbers[?(@.type=='work')].number");
-        assertEquals("630-0192", get(result, "$.address.postalCode"));
+        assertElement("630-0192", get(result, "$.address.postalCode"));
     }
 
     @Test
     void merge_json5HighWithJson7Low_success()
     {
-        assertEquals("630-0192",
+        assertElement("630-0192",
                 get(merger.merge(fromString(JSON_5), fromString(JSON_7)),
                         "$.address.postalCode"));
     }
@@ -257,7 +258,7 @@ abstract class JsonMergerTest<O>
     @Test
     void merge_json5LowWithJson7High_success()
     {
-        assertEquals("123 Street",
+        assertElement("123 Street",
                 get(merger.merge(fromString(JSON_7), fromString(JSON_8)),
                         "$.address"));
     }
