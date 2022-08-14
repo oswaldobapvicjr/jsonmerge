@@ -175,7 +175,6 @@
                     <encoding>UTF-8</encoding>
                     <show>public</show>
                     <aggregate>false</aggregate>
-                    <stylesheetfile>${project.basedir}/src/main/javadoc/stylesheet.css</stylesheetfile>
                 </configuration>
                 <executions>
                     <execution>
