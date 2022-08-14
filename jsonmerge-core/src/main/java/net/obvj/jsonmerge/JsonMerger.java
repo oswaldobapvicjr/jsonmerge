@@ -32,6 +32,8 @@ import org.slf4j.LoggerFactory;
 
 import net.obvj.jsonmerge.provider.JsonProvider;
 import net.obvj.jsonmerge.util.JsonPathExpression;
+import net.obvj.performetrics.Counter.Type;
+import net.obvj.performetrics.Stopwatch;
 
 /**
  * Combines two JSON documents.
@@ -104,7 +106,13 @@ public class JsonMerger<T>
     {
         Map<JsonPathExpression, List<String>> keys = parseDistinctKeys(mergeOptions);
         JsonPartMerger merger = new JsonPartMerger(jsonProvider, JsonPathExpression.ROOT, keys);
-        return (T) merger.merge(json1, json2);
+        LOGGER.info("Merging JSON documents...");
+
+        Stopwatch stopwatch = Stopwatch.createStarted(Type.WALL_CLOCK_TIME);
+        T result = (T) merger.merge(json1, json2);
+
+        LOGGER.info("Operation finished in {}", stopwatch.elapsedTime());
+        return result;
     }
 
     private static class JsonPartMerger
