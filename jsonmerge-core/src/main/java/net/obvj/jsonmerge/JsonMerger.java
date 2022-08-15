@@ -97,8 +97,9 @@ public class JsonMerger<T>
     /**
      * Combines two JSON documents.
      *
-     * @param json1        the first JSON document
-     * @param json2        the second JSON document
+     * @param json1        the first JSON document; this object will have higher precedence
+     *                     than the other one in case of key collision
+     * @param json2        the second JSON document (lower precedence object)
      * @param mergeOptions an array of options on how to merge the documents (optional)
      * @return a new JSON document from the combination of {@code json1} and {@code json2}
      */
