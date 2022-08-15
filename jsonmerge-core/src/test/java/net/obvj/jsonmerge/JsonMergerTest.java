@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
 import net.obvj.jsonmerge.provider.JsonProvider;
 
 /**
- * Unit tests for the {@link OConfigurationMerger}.
+ * Unit tests for the {@link JsonMerger}.
  *
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
