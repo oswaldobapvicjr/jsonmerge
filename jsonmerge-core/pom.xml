@@ -20,7 +20,7 @@
     <parent>
         <groupId>net.obvj</groupId>
         <artifactId>jsonmerge</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>jsonmerge-core</artifactId>
