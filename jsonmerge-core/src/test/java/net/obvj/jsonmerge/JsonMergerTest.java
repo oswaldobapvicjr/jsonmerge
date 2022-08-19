@@ -17,8 +17,7 @@
 package net.obvj.jsonmerge;
 
 import static java.util.Arrays.asList;
-import static net.obvj.jsonmerge.JsonMergeOption.distinctKey;
-import static net.obvj.jsonmerge.JsonMergeOption.distinctKeys;
+import static net.obvj.jsonmerge.JsonMergeOption.*;
 
 import java.util.List;
 
@@ -225,7 +224,8 @@ abstract class JsonMergerTest<O>
     void merge_json3HighWithJson4LowAndDistinctKey_success()
     {
         O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
-                distinctKey("$.agents", "class"));
+                onPath("$.agents").findObjectsIdentifiedBy("class")
+                        .thenPickTheHigherPrecedenceOne());
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json3Agent1", "Json3Agent2"), result, "$.agents[*].description");
@@ -235,7 +235,8 @@ abstract class JsonMergerTest<O>
     void merge_json3LowWithJson4HighAndDistinctKey_success()
     {
         O result = merger.merge(fromString(JSON_4), fromString(JSON_3),
-                distinctKey("$.agents", "class"));
+                onPath("$.agents").findObjectsIdentifiedBy("class")
+                        .thenPickTheHigherPrecedenceOne());
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json4Agent1", "Json3Agent2"), result, "$.agents[*].description");
@@ -283,7 +284,7 @@ abstract class JsonMergerTest<O>
     void merge_json8HighWithJson9LowAndDistinctKey_success()
     {
         O result = merger.merge(fromString(JSON_8), fromString(JSON_9),
-                distinctKey("$.array", "name"));
+                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
 
         assertArray(asList("Json8Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
@@ -293,7 +294,7 @@ abstract class JsonMergerTest<O>
     void merge_json8LowWithJson9HighAndDistinctKey_success()
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
-                distinctKey("$.array", "name"));
+                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
 
         assertArray(asList("Json9Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
@@ -303,7 +304,8 @@ abstract class JsonMergerTest<O>
     void merge_json8LowWithJson9HighAndUnknownDistinctKey_success()
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
-                distinctKey("$.array", "unknown"));
+                onPath("$.array").findObjectsIdentifiedBy("unknown")
+                        .thenPickTheHigherPrecedenceOne());
 
         // No exception expected, but the merge will consider no distinct key
         assertArray(asList("Json9Value1", "Json8Value1"), result,
@@ -316,7 +318,8 @@ abstract class JsonMergerTest<O>
         O result = merger.merge(
                 fromFile("testfiles/drive2.json"),
                 fromFile("testfiles/drive1.json"),
-                distinctKeys("$.files", "id", "version"));
+                onPath("$.files").findObjectsIdentifiedBy("id", "version")
+                        .thenPickTheHigherPrecedenceOne());
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
@@ -335,7 +338,8 @@ abstract class JsonMergerTest<O>
         O result = merger.merge(
                 fromFile("testfiles/drive1.json"),
                 fromFile("testfiles/drive2.json"),
-                distinctKeys("$.files", "id", "version"));
+                onPath("$.files").findObjectsIdentifiedBy("id", "version")
+                        .thenPickTheHigherPrecedenceOne());
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");

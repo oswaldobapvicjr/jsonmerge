@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.function.Function;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,12 +86,11 @@ public class JsonMerger<T>
         this.jsonProvider = requireNonNull(jsonProvider, "The JsonProvider cannot be null");
     }
 
-    private static Map<JsonPathExpression, List<String>> parseDistinctKeys(
+    private static Map<JsonPathExpression, JsonMergeOption> parseMergeOptions(
             JsonMergeOption[] mergeOptions)
     {
-        return stream(mergeOptions).map(JsonMergeOption::getDistinctKeys)
-                .filter(Optional::isPresent).map(Optional::get)
-                .collect(toMap(Pair::getLeft, Pair::getRight));
+        return stream(mergeOptions)
+                .collect(toMap(JsonMergeOption::getPath, Function.identity()));
     }
 
     /**
@@ -105,8 +104,8 @@ public class JsonMerger<T>
      */
     public T merge(T json1, T json2, JsonMergeOption... mergeOptions)
     {
-        Map<JsonPathExpression, List<String>> keys = parseDistinctKeys(mergeOptions);
-        JsonPartMerger merger = new JsonPartMerger(jsonProvider, JsonPathExpression.ROOT, keys);
+        Map<JsonPathExpression, JsonMergeOption> options = parseMergeOptions(mergeOptions);
+        JsonPartMerger merger = new JsonPartMerger(jsonProvider, JsonPathExpression.ROOT, options);
         LOGGER.info("Merging JSON documents...");
 
         Stopwatch stopwatch = Stopwatch.createStarted(Type.WALL_CLOCK_TIME);
@@ -120,25 +119,23 @@ public class JsonMerger<T>
     {
         private final JsonProvider jsonProvider;
         private final JsonPathExpression absolutePath;
-        private final Map<JsonPathExpression, List<String>> distinctKeysByJsonPath;
+        private final Map<JsonPathExpression, JsonMergeOption> options;
 
 
         /**
          * Creates a new {@link JsonPartMerger} for an absolute path.
          *
-         * @param jsonProvider           the {@link JsonProvider} to use; not {@code null}
-         * @param absolutePath           the absolute path of the current JSON object or array
-         *                               inside the root JSON object}; not {@code null}
-         * @param distinctKeysByJsonPath a map that associates JsonPath expressions inside the
-         *                               JSON object and distinct keys for object identification
-         *                               during the merge of an array; not {@code null}
+         * @param jsonProvider the {@link JsonProvider} to use; not {@code null}
+         * @param absolutePath the absolute path of the current JSON object or array inside the
+         *                     root JSON object}; not {@code null}
+         * @param options      a map storing custom merge options by path; not {@code null}
          */
         private JsonPartMerger(JsonProvider jsonProvider, JsonPathExpression absolutePath,
-                Map<JsonPathExpression, List<String>> distinctKeysByJsonPath)
+                Map<JsonPathExpression, JsonMergeOption> options)
         {
             this.jsonProvider = requireNonNull(jsonProvider, "The JsonProvider cannot be null");
             this.absolutePath = absolutePath;
-            this.distinctKeysByJsonPath = distinctKeysByJsonPath;
+            this.options = options;
         }
 
         /**
@@ -169,13 +166,13 @@ public class JsonMerger<T>
                 if (jsonProvider.isJsonObject(value1))
                 {
                     JsonPartMerger merger = new JsonPartMerger(jsonProvider,
-                            absolutePath.appendChild(key), distinctKeysByJsonPath);
+                            absolutePath.appendChild(key), options);
                     jsonProvider.put(result, key, merger.mergeSafely(value1, value2));
                 }
                 else if (jsonProvider.isJsonArray(value1))
                 {
                     JsonPartMerger merger = new JsonPartMerger(jsonProvider,
-                            absolutePath.appendChild(key), distinctKeysByJsonPath);
+                            absolutePath.appendChild(key), options);
                     jsonProvider.put(result, key, merger.mergeArray(value1, value2));
                 }
                 else
@@ -255,22 +252,25 @@ public class JsonMerger<T>
             // The 1st array is always the highest-precedence one
             Object result = jsonProvider.newJsonArray(array1);
 
-            List<String> keys = distinctKeysByJsonPath.get(absolutePath);
-            if (keys != null)
+            JsonMergeOption pathOption = options.get(absolutePath);
+            if (pathOption != null)
             {
-                if (LOGGER.isDebugEnabled())
+                List<String> keys = pathOption.getKeys();
+                if (keys != null)
                 {
-                    int size = keys.size();
-                    LOGGER.debug("Checking distinct objects inside {} with {} {}: {}", absolutePath,
-                            size, size == 1 ? "key" : "keys", keys);
-                }
+                    if (LOGGER.isDebugEnabled())
+                    {
+                        int size = keys.size();
+                        LOGGER.debug("Checking distinct objects inside {} with {} {}: {}",
+                                absolutePath, size, size == 1 ? "key" : "keys", keys);
+                    }
 
-                // Here we add objects from the 2nd array only if they are not present in the 1st
-                // one.
-                // Because the user specified a distinct key, then use it to find the "equal"
-                // objects.
-                jsonProvider.forEachElementInArray(array2,
-                        object -> addDistinctObject(object, keys, result));
+                    // Here we add objects from the 2nd array only if they are not present in the
+                    // 1st one. Because the user specified a distinct key, then use it to find the
+                    // "equal" objects.
+                    jsonProvider.forEachElementInArray(array2,
+                            object -> addDistinctObjectToArray(object, keys, result, pathOption));
+                }
             }
             else
             {
@@ -295,13 +295,16 @@ public class JsonMerger<T>
         /**
          * Adds a distinct object, identified by a specific key, to the target array.
          *
-         * @param object the object to be added, given it is not already is the {@code array}
-         * @param keys   a list of distinctive keys inside the JSON object to be used for "equal"
-         *               objects identification in the target array
-         * @param array  the array to which the object will be added, provided that it contains no
-         *               other object with the same value for the specified {@code key}
+         * @param object     the object to be added, given it is not already is the {@code array}
+         * @param keys       a list of distinctive keys inside the JSON object to be used for
+         *                   "equal" objects identification in the target array
+         * @param array      the array to which the object will be added, provided that it
+         *                   contains no other object with the same value for the specified
+         *                   {@code key}
+         * @param pathOption a {@link JsonMergeOption} for the current path
          */
-        private void addDistinctObject(Object object, List<String> keys, Object array)
+        private void addDistinctObjectToArray(Object object, List<String> keys, Object array,
+                JsonMergeOption pathOption)
         {
             if (jsonProvider.isJsonObject(object))
             {
@@ -311,8 +314,17 @@ public class JsonMerger<T>
                     Object value = jsonProvider.get(object, key);
                     values.put(key, value);
                 }
-                if (!findMatchingObjectOnArray(values, array).isPresent())
+                Optional<Object> matchingObjectOnArray = findMatchingObjectOnArray(values, array);
+                if (pathOption.isDeepMerge() && matchingObjectOnArray.isPresent())
                 {
+                    // The object already in the array is the higher-precedence one on the merge
+                    Object merged = merge(matchingObjectOnArray.get(), object);
+                    // We replace it with the merged object
+                    jsonProvider.add(array, merged);
+                }
+                else if (!matchingObjectOnArray.isPresent())
+                {
+                    // Deep-merge not specified, so just add the object if not already in the array
                     jsonProvider.add(array, object);
                 }
                 // Do nothing if the key is already present.

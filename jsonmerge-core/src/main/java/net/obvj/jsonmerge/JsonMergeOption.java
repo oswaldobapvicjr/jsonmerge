@@ -20,10 +20,8 @@ import static java.util.stream.Collectors.toList;
 import static net.obvj.jsonmerge.util.StringUtils.requireNonBlankAndTrim;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import com.jayway.jsonpath.InvalidPathException;
 
@@ -37,7 +35,16 @@ import net.obvj.jsonmerge.util.JsonPathExpression;
  */
 public class JsonMergeOption
 {
-    private Optional<Pair<JsonPathExpression, List<String>>> distinctKeys = Optional.empty();
+    private final JsonPathExpression path;
+    private final List<String> keys;
+    private final boolean deepMerge;
+
+    private JsonMergeOption(JsonPathExpression path, List<String> keys, boolean deepMerge)
+    {
+        this.path = path;
+        this.keys = keys;
+        this.deepMerge = deepMerge;
+    }
 
     /**
      * Specifies a distinct key for objects inside an array identified by a given
@@ -83,7 +90,9 @@ public class JsonMergeOption
      *
      * @throws IllegalArgumentException if one of the parameters is null or blank
      * @throws InvalidPathException     if the specified JsonPath expression is invalid
+     * @deprecated Use {@link JsonMergeOption#onPath(String)} instead
      */
+    @Deprecated(forRemoval = true, since = "1.1.0")
     public static JsonMergeOption distinctKey(String jsonPath, String key)
     {
         return distinctKeys(jsonPath, key);
@@ -140,7 +149,9 @@ public class JsonMergeOption
      *
      * @throws IllegalArgumentException if one of the parameters is null or blank
      * @throws InvalidPathException     if the specified JsonPath expression is invalid
+     * @deprecated Use {@link JsonMergeOption#onPath(String)} instead
      */
+    @Deprecated(forRemoval = true, since = "1.1.0")
     public static JsonMergeOption distinctKeys(String jsonPath, String... keys)
     {
         return distinctKeys(new JsonPathExpression(jsonPath), keys);
@@ -157,24 +168,77 @@ public class JsonMergeOption
      *
      * @throws IllegalArgumentException if one of the specified parameters is null or blank
      * @throws InvalidPathException     if the specified JsonPath expression is invalid
+     * @deprecated Use {@link JsonMergeOption#onPath(String)} instead
      */
+    @Deprecated(forRemoval = true, since = "1.1.0")
     private static JsonMergeOption distinctKeys(JsonPathExpression path, String... keys)
     {
         List<String> trimmedKeys = Arrays.stream(keys)
                 .map(key -> requireNonBlankAndTrim(key, "The key must not be null or blank"))
                 .collect(toList());
 
-        JsonMergeOption option = new JsonMergeOption();
-        option.distinctKeys = Optional.of(Pair.of(path, trimmedKeys));
-        return option;
+        return new JsonMergeOption(path, trimmedKeys, false);
     }
 
-    /**
-     * @return a pair of JsonPath and associated distinct keys for merging a JSON array.
-     */
-    public Optional<Pair<JsonPathExpression, List<String>>> getDistinctKeys()
+    public static JsonMergeBuilder onPath(String jsonPath)
     {
-        return distinctKeys;
+        JsonPathExpression compiledJsonPath = new JsonPathExpression(jsonPath);
+        return new JsonMergeBuilder(compiledJsonPath);
+    }
+
+    public JsonPathExpression getPath()
+    {
+        return path;
+    }
+
+    public List<String> getKeys()
+    {
+        return keys;
+    }
+
+    public boolean isDeepMerge()
+    {
+        return deepMerge;
+    }
+
+    public static class JsonMergeBuilder
+    {
+        private final JsonPathExpression path;
+
+        public JsonMergeBuilder(JsonPathExpression path)
+        {
+            this.path = path;
+        }
+
+        public JsonMergeOptionBuilderWithDistinctKey findObjectsIdentifiedBy(String... keys)
+        {
+            List<String> trimmedKeys = Arrays.stream(keys)
+                    .map(key -> requireNonBlankAndTrim(key, "The key must not be null or blank"))
+                    .collect(toList());
+            return new JsonMergeOptionBuilderWithDistinctKey(path, trimmedKeys);
+        }
+    }
+
+    public static class JsonMergeOptionBuilderWithDistinctKey
+    {
+        private final JsonPathExpression path;
+        private final List<String> keys;
+
+        public JsonMergeOptionBuilderWithDistinctKey(JsonPathExpression path, List<String> keys)
+        {
+            this.path = path;
+            this.keys = keys;
+        }
+
+        public JsonMergeOption thenPickTheHigherPrecedenceOne()
+        {
+            return new JsonMergeOption(path, keys, false);
+        }
+
+        public JsonMergeOption thenDoADeepMerge()
+        {
+            return new JsonMergeOption(path, keys, true);
+        }
     }
 
 }
