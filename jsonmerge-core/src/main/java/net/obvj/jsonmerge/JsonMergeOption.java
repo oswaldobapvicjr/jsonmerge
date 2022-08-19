@@ -92,7 +92,7 @@ public class JsonMergeOption
      * @throws InvalidPathException     if the specified JsonPath expression is invalid
      * @deprecated Use {@link JsonMergeOption#onPath(String)} instead
      */
-    @Deprecated(forRemoval = true, since = "1.1.0")
+    @Deprecated
     public static JsonMergeOption distinctKey(String jsonPath, String key)
     {
         return distinctKeys(jsonPath, key);
@@ -151,7 +151,7 @@ public class JsonMergeOption
      * @throws InvalidPathException     if the specified JsonPath expression is invalid
      * @deprecated Use {@link JsonMergeOption#onPath(String)} instead
      */
-    @Deprecated(forRemoval = true, since = "1.1.0")
+    @Deprecated
     public static JsonMergeOption distinctKeys(String jsonPath, String... keys)
     {
         return distinctKeys(new JsonPathExpression(jsonPath), keys);
@@ -170,7 +170,7 @@ public class JsonMergeOption
      * @throws InvalidPathException     if the specified JsonPath expression is invalid
      * @deprecated Use {@link JsonMergeOption#onPath(String)} instead
      */
-    @Deprecated(forRemoval = true, since = "1.1.0")
+    @Deprecated
     private static JsonMergeOption distinctKeys(JsonPathExpression path, String... keys)
     {
         List<String> trimmedKeys = Arrays.stream(keys)
