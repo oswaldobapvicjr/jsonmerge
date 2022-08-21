@@ -20,7 +20,6 @@ import static java.util.stream.Collectors.toList;
 import static net.obvj.jsonmerge.util.StringUtils.requireNonBlankAndTrim;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import com.jayway.jsonpath.InvalidPathException;

@@ -221,8 +221,23 @@ abstract class JsonMergerTest<O>
         assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS, result, "$.agents[*].description");
     }
 
+    /*
+     * This test is to secure the coverage of the legacy JsonMergeOption.distinctKey(...)
+     * method. It can be safely removed together with the associated legacy feature.
+     */
     @Test
+    @Deprecated
     void merge_json3HighWithJson4LowAndDistinctKey_success()
+    {
+        O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
+                JsonMergeOption.distinctKey("$.agents", "class"));
+
+        assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
+        assertArray(asList("Json3Agent1", "Json3Agent2"), result, "$.agents[*].description");
+    }
+
+    @Test
+    void merge_json3HighWithJson4LowAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
                 onPath("$.agents").findObjectsIdentifiedBy("class")
@@ -233,7 +248,7 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_json3LowWithJson4HighAndDistinctKey_success()
+    void merge_json3LowWithJson4HighAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_4), fromString(JSON_3),
                 onPath("$.agents").findObjectsIdentifiedBy("class")
@@ -282,7 +297,7 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_json8HighWithJson9LowAndDistinctKey_success()
+    void merge_json8HighWithJson9LowAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_8), fromString(JSON_9),
                 onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
@@ -292,7 +307,7 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_json8LowWithJson9HighAndDistinctKey_success()
+    void merge_json8LowWithJson9HighAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
                 onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
@@ -302,7 +317,7 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_json8LowWithJson9HighAndUnknownDistinctKey_success()
+    void merge_json8LowWithJson9HighAndUnknownDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
                 onPath("$.array").findObjectsIdentifiedBy("unknown")
@@ -321,6 +336,36 @@ abstract class JsonMergerTest<O>
                 fromFile("testfiles/drive1.json"),
                 onPath("$.files").findObjectsIdentifiedBy("id", "version")
                         .thenPickTheHigherPrecedenceOne());
+
+        assertArray(asList("1", "2", "3"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
+
+        // drive2.json
+        assertArray(asList("jackson", "java"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
+        assertArray(asList(Boolean.TRUE), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
+
+        assertArray(asList("1", "2"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
+
+        // drive2.json
+        assertArray(asList("2017-07-07T10:14:59"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002' && @.version=='1')].date");
+    }
+
+    /*
+     * This test is to secure the coverage of the legacy JsonMergeOption.distinctKey(...)
+     * method. It can be safely removed together with the associated legacy feature.
+     */
+    @Test
+    @Deprecated
+    void merge_jsonFilesWithTwoDistinctKeys_success()
+    {
+        O result = merger.merge(
+                fromFile("testfiles/drive2.json"),
+                fromFile("testfiles/drive1.json"),
+                JsonMergeOption.distinctKeys("$.files", "id", "version"));
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
