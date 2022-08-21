@@ -122,6 +122,18 @@ public class JsonSmartJsonProvider implements JsonProvider
     }
 
     @Override
+    public void set(Object jsonArray, int index, Object element)
+    {
+        toJsonArray(jsonArray).set(index, element);
+    }
+
+    @Override
+    public int indexOf(Object jsonArray, Object element)
+    {
+        return toJsonArray(jsonArray).indexOf(element);
+    }
+
+    @Override
     public void forEachElementInArray(final Object jsonArray, final Consumer<? super Object> action)
     {
         toJsonArray(jsonArray).forEach(action);

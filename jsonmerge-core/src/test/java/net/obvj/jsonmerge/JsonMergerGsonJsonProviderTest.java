@@ -118,7 +118,8 @@ class JsonMergerGsonJsonProviderTest extends JsonMergerTest<JsonObject>
             assertEquals(expected.size(), array.size());
         }
 
-        expected.forEach(element -> assertTrue(array.contains(gson.toJsonTree(element))));
+        expected.forEach(element -> assertTrue(array.contains(gson.toJsonTree(element)),
+                () -> String.format("Expected element %s not found in array %s", element, array)));
 
     }
 

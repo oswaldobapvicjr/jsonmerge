@@ -18,10 +18,12 @@ package net.obvj.jsonmerge.provider;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -144,6 +146,21 @@ public class JacksonJsonNodeJsonProvider implements JsonProvider
     public void add(final Object jsonArray, final Object element)
     {
         toJsonArray(jsonArray).add(toJsonNode(element));
+    }
+
+    @Override
+    public void set(Object jsonArray, int index, Object element)
+    {
+        toJsonArray(jsonArray).set(index, toJsonNode(element));
+    }
+
+    @Override
+    public int indexOf(Object jsonArray, Object element)
+    {
+        ArrayNode array = toJsonArray(jsonArray);
+        return IntStream.range(0, array.size())
+                .filter(index -> Objects.equals(array.get(index), element))
+                .findFirst().orElse(-1);
     }
 
     @Override

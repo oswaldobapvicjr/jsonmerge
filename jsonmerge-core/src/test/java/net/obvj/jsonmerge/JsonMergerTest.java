@@ -17,7 +17,8 @@
 package net.obvj.jsonmerge;
 
 import static java.util.Arrays.asList;
-import static net.obvj.jsonmerge.JsonMergeOption.*;
+import static java.util.Collections.emptyList;
+import static net.obvj.jsonmerge.JsonMergeOption.onPath;
 
 import java.util.List;
 
@@ -313,7 +314,7 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_jsonFilesWithTwoDistinctKeys_success()
+    void merge_jsonFilesWithTwoDistinctKeysThenPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(
                 fromFile("testfiles/drive2.json"),
@@ -324,6 +325,12 @@ abstract class JsonMergerTest<O>
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
 
+        // drive2.json
+        assertArray(asList("jackson", "java"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
+        assertArray(asList(Boolean.TRUE), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
+
         assertArray(asList("1", "2"), result,
                 "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
 
@@ -333,7 +340,7 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_jsonFilesWithTwoDistinctKeysAlt_success()
+    void merge_jsonFilesWithTwoDistinctKeysThenPickTheHigherPrecedenceOneAlt_success()
     {
         O result = merger.merge(
                 fromFile("testfiles/drive1.json"),
@@ -348,7 +355,34 @@ abstract class JsonMergerTest<O>
                 "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
 
         // drive1.json
+        assertArray(asList("java", "test"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
+        assertArray(emptyList(), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
+
+        // drive1.json
         assertArray(asList("2022-08-06T09:51:40"), result,
                 "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002' && @.version=='1')].date");
+    }
+
+    @Test
+    void merge_jsonFilesWithTwoDistinctKeysThenDoADeepMerge_success()
+    {
+        O result = merger.merge(
+                fromFile("testfiles/drive1.json"),
+                fromFile("testfiles/drive2.json"),
+                onPath("$.files").findObjectsIdentifiedBy("id", "version")
+                        .thenDoADeepMerge());
+
+        assertArray(asList("1", "2", "3"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
+        assertArray(asList("1", "2"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
+
+        // deep-merged elements
+        assertArray(asList("jackson", "java", "test"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
+        assertArray(asList(Boolean.TRUE), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
     }
 }

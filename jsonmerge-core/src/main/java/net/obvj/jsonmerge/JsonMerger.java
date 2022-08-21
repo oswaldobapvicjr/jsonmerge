@@ -314,13 +314,15 @@ public class JsonMerger<T>
                     Object value = jsonProvider.get(object, key);
                     values.put(key, value);
                 }
+                // TODO get the index first for performance to avoid a second search on line 327
                 Optional<Object> matchingObjectOnArray = findMatchingObjectOnArray(values, array);
                 if (pathOption.isDeepMerge() && matchingObjectOnArray.isPresent())
                 {
                     // The object already in the array is the higher-precedence one on the merge
-                    Object merged = merge(matchingObjectOnArray.get(), object);
-                    // We replace it with the merged object
-                    jsonProvider.add(array, merged);
+                    Object merged = mergeSafely(matchingObjectOnArray.get(), object);
+                    // We must replace the matching entry with the merged object
+                    int index = jsonProvider.indexOf(array, matchingObjectOnArray.get());
+                    jsonProvider.set(array, index, merged);
                 }
                 else if (!matchingObjectOnArray.isPresent())
                 {
