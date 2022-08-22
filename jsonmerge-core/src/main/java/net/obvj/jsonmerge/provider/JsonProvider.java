@@ -122,6 +122,18 @@ public interface JsonProvider
      */
     Object get(final Object jsonObject, final String key);
 
+    /**
+     * Returns the element at the specified position in the specified JSON array.
+     *
+     * @param jsonArray the JSON array; not {@code null}
+     * @param index     index of the element to return
+     * @return the element at the specified position in the specified JSON array
+     * @throws ClassCastException        if the specified {@code jsonObject} is not a valid
+     *                                   JSON object for this provider
+     * @throws IndexOutOfBoundsException if the index is out of range (either negative or
+     *                                   greater then the size of the array)
+     * @since 1.1.0
+     */
     Object get(final Object jsonArray, int index);
 
     /**
@@ -231,6 +243,13 @@ public interface JsonProvider
      */
     Stream<Object> stream(final Object jsonArray);
 
+    /**
+     * Returns the number of elements in the specified JSON array.
+     *
+     * @param jsonArray the JSON array; not {@code null}
+     * @return the number of elements in the specified JSON array
+     * @since 1.1.0
+     */
     int size(final Object jsonArray);
 
 }

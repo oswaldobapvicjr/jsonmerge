@@ -27,7 +27,8 @@ import com.jayway.jsonpath.InvalidPathException;
 import net.obvj.jsonmerge.util.JsonPathExpression;
 
 /**
- * An object that configures how to merge JSON documents.
+ * An immutable object that contains parameters about how to merge a specific path of a
+ * JSON document.
  *
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
@@ -187,16 +188,31 @@ public class JsonMergeOption
         return new JsonMergeBuilder(compiledJsonPath);
     }
 
+    /**
+     * @return a expression that represents a specific path of the JSON document to receive a
+     *         special handling
+     * @since 1.1.0
+     */
     public JsonPathExpression getPath()
     {
         return path;
     }
 
+    /**
+     * @return a list of keys to be considered for distinct JSON objects identification inside
+     *         the array represented by {@link #getPath()}.
+     * @since 1.1.0
+     */
     public List<String> getKeys()
     {
         return keys;
     }
 
+    /**
+     * @return a flag indicating whether or not to do a deep merge of the elements inside the
+     *         path represented by {@link #getPath()}.
+     * @since 1.1.0
+     */
     public boolean isDeepMerge()
     {
         return deepMerge;
@@ -214,11 +230,17 @@ public class JsonMergeOption
         return String.format(TO_STRING_FORMAT, path, keys, deepMerge);
     }
 
+    /**
+     * A builder for {@link JsonMergeOption}.
+     *
+     * @author oswaldo.bapvic.jr
+     * @since 1.1.0
+     */
     public static class JsonMergeBuilder
     {
         private final JsonPathExpression path;
 
-        public JsonMergeBuilder(JsonPathExpression path)
+        private JsonMergeBuilder(JsonPathExpression path)
         {
             this.path = path;
         }
@@ -232,22 +254,44 @@ public class JsonMergeOption
         }
     }
 
+    /**
+     * A final building stage for {@link JsonMergeOption}, applicable when one or more
+     * distinct keys are specified.
+     *
+     * @author oswaldo.bapvic.jr
+     * @since 1.1.0
+     */
     public static class JsonMergeOptionBuilderWithDistinctKey
     {
         private final JsonPathExpression path;
         private final List<String> keys;
 
-        public JsonMergeOptionBuilderWithDistinctKey(JsonPathExpression path, List<String> keys)
+        private JsonMergeOptionBuilderWithDistinctKey(JsonPathExpression path, List<String> keys)
         {
             this.path = path;
             this.keys = keys;
         }
 
+        /**
+         * Tell the algorithm to pick the higher precedence object when two objects identified by
+         * the same key(s) are found in both JSON documents at the path defined for this
+         * {@link JsonMergeOption}.
+         *
+         * @return a {@link JsonMergeOption}
+         * @since 1.1.0
+         */
         public JsonMergeOption thenPickTheHigherPrecedenceOne()
         {
             return new JsonMergeOption(path, keys, false);
         }
 
+        /**
+         * Tell the algorithm to do a deep merge if two objects identified by the same key(s) are
+         * found in both JSON documents at the path defined for this {@link JsonMergeOption}.
+         *
+         * @return a {@link JsonMergeOption}
+         * @since 1.1.0
+         */
         public JsonMergeOption thenDoADeepMerge()
         {
             return new JsonMergeOption(path, keys, true);
