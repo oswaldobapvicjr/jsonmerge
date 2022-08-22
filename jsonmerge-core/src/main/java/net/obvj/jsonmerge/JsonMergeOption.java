@@ -34,6 +34,8 @@ import net.obvj.jsonmerge.util.JsonPathExpression;
  */
 public class JsonMergeOption
 {
+    private static final String TO_STRING_FORMAT = "JsonMergeOption (path=%s, keys=%s, deepMerge=%s)";
+
     private final JsonPathExpression path;
     private final List<String> keys;
     private final boolean deepMerge;
@@ -198,6 +200,18 @@ public class JsonMergeOption
     public boolean isDeepMerge()
     {
         return deepMerge;
+    }
+
+    /**
+     * Returns a string representation of this {@code JsonMergeOption}.
+     *
+     * @return a string representation of this object
+     * @since 1.1.0
+     */
+    @Override
+    public String toString()
+    {
+        return String.format(TO_STRING_FORMAT, path, keys, deepMerge);
     }
 
     public static class JsonMergeBuilder

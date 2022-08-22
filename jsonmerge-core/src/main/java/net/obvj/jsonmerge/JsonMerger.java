@@ -24,8 +24,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.IntStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -314,17 +314,19 @@ public class JsonMerger<T>
                     Object value = jsonProvider.get(object, key);
                     values.put(key, value);
                 }
-                // TODO get the index first for performance to avoid a second search on line 327
-                Optional<Object> matchingObjectOnArray = findMatchingObjectOnArray(values, array);
-                if (pathOption.isDeepMerge() && matchingObjectOnArray.isPresent())
+
+                int matchingObjectIndex = findMatchingObjectOnArray(values, array);
+                if (pathOption.isDeepMerge() && matchingObjectIndex >= 0)
                 {
+                    Object matchingObject = jsonProvider.get(array, matchingObjectIndex);
+                    JsonPartMerger merger = new JsonPartMerger(jsonProvider,
+                            absolutePath.appendIndex(matchingObjectIndex), options);
                     // The object already in the array is the higher-precedence one on the merge
-                    Object merged = mergeSafely(matchingObjectOnArray.get(), object);
+                    Object merged = merger.merge(matchingObject, object);
                     // We must replace the matching entry with the merged object
-                    int index = jsonProvider.indexOf(array, matchingObjectOnArray.get());
-                    jsonProvider.set(array, index, merged);
+                    jsonProvider.set(array, matchingObjectIndex, merged);
                 }
-                else if (!matchingObjectOnArray.isPresent())
+                else if (matchingObjectIndex < 0)
                 {
                     // Deep-merge not specified, so just add the object if not already in the array
                     jsonProvider.add(array, object);
@@ -342,13 +344,16 @@ public class JsonMerger<T>
          * @param distinctValues a map of distinctive key-value pairs inside the JSON object to be
          *                       used for "equal" objects identification in the given array
          * @param array          the array to be searched
-         * @return the first JSON object matching the specified criteria
+         * @return the index of the first JSON object matching the specified criteria
          */
-        private Optional<Object> findMatchingObjectOnArray(Map<String, Object> distinctValues,
-                Object array)
+        private int findMatchingObjectOnArray(Map<String, Object> distinctValues, Object array)
         {
-            return jsonProvider.stream(array).filter(jsonProvider::isJsonObject)
-                    .filter(json -> jsonObjectContains(distinctValues, json)).findFirst();
+            return IntStream.range(0, jsonProvider.size(array)).filter(index ->
+            {
+                Object element = jsonProvider.get(array, index);
+                return jsonProvider.isJsonObject(element)
+                        && jsonObjectContains(distinctValues, element);
+            }).findFirst().orElse(-1);
         }
 
         /**

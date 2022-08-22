@@ -16,8 +16,10 @@
 
 package net.obvj.jsonmerge.provider;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static java.util.Arrays.*;
+import static net.obvj.junit.utils.matchers.AdvancedMatchers.containsAll;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -125,6 +127,22 @@ class JsonOrgJsonProviderTest
                               + "  \"value\": \"value9999\"\n"
                               + "}";
         assertFalse(provider.arrayContains(JSON1.getJSONArray("objects"), new JSONObject(unexpectedJson)));
+    }
+
+    @Test
+    void indexOf_success()
+    {
+        assertEquals(0, provider.indexOf(ARRAY1, "element1"));
+        assertEquals(1, provider.indexOf(ARRAY1, "element2"));
+        assertEquals(-1, provider.indexOf(ARRAY1, "unknown"));
+    }
+
+    @Test
+    void stream_array_allElementsCopied()
+    {
+        StringBuilder sb = new StringBuilder();
+        provider.stream(ARRAY1).forEach(sb::append);
+        assertThat(sb.toString(), containsAll("element1", "element2"));
     }
 
 }

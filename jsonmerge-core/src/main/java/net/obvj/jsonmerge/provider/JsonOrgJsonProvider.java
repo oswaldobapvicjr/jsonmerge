@@ -115,6 +115,11 @@ public class JsonOrgJsonProvider implements JsonProvider
         return toJsonObject(jsonObject).opt(key);
     }
 
+    @Override
+    public Object get(final Object jsonArray, int index)
+    {
+        return toJsonArray(jsonArray).get(index);
+    }
 
     @Override
     public void put(final Object jsonObject, final String key, final Object value)
@@ -177,6 +182,12 @@ public class JsonOrgJsonProvider implements JsonProvider
     {
         Spliterator<Object> spliterator = toJsonArray(jsonArray).spliterator();
         return StreamSupport.stream(spliterator, false);
+    }
+
+    @Override
+    public int size(Object jsonArray)
+    {
+        return toJsonArray(jsonArray).length();
     }
 
 }

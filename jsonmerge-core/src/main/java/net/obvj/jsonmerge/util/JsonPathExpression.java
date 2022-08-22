@@ -39,6 +39,7 @@ public class JsonPathExpression
     public static final JsonPathExpression ROOT = new JsonPathExpression("$");
 
     private static final String CHILD_TO_EXPRESSION_PATTERN = "['%s']";
+    private static final String INDEX_TO_EXPRESSION_PATTERN = "[%d]";
 
     private final JsonPath jsonPath;
 
@@ -75,6 +76,21 @@ public class JsonPathExpression
         }
         String expression = String.format(CHILD_TO_EXPRESSION_PATTERN, name);
         return append(expression);
+    }
+
+    /**
+     * Produces a new {@code JsonPathExpression} with the concatenation result of this
+     * {@code JsonPathExpression} and a given index.
+     *
+     * @param index the index to be appended to the end of this {@code JsonPathExpression}
+     * @return a new, compiled {@link JsonPathExpression}
+     *
+     * @throws InvalidPathException if the resulting JsonPath expression is invalid
+     * @since 1.1.0
+     */
+    public JsonPathExpression appendIndex(int index)
+    {
+        return append(String.format(INDEX_TO_EXPRESSION_PATTERN, index));
     }
 
     /**

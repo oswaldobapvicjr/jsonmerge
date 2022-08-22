@@ -122,6 +122,8 @@ public interface JsonProvider
      */
     Object get(final Object jsonObject, final String key);
 
+    Object get(final Object jsonArray, int index);
+
     /**
      * Associates the specified value with the specified key in the specified JSON object.
      *
@@ -228,5 +230,7 @@ public interface JsonProvider
      *                            for this provider
      */
     Stream<Object> stream(final Object jsonArray);
+
+    int size(final Object jsonArray);
 
 }

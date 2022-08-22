@@ -118,6 +118,11 @@ public class GsonJsonProvider implements JsonProvider
         return toJsonObject(jsonObject).get(key);
     }
 
+    @Override
+    public Object get(final Object jsonArray, int index)
+    {
+        return toJsonArray(jsonArray).get(index);
+    }
 
     @Override
     public void put(final Object jsonObject, final String key, final Object value)
@@ -152,7 +157,7 @@ public class GsonJsonProvider implements JsonProvider
     {
         JsonArray array = toJsonArray(jsonArray);
         return IntStream.range(0, array.size())
-                .filter(index -> Objects.equals(array.get(index), element))
+                .filter(index -> Objects.equals(array.get(index), toJsonElement(element)))
                 .findFirst().orElse(-1);
     }
 
@@ -173,6 +178,12 @@ public class GsonJsonProvider implements JsonProvider
     {
         Spliterator<JsonElement> spliterator = toJsonArray(jsonArray).spliterator();
         return (Stream) StreamSupport.stream(spliterator, false);
+    }
+
+    @Override
+    public int size(Object jsonArray)
+    {
+        return toJsonArray(jsonArray).size();
     }
 
 }
