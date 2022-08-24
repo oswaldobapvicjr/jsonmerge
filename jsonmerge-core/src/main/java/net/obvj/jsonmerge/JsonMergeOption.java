@@ -20,6 +20,7 @@ import static java.util.stream.Collectors.toList;
 import static net.obvj.jsonmerge.util.StringUtils.requireNonBlankAndTrim;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import com.jayway.jsonpath.InvalidPathException;
@@ -27,8 +28,29 @@ import com.jayway.jsonpath.InvalidPathException;
 import net.obvj.jsonmerge.util.JsonPathExpression;
 
 /**
- * An immutable object that contains parameters about how to merge a specific path of a
- * JSON document.
+ * An object that contains parameters about how to merge a specific path of a JSON
+ * document.
+ * <p>
+ * Use {@link JsonMergeOption#onPath(String)} to initialize the construction of a
+ * {@code JsonMergeOption} with a specific document path, then let the API guide you
+ * through the additional builder methods to finalize the construction of the desired
+ * merge option.
+ * <p>
+ * Examples:
+ * <p>
+ * <blockquote>
+ *
+ * <pre>
+ * {@code MergeOption.onPath("$.parameters")}
+ * {@code         .findObjectsIdentifiedBy("name")}
+ * {@code         .thenPickTheHigherPrecedenceOne();}
+ *
+ * {@code MergeOption.onPath("$.files")}
+ * {@code         .findObjectsIdentifiedBy("id", "version")}
+ * {@code         .thenDoADeepMerge();}
+ * </pre>
+ *
+ * </blockquote>
  *
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
@@ -44,7 +66,7 @@ public class JsonMergeOption
     private JsonMergeOption(JsonPathExpression path, List<String> keys, boolean deepMerge)
     {
         this.path = path;
-        this.keys = keys;
+        this.keys = Collections.unmodifiableList(keys);
         this.deepMerge = deepMerge;
     }
 
@@ -182,15 +204,33 @@ public class JsonMergeOption
         return new JsonMergeOption(path, trimmedKeys, false);
     }
 
-    public static JsonMergeBuilder onPath(String jsonPath)
+    /**
+     * Initializes the construction of a {@code JsonMergeOption} for the document path
+     * determined by the given {@code JsonPath} expression.
+     * <p>
+     * A {@code JsonPath} expression can be specified using either dot- or bracket-notation,
+     * but complex expressions containing filters, script, subscript, or union operations, are
+     * not supported.
+     *
+     * @param jsonPath a {@code JsonPath} expression that identifies the document part that
+     *                 should receive special handling during the merge; not empty
+     * @return a {@code JsonMergeOption} builder initialized with the specified
+     *         {@code JsonPath}
+     *
+     * @throws IllegalArgumentException if the specified expression is null or empty
+     * @throws InvalidPathException     if the specified {@code JsonPath} expression is
+     *                                  invalid
+     * @since 1.1.0
+     */
+    public static Builder onPath(String jsonPath)
     {
         JsonPathExpression compiledJsonPath = new JsonPathExpression(jsonPath);
-        return new JsonMergeBuilder(compiledJsonPath);
+        return new Builder(compiledJsonPath);
     }
 
     /**
-     * @return a expression that represents a specific path of the JSON document to receive a
-     *         special handling
+     * @return a expression that represents a specific path of the JSON document that should
+     *         receive special handling during the merge; not empty
      * @since 1.1.0
      */
     public JsonPathExpression getPath()
@@ -200,7 +240,7 @@ public class JsonMergeOption
 
     /**
      * @return a list of keys to be considered for distinct JSON objects identification inside
-     *         the array represented by {@link #getPath()}.
+     *         the array represented by {@link #getPath()}; not null
      * @since 1.1.0
      */
     public List<String> getKeys()
@@ -210,7 +250,7 @@ public class JsonMergeOption
 
     /**
      * @return a flag indicating whether or not to do a deep merge of the elements inside the
-     *         path represented by {@link #getPath()}.
+     *         document path represented by {@link #getPath()}.
      * @since 1.1.0
      */
     public boolean isDeepMerge()
@@ -231,54 +271,87 @@ public class JsonMergeOption
     }
 
     /**
-     * A builder for {@link JsonMergeOption}.
+     * A builder for {@link JsonMergeOption}, with the document path already set.
      *
      * @author oswaldo.bapvic.jr
      * @since 1.1.0
      */
-    public static class JsonMergeBuilder
+    public static class Builder
     {
         private final JsonPathExpression path;
 
-        private JsonMergeBuilder(JsonPathExpression path)
+        private Builder(JsonPathExpression path)
         {
             this.path = path;
         }
 
-        public JsonMergeOptionBuilderWithDistinctKey findObjectsIdentifiedBy(String... keys)
+        /**
+         * Defines one or more keys to determine object equality inside the specified document
+         * path, provided that the path is an array path.
+         * <p>
+         * For example, consider the following JSON document: <blockquote>
+         *
+         * <pre>
+         * {
+         *   "params": [
+         *     {
+         *       "name": "country",
+         *       "value": "Brazil"
+         *     },
+         *     {
+         *       "name": "language",
+         *       "value": "pt-BR"
+         *     }
+         *   ]
+         * }
+         * </pre>
+         *
+         * </blockquote>
+         * <p>
+         * A {@code JsonMergeOption} associating the {@code "name"} key with the
+         * {@code "$.params"} path tells the algorithm to find distinct objects identified by the
+         * {@code "name"} key during the merge of the {@code "$.params"} array.
+         * <p>
+         * In other words, if two JSON documents contain different objects with same value for the
+         * provided key(s), then they will be considered as "equal" during the merge.
+         *
+         * @param keys one or more keys to determine object equality inside an array path
+         * @return an intermediary {@code JsonMergeOption} build stage with the specified key(s)
+         * @throws IllegalArgumentException if a {@code null} or blank key is received
+         */
+        public BuilderWithKeys findObjectsIdentifiedBy(String... keys)
         {
             List<String> trimmedKeys = Arrays.stream(keys)
                     .map(key -> requireNonBlankAndTrim(key, "The key must not be null or blank"))
                     .collect(toList());
-            return new JsonMergeOptionBuilderWithDistinctKey(path, trimmedKeys);
+            return new BuilderWithKeys(path, trimmedKeys);
         }
     }
 
     /**
-     * A final building stage for {@link JsonMergeOption}, applicable when one or more
-     * distinct keys are specified.
+     * An intermediary {@link JsonMergeOption} build stage that is applicable when one or more
+     * distinct keys are specified for a given document path.
      *
      * @author oswaldo.bapvic.jr
      * @since 1.1.0
      */
-    public static class JsonMergeOptionBuilderWithDistinctKey
+    public static class BuilderWithKeys
     {
         private final JsonPathExpression path;
         private final List<String> keys;
 
-        private JsonMergeOptionBuilderWithDistinctKey(JsonPathExpression path, List<String> keys)
+        private BuilderWithKeys(JsonPathExpression path, List<String> keys)
         {
             this.path = path;
             this.keys = keys;
         }
 
         /**
-         * Tell the algorithm to pick the higher precedence object when two objects identified by
-         * the same key(s) are found in both JSON documents at the path defined for this
-         * {@link JsonMergeOption}.
+         * Tells the algorithm to pick the higher precedence object when two objects identified by
+         * the same key(s) are found in both JSON documents at the path defined for the
+         * {@code JsonMergeOption}.
          *
-         * @return a {@link JsonMergeOption}
-         * @since 1.1.0
+         * @return a finalized {@link JsonMergeOption}
          */
         public JsonMergeOption thenPickTheHigherPrecedenceOne()
         {
@@ -286,11 +359,10 @@ public class JsonMergeOption
         }
 
         /**
-         * Tell the algorithm to do a deep merge if two objects identified by the same key(s) are
-         * found in both JSON documents at the path defined for this {@link JsonMergeOption}.
+         * Tells the algorithm to do a deep merge if two objects identified by the same key(s) are
+         * found in both JSON documents at the path defined for the {@code JsonMergeOption}.
          *
-         * @return a {@link JsonMergeOption}
-         * @since 1.1.0
+         * @return a finalized {@link JsonMergeOption}
          */
         public JsonMergeOption thenDoADeepMerge()
         {
