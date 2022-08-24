@@ -17,8 +17,8 @@
 package net.obvj.jsonmerge;
 
 import static java.util.Arrays.asList;
-import static net.obvj.jsonmerge.JsonMergeOption.distinctKey;
-import static net.obvj.jsonmerge.JsonMergeOption.distinctKeys;
+import static java.util.Collections.emptyList;
+import static net.obvj.jsonmerge.JsonMergeOption.onPath;
 
 import java.util.List;
 
@@ -221,21 +221,38 @@ abstract class JsonMergerTest<O>
         assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS, result, "$.agents[*].description");
     }
 
+    /*
+     * This test is to secure the coverage of the legacy JsonMergeOption.distinctKey(...)
+     * method. It can be safely removed together with the associated legacy feature.
+     */
     @Test
+    @Deprecated
     void merge_json3HighWithJson4LowAndDistinctKey_success()
     {
         O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
-                distinctKey("$.agents", "class"));
+                JsonMergeOption.distinctKey("$.agents", "class"));
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json3Agent1", "Json3Agent2"), result, "$.agents[*].description");
     }
 
     @Test
-    void merge_json3LowWithJson4HighAndDistinctKey_success()
+    void merge_json3HighWithJson4LowAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
+    {
+        O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
+                onPath("$.agents").findObjectsIdentifiedBy("class")
+                        .thenPickTheHigherPrecedenceOne());
+
+        assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
+        assertArray(asList("Json3Agent1", "Json3Agent2"), result, "$.agents[*].description");
+    }
+
+    @Test
+    void merge_json3LowWithJson4HighAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_4), fromString(JSON_3),
-                distinctKey("$.agents", "class"));
+                onPath("$.agents").findObjectsIdentifiedBy("class")
+                        .thenPickTheHigherPrecedenceOne());
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json4Agent1", "Json3Agent2"), result, "$.agents[*].description");
@@ -280,30 +297,31 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_json8HighWithJson9LowAndDistinctKey_success()
+    void merge_json8HighWithJson9LowAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_8), fromString(JSON_9),
-                distinctKey("$.array", "name"));
+                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
 
         assertArray(asList("Json8Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
     }
 
     @Test
-    void merge_json8LowWithJson9HighAndDistinctKey_success()
+    void merge_json8LowWithJson9HighAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
-                distinctKey("$.array", "name"));
+                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
 
         assertArray(asList("Json9Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
     }
 
     @Test
-    void merge_json8LowWithJson9HighAndUnknownDistinctKey_success()
+    void merge_json8LowWithJson9HighAndUnknownDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
-                distinctKey("$.array", "unknown"));
+                onPath("$.array").findObjectsIdentifiedBy("unknown")
+                        .thenPickTheHigherPrecedenceOne());
 
         // No exception expected, but the merge will consider no distinct key
         assertArray(asList("Json9Value1", "Json8Value1"), result,
@@ -311,15 +329,52 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
+    void merge_jsonFilesWithTwoDistinctKeysThenPickTheHigherPrecedenceOne_success()
+    {
+        O result = merger.merge(
+                fromFile("testfiles/drive2.json"),
+                fromFile("testfiles/drive1.json"),
+                onPath("$.files").findObjectsIdentifiedBy("id", "version")
+                        .thenPickTheHigherPrecedenceOne());
+
+        assertArray(asList("1", "2", "3"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
+
+        // drive2.json
+        assertArray(asList("jackson", "java"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
+        assertArray(asList(Boolean.TRUE), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
+
+        assertArray(asList("1", "2"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
+
+        // drive2.json
+        assertArray(asList("2017-07-07T10:14:59"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002' && @.version=='1')].date");
+    }
+
+    /*
+     * This test is to secure the coverage of the legacy JsonMergeOption.distinctKey(...)
+     * method. It can be safely removed together with the associated legacy feature.
+     */
+    @Test
+    @Deprecated
     void merge_jsonFilesWithTwoDistinctKeys_success()
     {
         O result = merger.merge(
                 fromFile("testfiles/drive2.json"),
                 fromFile("testfiles/drive1.json"),
-                distinctKeys("$.files", "id", "version"));
+                JsonMergeOption.distinctKeys("$.files", "id", "version"));
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
+
+        // drive2.json
+        assertArray(asList("jackson", "java"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
+        assertArray(asList(Boolean.TRUE), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
 
         assertArray(asList("1", "2"), result,
                 "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
@@ -330,12 +385,13 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_jsonFilesWithTwoDistinctKeysAlt_success()
+    void merge_jsonFilesWithTwoDistinctKeysThenPickTheHigherPrecedenceOneAlt_success()
     {
         O result = merger.merge(
                 fromFile("testfiles/drive1.json"),
                 fromFile("testfiles/drive2.json"),
-                distinctKeys("$.files", "id", "version"));
+                onPath("$.files").findObjectsIdentifiedBy("id", "version")
+                        .thenPickTheHigherPrecedenceOne());
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
@@ -344,7 +400,34 @@ abstract class JsonMergerTest<O>
                 "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
 
         // drive1.json
+        assertArray(asList("java", "test"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
+        assertArray(emptyList(), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
+
+        // drive1.json
         assertArray(asList("2022-08-06T09:51:40"), result,
                 "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002' && @.version=='1')].date");
+    }
+
+    @Test
+    void merge_jsonFilesWithTwoDistinctKeysThenDoADeepMerge_success()
+    {
+        O result = merger.merge(
+                fromFile("testfiles/drive1.json"),
+                fromFile("testfiles/drive2.json"),
+                onPath("$.files").findObjectsIdentifiedBy("id", "version")
+                        .thenDoADeepMerge());
+
+        assertArray(asList("1", "2", "3"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
+        assertArray(asList("1", "2"), result,
+                "$.files[?(@.id=='9570cc646-1586-11ed-861d-0242ac120002')].version");
+
+        // deep-merged elements
+        assertArray(asList("jackson", "java", "test"), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
+        assertArray(asList(Boolean.TRUE), result,
+                "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
     }
 }

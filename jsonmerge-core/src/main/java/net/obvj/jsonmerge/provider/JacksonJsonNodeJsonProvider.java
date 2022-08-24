@@ -18,10 +18,12 @@ package net.obvj.jsonmerge.provider;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -123,6 +125,11 @@ public class JacksonJsonNodeJsonProvider implements JsonProvider
         return toJsonObject(jsonObject).get(key);
     }
 
+    @Override
+    public Object get(final Object jsonArray, int index)
+    {
+        return toJsonArray(jsonArray).get(index);
+    }
 
     @Override
     public void put(final Object jsonObject, final String key, final Object value)
@@ -147,6 +154,21 @@ public class JacksonJsonNodeJsonProvider implements JsonProvider
     }
 
     @Override
+    public void set(Object jsonArray, int index, Object element)
+    {
+        toJsonArray(jsonArray).set(index, toJsonNode(element));
+    }
+
+    @Override
+    public int indexOf(Object jsonArray, Object element)
+    {
+        ArrayNode array = toJsonArray(jsonArray);
+        return IntStream.range(0, array.size())
+                .filter(index -> Objects.equals(array.get(index), toJsonNode(element)))
+                .findFirst().orElse(-1);
+    }
+
+    @Override
     public void forEachElementInArray(final Object jsonArray, final Consumer<? super Object> action)
     {
         toJsonArray(jsonArray).forEach(action);
@@ -163,6 +185,12 @@ public class JacksonJsonNodeJsonProvider implements JsonProvider
     {
         Spliterator<JsonNode> spliterator = toJsonArray(jsonArray).spliterator();
         return (Stream) StreamSupport.stream(spliterator, false);
+    }
+
+    @Override
+    public int size(Object jsonArray)
+    {
+        return toJsonArray(jsonArray).size();
     }
 
 }

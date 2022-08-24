@@ -16,7 +16,10 @@
 
 package net.obvj.jsonmerge.provider;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static net.obvj.junit.utils.matchers.AdvancedMatchers.containsAll;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 import org.junit.jupiter.api.Test;
 
@@ -81,6 +84,22 @@ class GsonJsonProviderTest
         JsonObject json = new JsonObject();
         provider.put(json, KEY1, provider.toJsonElement(VALUE1));
         assertEquals(VALUE1, json.get(KEY1).getAsString());
+    }
+
+    @Test
+    void indexOf_success()
+    {
+        assertEquals(0, provider.indexOf(ARRAY1, "element1"));
+        assertEquals(1, provider.indexOf(ARRAY1, "element2"));
+        assertEquals(-1, provider.indexOf(ARRAY1, "unknown"));
+    }
+
+    @Test
+    void stream_array_allElementsCopied()
+    {
+        StringBuilder sb = new StringBuilder();
+        provider.stream(ARRAY1).forEach(sb::append);
+        assertThat(sb.toString(), containsAll("element1", "element2"));
     }
 
 }

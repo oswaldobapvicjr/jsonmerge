@@ -17,9 +17,11 @@
 package net.obvj.jsonmerge.provider;
 
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -116,6 +118,11 @@ public class GsonJsonProvider implements JsonProvider
         return toJsonObject(jsonObject).get(key);
     }
 
+    @Override
+    public Object get(final Object jsonArray, int index)
+    {
+        return toJsonArray(jsonArray).get(index);
+    }
 
     @Override
     public void put(final Object jsonObject, final String key, final Object value)
@@ -140,6 +147,21 @@ public class GsonJsonProvider implements JsonProvider
     }
 
     @Override
+    public void set(Object jsonArray, int index, Object element)
+    {
+        toJsonArray(jsonArray).set(index, toJsonElement(element));
+    }
+
+    @Override
+    public int indexOf(Object jsonArray, Object element)
+    {
+        JsonArray array = toJsonArray(jsonArray);
+        return IntStream.range(0, array.size())
+                .filter(index -> Objects.equals(array.get(index), toJsonElement(element)))
+                .findFirst().orElse(-1);
+    }
+
+    @Override
     public void forEachElementInArray(final Object jsonArray, final Consumer<? super Object> action)
     {
         toJsonArray(jsonArray).forEach(action);
@@ -156,6 +178,12 @@ public class GsonJsonProvider implements JsonProvider
     {
         Spliterator<JsonElement> spliterator = toJsonArray(jsonArray).spliterator();
         return (Stream) StreamSupport.stream(spliterator, false);
+    }
+
+    @Override
+    public int size(Object jsonArray)
+    {
+        return toJsonArray(jsonArray).size();
     }
 
 }

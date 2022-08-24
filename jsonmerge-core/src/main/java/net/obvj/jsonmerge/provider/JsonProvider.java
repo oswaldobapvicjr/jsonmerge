@@ -123,6 +123,20 @@ public interface JsonProvider
     Object get(final Object jsonObject, final String key);
 
     /**
+     * Returns the element at the specified position in the specified JSON array.
+     *
+     * @param jsonArray the JSON array; not {@code null}
+     * @param index     index of the element to return
+     * @return the element at the specified position in the specified JSON array
+     * @throws ClassCastException        if the specified {@code jsonObject} is not a valid
+     *                                   JSON object for this provider
+     * @throws IndexOutOfBoundsException if the index is out of range (either negative or
+     *                                   greater then the size of the array)
+     * @since 1.1.0
+     */
+    Object get(final Object jsonArray, int index);
+
+    /**
      * Associates the specified value with the specified key in the specified JSON object.
      *
      * @param jsonObject the JSON object; not {@code null}
@@ -162,6 +176,37 @@ public interface JsonProvider
     void add(final Object jsonArray, final Object element);
 
     /**
+     * Replaces the element at the specified position in the JSON array with the specified
+     * element.
+     *
+     * @param jsonArray the JSON array; not {@code null}
+     * @param index     the index of the element to replace
+     * @param element   the element to be stored at the specified position
+     *
+     * @throws ClassCastException        if the specified {@code jsonArray} is not a valid
+     *                                   JSON array for this provider
+     * @throws IndexOutOfBoundsException if the index is out of range (either negative or
+     *                                   greater then the size of the array)
+     * @since 1.1.0
+     */
+    void set(final Object jsonArray, int index, final Object element);
+
+    /**
+     * Returns the index of the first occurrence of the specified element in the specified
+     * JSON array, or -1 if there is no such index.
+     *
+     * @param jsonArray the JSON array; not {@code null}
+     * @param element   the element to search for
+     * @return the index of the first occurrence of the specified element in the array, or -1
+     *         if the array does not contain the element
+     *
+     * @throws ClassCastException if the specified {@code jsonArray} is not a valid JSON array
+     *                            for this provider
+     * @since 1.1.0
+     */
+    int indexOf(final Object jsonArray, final Object element);
+
+    /**
      * Performs the given action for each element of the specified JSON array until all
      * entries have been processed.
      *
@@ -197,5 +242,14 @@ public interface JsonProvider
      *                            for this provider
      */
     Stream<Object> stream(final Object jsonArray);
+
+    /**
+     * Returns the number of elements in the specified JSON array.
+     *
+     * @param jsonArray the JSON array; not {@code null}
+     * @return the number of elements in the specified JSON array
+     * @since 1.1.0
+     */
+    int size(final Object jsonArray);
 
 }

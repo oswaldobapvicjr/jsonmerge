@@ -104,6 +104,12 @@ public class JsonSmartJsonProvider implements JsonProvider
     }
 
     @Override
+    public Object get(final Object jsonArray, int index)
+    {
+        return toJsonArray(jsonArray).get(index);
+    }
+
+    @Override
     public void put(final Object jsonObject, final String key, final Object value)
     {
         toJsonObject(jsonObject).put(key, value);
@@ -122,6 +128,18 @@ public class JsonSmartJsonProvider implements JsonProvider
     }
 
     @Override
+    public void set(Object jsonArray, int index, Object element)
+    {
+        toJsonArray(jsonArray).set(index, element);
+    }
+
+    @Override
+    public int indexOf(Object jsonArray, Object element)
+    {
+        return toJsonArray(jsonArray).indexOf(element);
+    }
+
+    @Override
     public void forEachElementInArray(final Object jsonArray, final Consumer<? super Object> action)
     {
         toJsonArray(jsonArray).forEach(action);
@@ -137,6 +155,12 @@ public class JsonSmartJsonProvider implements JsonProvider
     public Stream<Object> stream(final Object jsonArray)
     {
         return toJsonArray(jsonArray).stream();
+    }
+
+    @Override
+    public int size(Object jsonArray)
+    {
+        return toJsonArray(jsonArray).size();
     }
 
 }
