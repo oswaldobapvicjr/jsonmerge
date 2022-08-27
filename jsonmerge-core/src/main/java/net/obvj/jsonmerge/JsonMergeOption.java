@@ -16,11 +16,12 @@
 
 package net.obvj.jsonmerge;
 
+import static java.util.Collections.emptyList;
+import static java.util.Collections.unmodifiableList;
 import static java.util.stream.Collectors.toList;
 import static net.obvj.jsonmerge.util.StringUtils.requireNonBlankAndTrim;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import com.jayway.jsonpath.InvalidPathException;
@@ -48,6 +49,12 @@ import net.obvj.jsonmerge.util.JsonPathExpression;
  * {@code MergeOption.onPath("$.files")}
  * {@code         .findObjectsIdentifiedBy("id", "version")}
  * {@code         .thenDoADeepMerge();}
+ *
+ * {@code MergeOption.onPath("$.files")}
+ * {@code         .addDistinctObjectsOnly();}
+ *
+ * {@code MergeOption.onPath("$.files")}
+ * {@code         .addAll();}
  * </pre>
  *
  * </blockquote>
@@ -57,17 +64,31 @@ import net.obvj.jsonmerge.util.JsonPathExpression;
  */
 public class JsonMergeOption
 {
-    private static final String TO_STRING_FORMAT = "JsonMergeOption (path=%s, keys=%s, deepMerge=%s)";
+    private static final String TO_STRING_FORMAT = "JsonMergeOption (path=%s, keys=%s, deepMerge=%s, distinctObjectsOnly=%s)";
+
+    private static final boolean DEFAULT_DEEP_MERGE = false;
+    private static final boolean DEFAULT_DISTINCT_OBJECTS_ONLY = true;
+
+    /**
+     * The default merge option.
+     *
+     * @since 1.1.0
+     */
+    public static final JsonMergeOption DEFAULT = new JsonMergeOption(new JsonPathExpression("@"),
+            emptyList(), DEFAULT_DEEP_MERGE, DEFAULT_DISTINCT_OBJECTS_ONLY);
 
     private final JsonPathExpression path;
     private final List<String> keys;
     private final boolean deepMerge;
+    private final boolean distinctObjectsOnly;
 
-    private JsonMergeOption(JsonPathExpression path, List<String> keys, boolean deepMerge)
+    private JsonMergeOption(JsonPathExpression path, List<String> keys, boolean deepMerge,
+            boolean distinctObjectsOnly)
     {
         this.path = path;
-        this.keys = Collections.unmodifiableList(keys);
+        this.keys = unmodifiableList(keys);
         this.deepMerge = deepMerge;
+        this.distinctObjectsOnly = distinctObjectsOnly;
     }
 
     /**
@@ -201,7 +222,8 @@ public class JsonMergeOption
                 .map(key -> requireNonBlankAndTrim(key, "The key must not be null or blank"))
                 .collect(toList());
 
-        return new JsonMergeOption(path, trimmedKeys, false);
+        return new JsonMergeOption(path, trimmedKeys, DEFAULT_DEEP_MERGE,
+                DEFAULT_DISTINCT_OBJECTS_ONLY);
     }
 
     /**
@@ -259,6 +281,16 @@ public class JsonMergeOption
     }
 
     /**
+     * @return a flag to determine that duplicate objects should not be added during the merge
+     *         of the document path represented by {@link #getPath()}.
+     * @since 1.1.0
+     */
+    public boolean isDistinctObjectsOnly()
+    {
+        return distinctObjectsOnly;
+    }
+
+    /**
      * Returns a string representation of this {@code JsonMergeOption}.
      *
      * @return a string representation of this object
@@ -267,7 +299,7 @@ public class JsonMergeOption
     @Override
     public String toString()
     {
-        return String.format(TO_STRING_FORMAT, path, keys, deepMerge);
+        return String.format(TO_STRING_FORMAT, path, keys, deepMerge, distinctObjectsOnly);
     }
 
     /**
@@ -326,6 +358,27 @@ public class JsonMergeOption
                     .collect(toList());
             return new BuilderWithKeys(path, trimmedKeys);
         }
+
+        /**
+         * Avoid duplicate objects during the merge of the specified array path (default option).
+         *
+         * @return a finalized {@link JsonMergeOption}
+         */
+        public JsonMergeOption addDistinctObjectsOnly()
+        {
+            return new JsonMergeOption(path, emptyList(), DEFAULT_DEEP_MERGE, true);
+        }
+
+        /**
+         * Add all elements of the both JSON documents during the merge of the specified array
+         * path, with no duplication check.
+         *
+         * @return a finalized {@link JsonMergeOption}
+         */
+        public JsonMergeOption addAll()
+        {
+            return new JsonMergeOption(path, emptyList(), DEFAULT_DEEP_MERGE, false);
+        }
     }
 
     /**
@@ -355,7 +408,7 @@ public class JsonMergeOption
          */
         public JsonMergeOption thenPickTheHigherPrecedenceOne()
         {
-            return new JsonMergeOption(path, keys, false);
+            return new JsonMergeOption(path, keys, false, DEFAULT_DISTINCT_OBJECTS_ONLY);
         }
 
         /**
@@ -366,7 +419,7 @@ public class JsonMergeOption
          */
         public JsonMergeOption thenDoADeepMerge()
         {
-            return new JsonMergeOption(path, keys, true);
+            return new JsonMergeOption(path, keys, true, DEFAULT_DISTINCT_OBJECTS_ONLY);
         }
     }
 

@@ -16,7 +16,9 @@
 
 package net.obvj.jsonmerge;
 
+import static java.util.Collections.emptyList;
 import static net.obvj.junit.utils.matchers.AdvancedMatchers.containsAll;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.junit.jupiter.api.Test;
@@ -33,11 +35,23 @@ class JsonMergeOptionTest
     @Test
     void toString_AllParamsSet_success()
     {
-        assertThat(
-                JsonMergeOption.onPath("$.myPath").findObjectsIdentifiedBy("key1", "key2")
+        assertThat(JsonMergeOption.onPath("$.myPath").findObjectsIdentifiedBy("key1", "key2")
                         .thenDoADeepMerge().toString(),
                 containsAll("JsonMergeOption", "path=$['myPath']", "keys=[key1, key2]",
-                        "deepMerge=true"));
+                        "deepMerge=true", "distinctObjectsOnly=true"));
+
+        assertThat(JsonMergeOption.onPath("$.myPath").addAll().toString(),
+                containsAll("JsonMergeOption", "path=$['myPath']", "keys=[]", "deepMerge=false",
+                        "distinctObjectsOnly=false"));
+    }
+
+    @Test
+    void default_expectedParameters()
+    {
+        assertThat(JsonMergeOption.DEFAULT.getPath().toString(), equalTo("@"));
+        assertThat(JsonMergeOption.DEFAULT.getKeys(), equalTo(emptyList()));
+        assertThat(JsonMergeOption.DEFAULT.isDeepMerge(), equalTo(false));
+        assertThat(JsonMergeOption.DEFAULT.isDistinctObjectsOnly(), equalTo(true));
     }
 
 }

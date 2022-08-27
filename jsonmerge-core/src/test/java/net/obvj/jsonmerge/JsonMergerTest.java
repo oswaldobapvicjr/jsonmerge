@@ -57,7 +57,7 @@ abstract class JsonMergerTest<O>
             + "  \"number\": 9876"
             + "}";
 
-    private static final List<Integer> EXPECTED_JSON_1_JSON_2_ARRAY = asList(1, 2, 3, 4, 5);
+    private static final List<Integer> EXPECTED_JSON_1_JSON_2_ARRAY_DISTINCT = asList(1, 2, 3, 4, 5);
 
     private static final String JSON_3
             = "{\n"
@@ -84,8 +84,8 @@ abstract class JsonMergerTest<O>
             + "  ]\n"
             + "}";
 
-    private static final List<String> EXPECTED_JSON_3_JSON_4_DESCRIPTIONS = asList("Json3Agent1",
-            "Json3Agent2", "Json4Agent1");
+    private static final List<String> EXPECTED_JSON_3_JSON_4_DESCRIPTIONS_DISTINCT = asList(
+            "Json3Agent1", "Json3Agent2", "Json4Agent1");
 
     private static final String JSON_5
             = "{\r\n"
@@ -174,14 +174,14 @@ abstract class JsonMergerTest<O>
      */
 
     @Test
-    void merge_json1HighWithJson2Low_success()
+    void merge_json1HighWithJson2LowDefaultOption_success()
     {
         O result = merger.merge(fromString(JSON_1), fromString(JSON_2));
 
         assertElement("value1", get(result, "string")); // from JSON_1
         assertElement("alt1", get(result, "alt")); // from JSON_1
         assertElement(9876, get(result, "number")); // from JSON_2
-        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY, result, "array");
+        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY_DISTINCT, result, "array");
 
         assertElement("Json1ObjectA", get(result, "$.object.a")); // from JSON_1
         assertElement("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
@@ -189,14 +189,14 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_json1LowWithJson2High_success()
+    void merge_json1LowWithJson2HighDefaultOption_success()
     {
         O result = merger.merge(fromString(JSON_2), fromString(JSON_1));
 
         assertElement("value2", get(result, "string")); // from JSON_2
         assertElement("alt1", get(result, "alt")); // from JSON_1
         assertElement(9876, get(result, "number")); // from JSON_2
-        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY, result, "array");
+        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY_DISTINCT, result, "array");
 
         assertElement("Json2ObjectA", get(result, "$.object.a")); // from JSON_2
         assertElement("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
@@ -204,21 +204,50 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
-    void merge_json3HighWithJson4Low_success()
+    void merge_json1HighWithJson2LowWithOptionAddDistinctObjectsOnly_success()
+    {
+        O result = merger.merge(fromString(JSON_1), fromString(JSON_2),
+                JsonMergeOption.onPath("array").addDistinctObjectsOnly());
+
+        assertElement(1, get(result, "$.array[0]"));
+        assertElement(2, get(result, "$.array[1]"));
+        assertElement(3, get(result, "$.array[2]"));
+        assertElement(4, get(result, "$.array[3]"));
+        assertElement(5, get(result, "$.array[4]"));
+    }
+
+    @Test
+    void merge_json1HighWithJson2LowWithOptionAddAllOnArray_success()
+    {
+        O result = merger.merge(fromString(JSON_1), fromString(JSON_2),
+                JsonMergeOption.onPath("array").addAll());
+
+        assertElement(1, get(result, "$.array[0]"));
+        assertElement(2, get(result, "$.array[1]"));
+        assertElement(3, get(result, "$.array[2]"));
+        assertElement(3, get(result, "$.array[3]"));
+        assertElement(4, get(result, "$.array[4]"));
+        assertElement(5, get(result, "$.array[5]"));
+    }
+
+    @Test
+    void merge_json3HighWithJson4LowDefaultOption_success()
     {
         O result = merger.merge(fromString(JSON_3), fromString(JSON_4));
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
-        assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS, result, "$.agents[*].description");
+        assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS_DISTINCT, result,
+                "$.agents[*].description");
     }
 
     @Test
-    void merge_json3LowWithJson4High_success()
+    void merge_json3LowWithJson4HighDefaultOption_success()
     {
         O result = merger.merge(fromString(JSON_4), fromString(JSON_3));
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
-        assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS, result, "$.agents[*].description");
+        assertArray(EXPECTED_JSON_3_JSON_4_DESCRIPTIONS_DISTINCT, result,
+                "$.agents[*].description");
     }
 
     /*
