@@ -252,44 +252,58 @@ public class JsonMerger<T>
             // The 1st array is always the highest-precedence one
             Object result = jsonProvider.newJsonArray(array1);
 
-            JsonMergeOption pathOption = options.get(absolutePath);
-            if (pathOption != null)
+            JsonMergeOption pathOption = getMergeOption();
+            List<String> keys = pathOption.getKeys();
+            if (!keys.isEmpty())
             {
-                List<String> keys = pathOption.getKeys();
-                if (keys != null)
+                if (LOGGER.isDebugEnabled())
                 {
-                    if (LOGGER.isDebugEnabled())
-                    {
-                        int size = keys.size();
-                        LOGGER.debug("Checking distinct objects inside {} with {} {}: {}",
-                                absolutePath, size, size == 1 ? "key" : "keys", keys);
-                    }
-
-                    // Here we add objects from the 2nd array only if they are not present in the
-                    // 1st one. Because the user specified a distinct key, then use it to find the
-                    // "equal" objects.
-                    jsonProvider.forEachElementInArray(array2,
-                            object -> addDistinctObjectToArray(object, keys, result, pathOption));
+                    int size = keys.size();
+                    LOGGER.debug("Checking distinct objects inside {} with {} {}: {}",
+                            absolutePath, size, size == 1 ? "key" : "keys", keys);
                 }
+
+                // Here we add objects from the 2nd array only if they are not present in the
+                // 1st one. Because the user specified a distinct key, then use it to find the
+                // "equal" objects.
+                jsonProvider.forEachElementInArray(array2, object ->
+                        addDistinctObjectToArray(object, keys, result, pathOption));
             }
             else
             {
-                LOGGER.debug("No merge option found for {}", absolutePath);
                 jsonProvider.forEachElementInArray(array2, object ->
-                {
-                    addDistinctObjectToArray(result, object);
-                });
+                        addObjectToArray(result, object, pathOption));
             }
 
             return result;
         }
 
+        /**
+         * @return the {@link JsonMergeOption} associated with the current path, or a default
+         *         option; not null
+         */
+        private JsonMergeOption getMergeOption()
+        {
+            return options.getOrDefault(absolutePath, JsonMergeOption.DEFAULT);
+        }
+
+        private void addObjectToArray(Object array, Object object, JsonMergeOption pathOption)
+        {
+            addObjectToArray(array, object, pathOption.isDistinctObjectsOnly());
+        }
+
         private void addDistinctObjectToArray(Object array, Object object)
         {
-            if (!jsonProvider.arrayContains(array, object))
+            addObjectToArray(array, object, true);
+        }
+
+        private void addObjectToArray(Object array, Object object, boolean distinctObjectsOnly)
+        {
+            if (distinctObjectsOnly && jsonProvider.arrayContains(array, object))
             {
-                jsonProvider.add(array, object);
+                return;
             }
+            jsonProvider.add(array, object);
         }
 
         /**
