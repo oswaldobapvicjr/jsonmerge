@@ -27,14 +27,14 @@ Simply pass two previously loaded JSON documents to be merged. The resulting JSO
 
 
 
-## Define custom behavior for child paths
+## Define custom behavior for children elements
 
 The operation accepts an arbitrary number of options for parts of the document defined by [JSONPath Expressions](https://goessner.net/articles/JsonPath/index.html#e2).
 
 ```java
 JsonMergeOption.onPath("$.params")
-               .findObjectsIdentifiedBy("key")
-               .thenDoADeepMerge();
+          .findObjectsIdentifiedBy("key")
+          .thenDoADeepMerge();
 ```
 
 > :bulb: Call `JsonMergeOption.onPath(String)` then let the API guide you through the additional builder methods.
@@ -59,11 +59,11 @@ This is particularly useful to define distinct elements during the merge of an a
 
 
 
-## Use the JSON provider of your choice
+## Use your favorite JSON Provider
 
-The algorithm implemented by **JSON Merge** is provider-agnostic. The actual read/write operations on the source and target JSON objects are delegated to a specialized `JsonProvider` implementation, which must be specified during `JsonMerger` creation. This design was chosen to eliminate the need for intermediary JSON object type conversions for the different providers.
+The algorithm implemented by **JSON Merge** is provider-agnostic. The actual read/write operations on the JSON objects are delegated to a specialized `JsonProvider` which must be specified during `JsonMerger` creation. This design was chosen to eliminate the need for intermediary JSON object type conversions for the different providers.
 
-The project supports the most popular JSON providers available in the community today:
+The Project supports the most popular JSON providers available in the community today.
 
 ![Supported JSON providers](resources/jsonmerge%20-%20Json%20Providers%20diagram%20-%201.0-A.svg)
 
