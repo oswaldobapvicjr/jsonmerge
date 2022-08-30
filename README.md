@@ -25,7 +25,7 @@ Simply pass two previously loaded JSON documents to be merged. The resulting JSO
 
 > ℹ️ **Note:** The first JSON document is always considered to have **higher precedence** than the second one.
 
----
+
 
 ## Define custom behavior for child paths
 
@@ -56,17 +56,17 @@ This is particularly useful to define distinct elements during the merge of an a
 }
 ```
 
----
+
+
 
 ## Use the JSON provider of your choice
 
-The merge algorithm implemented by **JSON Merge** is provider-agnostic and depends on a specialized `JsonProvider` to perform the actual read/write operations on the source and target JSON documents.
+The algorithm implemented by **JSON Merge** is provider-agnostic. The actual read/write operations on the source and target JSON objects are delegated to a specialized `JsonProvider` implementation, which must be specified during `JsonMerger` creation. This design was chosen to eliminate the need for intermediary JSON object type conversions for the different providers.
 
 The project supports the most popular JSON providers available in the community today:
 
 ![Supported JSON providers](resources/jsonmerge%20-%20Json%20Providers%20diagram%20-%201.0-A.svg)
 
----
 
 ## Downloading
 
@@ -74,15 +74,14 @@ If you are using Maven, add **JSON Merge** as a dependency to your pom.xml file:
 
 ```xml
 <dependency>
-  <groupId>net.obvj</groupId>
-  <artifactId>jsonmerge</artifactId>
-  <version>1.0.0</version>
+    <groupId>net.obvj</groupId>
+    <artifactId>jsonmerge</artifactId>
+    <version>1.0.0</version>
 </dependency>
 ```
 
 If you use other dependency management systems (such as Gradle, Grape, Ivy, etc.) click [here](https://maven-badges.herokuapp.com/maven-central/net.obvj/jsonmerge).
 
----
 
 ## Contributing
 
