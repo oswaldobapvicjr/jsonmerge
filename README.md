@@ -8,7 +8,7 @@
 [![Vulnerabilities](https://snyk.io/test/github/oswaldobapvicjr/jsonmerge/badge.svg?targetFile=jsonmerge-core/pom.xml)](https://snyk.io/test/github/oswaldobapvicjr/jsonmerge?targetFile=jsonmerge-core/pom.xml)
 
 
-A utility for merging JSON objects that support **multiple JSON providers** and **fine options** for different levels of the document.
+A utility for merging JSON objects that supports **fine options** and **multiple JSON providers**.
 
 > ℹ️ [Find examples in the wiki.](https://github.com/oswaldobapvicjr/jsonmerge/wiki/Examples/)
 
@@ -23,15 +23,15 @@ Simply pass two previously loaded JSON documents to be merged. The resulting JSO
 - If the value is a **JSON array** in both documents, then all distinct elements (i.e., not repeated ones) will be copied to the resulting array, unless a  custom `JsonMergeOption` is provided specifically for that array path
 - If the types are **incompatible** in the source JSON documents (e.g.: array in one side and simple value or complex object in the other), then a copy of the object from the highest-precedence document will be selected as fallback
 
-> ℹ️ **Note:** The first JSON document passed is always considered to have **higher precedence** than the second one.
+> ℹ️ **Note:** The first JSON document is always considered to have **higher precedence** than the second one.
 
 ---
 
 ## Define custom behavior for child paths
 
-The operation accepts an arbitrary number of merge options for specific parts of the document, defined by [JSONPath Expressions](https://goessner.net/articles/JsonPath/index.html#e2).
+The operation accepts an arbitrary number of options for parts of the document defined by [JSONPath Expressions](https://goessner.net/articles/JsonPath/index.html#e2).
 
-```js
+```java
 JsonMergeOption.onPath("$.params")
                .findObjectsIdentifiedBy("key")
                .thenDoADeepMerge();
