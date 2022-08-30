@@ -67,6 +67,33 @@ The Project supports the most popular JSON providers available in the community 
 
 ![Supported JSON providers](resources/jsonmerge%20-%20Json%20Providers%20diagram%20-%201.0-A.svg)
 
+### How to use
+
+#### Using json-smart as JSON Provider
+
+```java
+JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonSmartJsonProvider());
+````
+
+#### Using Gson as JSON Provider
+
+```java
+JsonMerger<JsonObject> merger = new JsonMerger<>(new GsonJsonProvider());
+````
+
+
+#### Using Jackson as JSON Provider
+
+```java
+JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider());
+````
+
+#### Using Jackson as JSON Provider
+
+```java
+JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonOrgJsonProvider());
+````
+
 
 ## Downloading
 
