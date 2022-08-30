@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="304.67722mm"
-   height="213.66043mm"
-   viewBox="0 0 304.67722 213.66043"
+   width="1148"
+   height="803.99994"
+   viewBox="0 0 303.74167 212.72498"
    version="1.1"
    id="svg5"
    sodipodi:docname="jsonmerge - Json Providers diagram - 1.0-A.svg"
@@ -14,608 +14,519 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
-     id="namedview7"
+     id="namedview86"
      pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageshadow="2"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
-     inkscape:document-units="mm"
-     showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
-     showborder="false"
-     inkscape:zoom="0.70710678"
-     inkscape:cx="381.13056"
-     inkscape:cy="497.80317"
-     inkscape:window-width="1377"
-     inkscape:window-height="481"
-     inkscape:window-x="48"
-     inkscape:window-y="235"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="layer1"
-     inkscape:showpageshadow="2"
      inkscape:deskcolor="#d1d1d1"
-     showguides="false" />
+     showgrid="false"
+     inkscape:zoom="0.70710678"
+     inkscape:cx="642.05296"
+     inkscape:cy="403.05087"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5" />
   <defs
-     id="defs2">
-    <clipPath
-       clipPathUnits="userSpaceOnUse"
-       id="clipPath1143">
-      <path
-         d="m 581.5,97.500001 v 53.999989 h 438 V 97.500001 Z M 226,44.000002 H 1378 V 852.00002 H 226 Z"
-         fill-rule="evenodd"
-         clip-rule="evenodd"
-         id="path1145"
-         style="stroke-width:0.999999" />
-    </clipPath>
-  </defs>
+     id="defs2" />
+  <rect
+     x="-3.1030274e-07"
+     y="3.7475587e-08"
+     width="303.74167"
+     height="212.72499"
+     fill="#f7f7f7"
+     id="rect870"
+     style="fill:#f7f7f7;fill-opacity:1;stroke-width:0.264583" />
+  <path
+     d="M 12.861007,158.74771 H 291.14525"
+     stroke="#bfbfbf"
+     stroke-width="0.439095"
+     stroke-miterlimit="8"
+     stroke-dasharray="1.66667, 1.66667"
+     fill="none"
+     fill-rule="evenodd"
+     id="path872" />
+  <rect
+     x="94.059372"
+     y="14.15521"
+     width="115.8875"
+     height="14.287499"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect884" />
+  <rect
+     x="14.948959"
+     y="125.80938"
+     width="62.177082"
+     height="24.606249"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect900"
+     style="fill:#ffffff" />
+  <rect
+     x="85.592705"
+     y="125.80938"
+     width="62.177082"
+     height="24.606249"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect916"
+     style="fill:#ffffff" />
+  <rect
+     x="156.23647"
+     y="125.80938"
+     width="62.177082"
+     height="24.606249"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect932"
+     style="fill:#ffffff" />
+  <rect
+     x="226.88022"
+     y="125.80938"
+     width="62.177082"
+     height="24.606249"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect948"
+     style="fill:#ffffff" />
+  <path
+     d="M 45.905209,125.7173 V 112.53416 H 151.88935 V 99.351016"
+     stroke="#44546a"
+     stroke-width="0.633471"
+     stroke-miterlimit="8"
+     fill="none"
+     fill-rule="evenodd"
+     id="path954"
+     style="stroke:#000000" />
+  <path
+     d="m 116.54896,125.7173 v -13.18314 h 35.32796 V 99.351016"
+     stroke="#44546a"
+     stroke-width="0.633471"
+     stroke-miterlimit="8"
+     fill="none"
+     fill-rule="evenodd"
+     id="path956"
+     style="stroke:#000000" />
+  <path
+     d="M 187.33135,125.7173 V 112.53409 H 152.00313 V 99.350776"
+     stroke="#44546a"
+     stroke-width="0.633471"
+     stroke-miterlimit="8"
+     fill="none"
+     fill-rule="evenodd"
+     id="path958"
+     style="stroke:#000000" />
+  <path
+     d="M 257.98727,125.7173 V 112.53416 H 152.00286 V 99.351016"
+     stroke="#44546a"
+     stroke-width="0.633471"
+     stroke-miterlimit="8"
+     fill="none"
+     fill-rule="evenodd"
+     id="path960"
+     style="stroke:#000000" />
+  <rect
+     x="107.55312"
+     y="72.363541"
+     width="88.900002"
+     height="24.606249"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect972"
+     style="fill:#ffffff;stroke:#780116;stroke-opacity:1" />
+  <path
+     d="m 149.08102,103.68359 2.91042,-6.085424 2.91041,6.085424 z"
+     stroke="#44546a"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#ffffff"
+     fill-rule="evenodd"
+     id="path978"
+     style="stroke:#000000" />
+  <rect
+     x="14.948959"
+     y="167.87813"
+     width="62.177082"
+     height="31.220833"
+     stroke="#548235"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#e2f0d9"
+     id="rect998"
+     style="fill:#d9f0dd;fill-opacity:1;stroke:#49b252;stroke-opacity:1" />
+  <path
+     d="m 46.235939,150.41563 v 16.70579 H 45.57448 v -16.70579 z m 2.163233,12.89764 -2.493963,4.48919 -2.493962,-4.48919 c -0.08864,-0.15981 -0.03122,-0.36116 0.128587,-0.44979 0.159544,-0.0886 0.360892,-0.0312 0.449527,0.12859 l 2.205038,3.96875 H 45.61602 l 2.205037,-3.96875 c 0.08863,-0.15981 0.289984,-0.21723 0.449527,-0.12859 0.159809,0.0886 0.217223,0.28998 0.128588,0.44979 z"
+     fill="#44546a"
+     id="path1012"
+     style="fill:#000000;stroke-width:0.264583" />
+  <path
+     d="m 116.21823,150.41563 -4e-5,16.70563 h 0.66146 l 4e-5,-16.70563 z m -2.16327,12.89751 2.49396,4.48913 2.49398,-4.48913 c 0.0887,-0.15967 0.0312,-0.36102 -0.12849,-0.44971 -0.15967,-0.0887 -0.36102,-0.0312 -0.44973,0.12848 l -2.20486,3.96875 h 0.57821 l -2.20485,-3.96875 c -0.0887,-0.15968 -0.29005,-0.2172 -0.44972,-0.12851 -0.15967,0.0887 -0.2172,0.29007 -0.1285,0.44974 z"
+     fill="#44546a"
+     id="path1014"
+     style="fill:#000000;stroke-width:0.264583" />
+  <path
+     d="m 187.12656,150.41563 -7e-5,16.70569 0.66146,2e-5 7e-5,-16.70571 z m -2.16329,12.89754 2.49395,4.48916 2.49399,-4.48914 c 0.0887,-0.15967 0.0312,-0.36102 -0.12849,-0.44973 -0.15967,-0.0887 -0.36102,-0.0312 -0.44973,0.12848 l -2.20488,3.96875 h 0.57822 l -2.20484,-3.96875 c -0.0887,-0.15968 -0.29006,-0.2172 -0.44973,-0.12851 -0.15967,0.0887 -0.2172,0.29006 -0.12849,0.44974 z"
+     fill="#44546a"
+     id="path1016"
+     style="fill:#000000;stroke-width:0.264583" />
+  <path
+     d="m 257.77031,150.41563 -10e-5,16.70569 0.66146,2e-5 10e-5,-16.70571 z m -2.16332,12.89754 2.49395,4.48916 2.49399,-4.48914 c 0.0887,-0.15967 0.0312,-0.36102 -0.12849,-0.44973 -0.15967,-0.0887 -0.36102,-0.0312 -0.44972,0.1285 l -2.20489,3.96873 h 0.57822 l -2.20484,-3.96875 c -0.0887,-0.15968 -0.29005,-0.2172 -0.44972,-0.12851 -0.15967,0.0887 -0.2172,0.29006 -0.1285,0.44974 z"
+     fill="#44546a"
+     id="path1018"
+     style="fill:#000000;stroke-width:0.264583" />
+  <rect
+     x="85.592705"
+     y="167.87813"
+     width="62.177082"
+     height="31.220833"
+     stroke="#548235"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#ffffff"
+     id="rect1034"
+     style="stroke:#35823c;stroke-opacity:1" />
+  <rect
+     x="156.23647"
+     y="167.87813"
+     width="62.177082"
+     height="31.220833"
+     stroke="#548235"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#ffffff"
+     id="rect1062"
+     style="stroke:#35823c;stroke-opacity:1" />
+  <rect
+     x="226.88022"
+     y="167.87813"
+     width="62.177082"
+     height="31.220833"
+     stroke="#548235"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#ffffff"
+     id="rect1088"
+     style="stroke:#35823c;stroke-opacity:1" />
+  <rect
+     x="94.059372"
+     y="28.178125"
+     width="115.8875"
+     height="10.583333"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect1110" />
+  <rect
+     x="94.059372"
+     y="38.761463"
+     width="115.8875"
+     height="18.25625"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect1140" />
+  <path
+     d="m 151.67266,57.017705 -1.3e-4,14.750601 h 0.66146 l 1.3e-4,-14.750595 z m -2.16334,10.942455 2.49393,4.489156 2.49401,-4.489103 c 0.0887,-0.159676 0.0312,-0.361024 -0.12849,-0.449739 -0.15967,-0.08871 -0.36102,-0.03117 -0.44972,0.128482 l -2.2049,3.96875 h 0.57822 l -2.20483,-3.968776 c -0.0887,-0.159677 -0.29005,-0.217197 -0.44972,-0.128482 -0.15967,0.08869 -0.2172,0.290036 -0.1285,0.449712 z"
+     fill="#44546a"
+     id="path1158"
+     style="fill:#000000;stroke-width:0.264583" />
+  <rect
+     x="226.88022"
+     y="38.496876"
+     width="62.177082"
+     height="18.520834"
+     stroke="#700000"
+     stroke-width="0.661458"
+     stroke-miterlimit="8"
+     fill="#fffbef"
+     id="rect1168" />
+  <path
+     d="m 209.94791,48.140671 16.11505,-0.05064 -0.002,-0.661456 -16.11504,0.05064 z m 12.31378,2.124561 4.48127,-2.508065 -4.49696,-2.479852 c -0.15994,-0.0882 -0.3611,-0.03004 -0.44932,0.129905 -0.0882,0.159949 -0.03,0.361117 0.12991,0.449321 l 3.97566,2.192379 -0.002,-0.578217 -3.96179,2.217322 c -0.15938,0.08921 -0.21629,0.290735 -0.12708,0.450128 0.0892,0.15939 0.29073,0.216286 0.45014,0.127079 z"
+     fill="#44546a"
+     id="path1172"
+     style="fill:#000000;stroke-width:0.264583" />
   <g
-     inkscape:label="Camada 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(44.939447,-31.136405)">
-    <path
-       id="rect868"
-       style="stroke-width:0.264583;fill:#cccccc;fill-opacity:1"
-       d="M -44.004104 32.071748 L -44.004104 244.79675 L 259.73756 244.79675 L 259.73756 32.071748 L -44.004104 32.071748 z " />
-    <rect
-       x="-44.939449"
-       y="31.136404"
-       width="303.74167"
-       height="212.72499"
-       fill="#f7f7f7"
-       id="rect870"
-       style="stroke-width:0.264583;fill:#f5f7f9;fill-opacity:1" />
-    <path
-       d="M -32.078442,189.88411 H 246.2058"
-       stroke="#bfbfbf"
-       stroke-width="0.439095"
-       stroke-miterlimit="8"
-       stroke-dasharray="1.66667, 1.66667"
-       fill="none"
-       fill-rule="evenodd"
-       id="path872" />
-    <path
-       id="rect1123"
-       clip-path="url(#clipPath1143)"
-       style="fill:#cccccc"
-       d="M 583.78516 99.785159 L 583.78516 152.78516 L 583.78516 156.28516 L 583.78516 195.28516 L 583.78516 264.28516 L 1024.2891 264.28516 L 1024.2891 192.78516 L 1024.2891 156.28516 L 1024.2891 152.78516 L 1024.2891 99.785159 L 583.78516 99.785159 z "
-       transform="matrix(0.26458333,0,0,0.26458333,-104.73528,19.494738)" />
-    <rect
-       x="49.119926"
-       y="45.291615"
-       width="115.8875"
-       height="14.287499"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect884" />
+     id="g1656"
+     transform="translate(44.939449,-31.136404)">
     <text
-       fill="#700000"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="700"
-       font-size="6.08542px"
-       id="text888"
-       x="84.00074"
-       y="54.419739"
-       style="stroke-width:0.264583;fill:#700000;fill-opacity:1">JsonMerger<tspan
-   font-size="6.08542px"
-   x="119.2234"
-   y="54.419739"
-   id="tspan886"
-   style="stroke-width:0.0700043;fill:#700000;fill-opacity:1">&lt;T&gt;</tspan></text>
-    <path
-       id="rect890"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M -29.385874 157.55039 L -29.385874 182.8181 L 33.452667 182.8181 L 33.452667 157.55039 L -29.385874 157.55039 z " />
-    <rect
-       x="-29.99049"
-       y="156.94579"
-       width="62.177082"
-       height="24.606249"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect900"
-       style="fill:#ffffff" />
+       xml:space="preserve"
+       style="font-size:3.65754px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.1452;stroke-linecap:round;stroke-linejoin:bevel"
+       x="1.0757276"
+       y="209.42992"
+       id="text475"><tspan
+         id="tspan473"
+         style="text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.1452"
+         x="1.0757276"
+         y="209.42992">net.minidev:</tspan></text>
     <text
-       fill="#700000"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="700"
-       font-size="5.29167px"
-       id="text904"
-       x="-12.640437"
-       y="167.66141"
-       style="stroke-width:0.264583;fill:#700000;fill-opacity:1">JsonSmart<tspan
-   font-size="5.29167px"
-   x="-15.892616"
-   y="174.0114"
-   id="tspan902"
-   style="stroke-width:0.0700043;fill:#700000;fill-opacity:1">JsonProvider</tspan></text>
-    <path
-       id="rect906"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M 41.257876 157.55039 L 41.257876 182.8181 L 104.09642 182.8181 L 104.09642 157.55039 L 41.257876 157.55039 z " />
-    <rect
-       x="40.653259"
-       y="156.94579"
-       width="62.177082"
-       height="24.606249"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect916"
-       style="fill:#ffffff" />
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.41471px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:6.13664;stroke-linecap:round;stroke-linejoin:bevel"
+       x="1.3584757"
+       y="215.75055"
+       id="text680"><tspan
+         id="tspan678"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:6.13664"
+         x="1.358476"
+         y="215.75055">json-smart</tspan></text>
     <text
-       fill="#700000"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="700"
-       font-size="5.29167px"
-       id="text920"
-       x="64.989899"
-       y="167.66141"
-       style="stroke-width:0.264583;fill:#700000;fill-opacity:1">Gson<tspan
-   font-size="5.29167px"
-   x="54.763752"
-   y="174.0114"
-   id="tspan918"
-   style="stroke-width:0.0700043;fill:#700000;fill-opacity:1">JsonProvider</tspan></text>
-    <path
-       id="rect922"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M 111.90163 157.55039 L 111.90163 182.8181 L 174.7412 182.8181 L 174.7412 157.55039 L 111.90163 157.55039 z " />
-    <rect
-       x="111.29701"
-       y="156.94579"
-       width="62.177082"
-       height="24.606249"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect932"
-       style="fill:#ffffff" />
-    <text
-       fill="#700000"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="700"
-       font-size="5.29167px"
-       id="text936"
-       x="119.49433"
-       y="167.66141"
-       style="stroke-width:0.264583;fill:#700000;fill-opacity:1">JacksonJsonNode<tspan
-   font-size="5.29167px"
-   x="125.4188"
-   y="174.0114"
-   id="tspan934"
-   style="stroke-width:0.0700043;fill:#700000;fill-opacity:1">JsonProvider</tspan></text>
-    <path
-       id="rect938"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M 182.54641 157.55039 L 182.54641 182.8181 L 245.38495 182.8181 L 245.38495 157.55039 L 182.54641 157.55039 z " />
-    <rect
-       x="181.94077"
-       y="156.94579"
-       width="62.177082"
-       height="24.606249"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect948"
-       style="fill:#ffffff" />
-    <text
-       fill="#700000"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="700"
-       font-size="5.29167px"
-       id="text952"
-       x="202.55444"
-       y="167.66141"
-       style="stroke-width:0.264583;fill:#700000;fill-opacity:1">JsonOrg<tspan
-   font-size="5.29167px"
-   x="196.07655"
-   y="174.0114"
-   id="tspan950"
-   style="stroke-width:0.0700043;fill:#700000;fill-opacity:1">JsonProvider</tspan></text>
-    <path
-       d="M 0.96576033,156.8537 V 142.47995 H 106.9499 v -14.37376"
-       stroke="#44546a"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="none"
-       fill-rule="evenodd"
-       id="path954"
-       style="stroke:#000000" />
-    <path
-       d="M 71.609509,156.8537 V 142.47995 H 106.93747 V 128.10619"
-       stroke="#44546a"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="none"
-       fill-rule="evenodd"
-       id="path956"
-       style="stroke:#000000" />
-    <path
-       d="M 142.3919,156.8537 V 142.47987 H 107.06368 V 128.10593"
-       stroke="#44546a"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="none"
-       fill-rule="evenodd"
-       id="path958"
-       style="stroke:#000000" />
-    <path
-       d="M 213.04782,156.8537 V 142.47995 H 107.06341 v -14.37376"
-       stroke="#44546a"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="none"
-       fill-rule="evenodd"
-       id="path960"
-       style="stroke:#000000" />
-    <path
-       id="rect962"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M 63.218292 104.10456 L 63.218292 129.37227 L 152.77975 129.37227 L 152.77975 104.10456 L 63.218292 104.10456 z " />
-    <rect
-       x="62.613678"
-       y="103.49995"
-       width="88.900002"
-       height="24.606249"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect972"
-       style="stroke:#780116;stroke-opacity:1;fill:#ffffff" />
-    <text
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="400"
-       font-size="4.7625px"
-       id="text976"
-       x="94.198311"
-       y="113.6864"
-       style="fill:#780116;fill-opacity:1;stroke-width:0.264583"><tspan
-         style="fill:#000000"
-         id="tspan11080">&lt;interface&gt;</tspan><tspan
-         fill="#700000"
-         font-weight="700"
-         font-size="6.08542px"
-         x="87.308136"
-         y="120.83015"
-         id="tspan974"
-         style="fill:#780116;fill-opacity:1;stroke-width:0.0700043">JsonProvider</tspan></text>
-    <path
-       d="m 104.15326,135.24995 2.91042,-6.08542 2.91041,6.08542 z"
-       stroke="#44546a"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#ffffff"
-       fill-rule="evenodd"
-       id="path978"
-       style="stroke:#000000" />
-    <path
-       id="rect980"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M -29.385874 199.61914 L -29.385874 231.50144 L 33.452667 231.50144 L 33.452667 199.61914 L -29.385874 199.61914 z " />
-    <rect
-       x="-29.99049"
-       y="199.01453"
-       width="62.177082"
-       height="31.220833"
-       stroke="#548235"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#e2f0d9"
-       id="rect998"
-       style="stroke:#49b252;stroke-opacity:1;fill:#d9f0dd;fill-opacity:1" />
-    <text
-       fill="#002060"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="400"
-       font-size="3.43958px"
-       id="text1010"
-       x="-9.2238731"
-       y="208.9364"
-       style="stroke-width:0.264583">net.minidev<tspan
-   font-size="3.43958px"
-   x="10.178895"
-   y="208.9364"
-   id="tspan1000"
-   style="stroke-width:0.0700043">:</tspan><tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="-13.274194"
-   y="214.75723"
-   id="tspan1002"
-   style="stroke-width:0.0700043">json</tspan><tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="-2.3050189"
-   y="214.75723"
-   id="tspan1004"
-   style="stroke-width:0.0700043">-</tspan><tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="-0.59626049"
-   y="214.75723"
-   id="tspan1006"
-   style="stroke-width:0.0700043">smart</tspan><tspan
-   font-weight="700"
-   font-size="4.7625px"
-   x="-10.877519"
-   y="222.43015"
-   id="tspan1008"
-   style="stroke-width:0.0700043">(provided)</tspan></text>
-    <path
-       d="m 1.2964895,181.55203 v 16.70579 H 0.63503117 v -16.70579 z m 2.1632333,12.89764 -2.49396247,4.48919 -2.49396243,-4.48919 c -0.088635,-0.15981 -0.031221,-0.36116 0.1285875,-0.44979 0.1595437,-0.0886 0.3608916,-0.0312 0.44952704,0.12859 l 2.20503746,3.96875 H 0.67657076 l 2.20503744,-3.96875 c 0.088635,-0.15981 0.2899834,-0.21723 0.4495271,-0.12859 0.1598083,0.0886 0.2172229,0.28998 0.1285875,0.44979 z"
-       fill="#44546a"
-       id="path1012"
-       style="stroke-width:0.264583;fill:#000000" />
-    <path
-       d="m 71.27878,181.55203 -3.5e-5,16.70563 h 0.661459 l 3.4e-5,-16.70563 z m -2.163268,12.89751 2.493962,4.48913 2.493979,-4.48913 c 0.08871,-0.15967 0.03118,-0.36102 -0.128492,-0.44971 -0.159671,-0.0887 -0.361019,-0.0312 -0.449726,0.12848 l -2.204868,3.96875 h 0.578218 l -2.204852,-3.96875 c -0.08871,-0.15968 -0.290055,-0.2172 -0.449726,-0.12851 -0.159671,0.0887 -0.217199,0.29007 -0.128495,0.44974 z"
-       fill="#44546a"
-       id="path1014"
-       style="stroke-width:0.264583;fill:#000000" />
-    <path
-       d="m 142.18711,181.55203 -7e-5,16.70569 0.66146,2e-5 7e-5,-16.70571 z m -2.16329,12.89754 2.49395,4.48916 2.49399,-4.48914 c 0.0887,-0.15967 0.0312,-0.36102 -0.12849,-0.44973 -0.15967,-0.0887 -0.36102,-0.0312 -0.44973,0.12848 l -2.20488,3.96875 h 0.57822 l -2.20484,-3.96875 c -0.0887,-0.15968 -0.29006,-0.2172 -0.44973,-0.12851 -0.15967,0.0887 -0.2172,0.29006 -0.12849,0.44974 z"
-       fill="#44546a"
-       id="path1016"
-       style="stroke-width:0.264583;fill:#000000" />
-    <path
-       d="m 212.83086,181.55203 -1e-4,16.70569 0.66146,2e-5 1e-4,-16.70571 z m -2.16332,12.89754 2.49395,4.48916 2.49399,-4.48914 c 0.0887,-0.15967 0.0312,-0.36102 -0.12849,-0.44973 -0.15967,-0.0887 -0.36102,-0.0312 -0.44972,0.1285 l -2.20489,3.96873 h 0.57822 l -2.20484,-3.96875 c -0.0887,-0.15968 -0.29005,-0.2172 -0.44972,-0.12851 -0.15967,0.0887 -0.2172,0.29006 -0.1285,0.44974 z"
-       fill="#44546a"
-       id="path1018"
-       style="stroke-width:0.264583;fill:#000000" />
-    <path
-       id="rect1020"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M 41.257876 199.61914 L 41.257876 231.50144 L 104.09642 231.50144 L 104.09642 199.61914 L 41.257876 199.61914 z " />
-    <rect
-       x="40.653259"
-       y="199.01453"
-       width="62.177082"
-       height="31.220833"
-       stroke="#548235"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#ffffff"
-       id="rect1034"
-       style="stroke:#35823c;stroke-opacity:1" />
-    <text
-       fill="#002060"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="400"
-       font-size="3.43958px"
-       id="text1042"
-       x="52.696564"
-       y="208.9364"
-       style="stroke-width:0.264583">com.google.code.gson<tspan
-   font-size="3.43958px"
-   x="89.572868"
-   y="208.9364"
-   id="tspan1036"
-   style="stroke-width:0.0700043">:</tspan><tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="65.429634"
-   y="214.75723"
-   id="tspan1038"
-   style="stroke-width:0.0700043">gson</tspan><tspan
-   font-size="4.7625px"
-   x="61.295521"
-   y="222.43015"
-   id="tspan1040"
-   style="stroke-width:0.0700043">(optional)</tspan></text>
-    <path
-       id="rect1044"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M 111.90163 199.61914 L 111.90163 231.50144 L 174.7412 231.50144 L 174.7412 199.61914 L 111.90163 199.61914 z " />
-    <rect
-       x="111.29701"
-       y="199.01453"
-       width="62.177082"
-       height="31.220833"
-       stroke="#548235"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#ffffff"
-       id="rect1062"
-       style="stroke:#35823c;stroke-opacity:1" />
-    <text
-       fill="#002060"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="400"
-       font-size="3.43958px"
-       id="text1072"
-       x="119.1636"
-       y="208.9364"
-       style="stroke-width:0.264583">com.fasterxml.jackson.core:<tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="119.38408"
-   y="214.75723"
-   id="tspan1064"
-   style="stroke-width:0.0700043">jackson</tspan><tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="139.55855"
-   y="214.75723"
-   id="tspan1066"
-   style="stroke-width:0.0700043">-</tspan><tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="141.26735"
-   y="214.75723"
-   id="tspan1068"
-   style="stroke-width:0.0700043">databind</tspan><tspan
-   font-size="4.7625px"
-   x="131.95178"
-   y="222.43015"
-   id="tspan1070"
-   style="stroke-width:0.0700043">(optional)</tspan></text>
-    <path
-       id="rect1074"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M 182.54641 199.61914 L 182.54641 231.50144 L 245.38495 231.50144 L 245.38495 199.61914 L 182.54641 199.61914 z " />
-    <rect
-       x="181.94077"
-       y="199.01453"
-       width="62.177082"
-       height="31.220833"
-       stroke="#548235"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#ffffff"
-       id="rect1088"
-       style="stroke:#35823c;stroke-opacity:1" />
-    <text
-       fill="#002060"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="400"
-       font-size="3.43958px"
-       id="text1096"
-       x="205.77707"
-       y="208.9364"
-       style="stroke-width:0.264583">org.json<tspan
-   font-size="3.43958px"
-   x="219.11649"
-   y="208.9364"
-   id="tspan1090"
-   style="stroke-width:0.0700043">:</tspan><tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="207.43071"
-   y="214.75723"
-   id="tspan1092"
-   style="stroke-width:0.0700043">json</tspan><tspan
-   font-size="4.7625px"
-   x="202.60869"
-   y="222.43015"
-   id="tspan1094"
-   style="stroke-width:0.0700043">(optional)</tspan></text>
-    <rect
-       x="49.119926"
-       y="59.314529"
-       width="115.8875"
-       height="10.583333"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect1110" />
-    <text
-       font-family="Consolas, Consolas_MSFontService, sans-serif"
-       font-weight="400"
-       font-size="5.29167px"
-       id="text1116"
-       x="52.05204"
-       y="66.325989"
-       style="stroke-width:0.264583">-<tspan
-   font-size="5.29167px"
-   x="57.894913"
-   y="66.325989"
-   id="tspan1112"
-   style="stroke-width:0.0700043">provider :</tspan><tspan
-   font-weight="700"
-   font-size="5.29167px"
-   x="90.030861"
-   y="66.325989"
-   id="tspan1114"
-   style="stroke-width:0.0700043">JsonProvider</tspan></text>
-    <rect
-       x="49.119926"
-       y="69.897865"
-       width="115.8875"
-       height="18.25625"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect1140" />
-    <text
-       font-family="Consolas, Consolas_MSFontService, sans-serif"
-       font-weight="400"
-       font-size="5.29167px"
-       id="text1156"
-       x="52.052303"
-       y="77.438484"
-       style="stroke-width:0.264583">+ <tspan
-   font-size="5.29167px"
-   x="57.895203"
-   y="77.438484"
-   id="tspan1142"
-   style="stroke-width:0.0700043">JsonMerger</tspan><tspan
-   font-size="5.29167px"
-   x="87.109596"
-   y="77.438484"
-   id="tspan1144"
-   style="stroke-width:0.0700043">(</tspan><tspan
-   font-size="5.29167px"
-   x="90.031128"
-   y="77.438484"
-   id="tspan1146"
-   style="stroke-width:0.0700043">JsonProvider</tspan><tspan
-   font-size="5.29167px"
-   x="125.08841"
-   y="77.438484"
-   id="tspan1148"
-   style="stroke-width:0.0700043">)</tspan><tspan
-   font-size="5.29167px"
-   x="52.052303"
-   y="83.78849"
-   id="tspan1150"
-   style="stroke-width:0.0700043">+ merge(T, T,</tspan><tspan
-   font-size="5.29167px"
-   x="92.952385"
-   y="83.78849"
-   id="tspan1152"
-   style="stroke-width:0.0700043">JsonMergeOption</tspan><tspan
-   font-size="5.29167px"
-   x="136.774"
-   y="83.78849"
-   id="tspan1154"
-   style="stroke-width:0.0700043">[]) : T</tspan></text>
-    <path
-       d="m 106.73321,88.154109 -1.3e-4,14.750601 h 0.66146 l 1.3e-4,-14.750595 z m -2.16334,10.942455 2.49393,4.489156 2.49401,-4.489103 c 0.0887,-0.159676 0.0312,-0.361024 -0.12849,-0.449739 -0.15967,-0.08871 -0.36102,-0.03117 -0.44972,0.128482 l -2.2049,3.96875 h 0.57822 l -2.20483,-3.968776 c -0.0887,-0.159677 -0.29005,-0.217197 -0.44972,-0.128482 -0.15967,0.08869 -0.2172,0.290036 -0.1285,0.449712 z"
-       fill="#44546a"
-       id="path1158"
-       style="stroke-width:0.264583;fill:#000000" />
-    <path
-       id="rect1160"
-       style="stroke-width:0.264583;fill:#cccccc"
-       d="M 182.54641 70.237894 L 182.54641 89.420186 L 245.38495 89.420186 L 245.38495 70.237894 L 182.54641 70.237894 z " />
-    <rect
-       x="181.94077"
-       y="69.633278"
-       width="62.177082"
-       height="18.520834"
-       stroke="#700000"
-       stroke-width="0.661458"
-       stroke-miterlimit="8"
-       fill="#fffbef"
-       id="rect1168" />
-    <text
-       fill="#700000"
-       font-family="'Open Sans', 'Open Sans_MSFontService', sans-serif"
-       font-weight="700"
-       font-size="5.29167px"
-       id="text1170"
-       x="189.90207"
-       y="80.613487"
-       style="stroke-width:0.264583;fill:#700000;fill-opacity:1">JsonMergeOption</text>
-    <path
-       d="m 165.00846,79.277075 16.11505,-0.05064 -0.002,-0.661456 -16.11504,0.05064 z m 12.31378,2.124561 4.48127,-2.508065 -4.49696,-2.479852 c -0.15994,-0.0882 -0.3611,-0.03004 -0.44932,0.129905 -0.0882,0.159949 -0.03,0.361117 0.12991,0.449321 l 3.97566,2.192379 -0.002,-0.578217 -3.96179,2.217322 c -0.15938,0.08921 -0.21629,0.290735 -0.12708,0.450128 0.0892,0.15939 0.29073,0.216286 0.45014,0.127079 z"
-       fill="#44546a"
-       id="path1172"
-       style="stroke-width:0.264583;fill:#000000" />
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.31064px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.88536;stroke-linecap:round;stroke-linejoin:bevel"
+       x="1.0980508"
+       y="222.09033"
+       id="text786"><tspan
+         id="tspan784"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.88536"
+         x="1.0980505"
+         y="222.09033">(provided)</tspan></text>
   </g>
+  <g
+     id="g1664"
+     transform="translate(46.122347,-31.136404)">
+    <text
+       xml:space="preserve"
+       style="font-size:3.65754px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.1452;stroke-linecap:round;stroke-linejoin:bevel"
+       x="70.591049"
+       y="209.43097"
+       id="text1480"><tspan
+         id="tspan1478"
+         style="text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.1452"
+         x="70.591049"
+         y="209.43097">com.google.code.gson:</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.41471px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:6.13664;stroke-linecap:round;stroke-linejoin:bevel"
+       x="70.754547"
+       y="215.7516"
+       id="text1484"><tspan
+         id="tspan1482"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:6.13664"
+         x="70.754547"
+         y="215.7516">gson</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.31064px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.88536;stroke-linecap:round;stroke-linejoin:bevel"
+       x="70.558899"
+       y="222.09138"
+       id="text1488"><tspan
+         id="tspan1486"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.88536"
+         x="70.558899"
+         y="222.09138">(optional)</tspan></text>
+  </g>
+  <g
+     id="g1672"
+     transform="translate(45.112048,-31.136404)">
+    <text
+       xml:space="preserve"
+       style="font-size:3.65754px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.1452;stroke-linecap:round;stroke-linejoin:bevel"
+       x="142.2451"
+       y="209.43097"
+       id="text1608"><tspan
+         id="tspan1606"
+         style="text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.1452"
+         x="142.2451"
+         y="209.43097">com.fasterxml.jackson.core:</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.41471px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:6.13664;stroke-linecap:round;stroke-linejoin:bevel"
+       x="142.4086"
+       y="215.7516"
+       id="text1612"><tspan
+         id="tspan1610"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:6.13664"
+         x="142.4086"
+         y="215.7516">jackson-databind</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.31064px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.88536;stroke-linecap:round;stroke-linejoin:bevel"
+       x="142.21295"
+       y="222.09138"
+       id="text1616"><tspan
+         id="tspan1614"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.88536"
+         x="142.21295"
+         y="222.09138">(optional)</tspan></text>
+  </g>
+  <g
+     id="g1680"
+     transform="translate(44.939449,-31.136404)">
+    <text
+       xml:space="preserve"
+       style="font-size:3.65754px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.1452;stroke-linecap:round;stroke-linejoin:bevel"
+       x="213.06145"
+       y="209.43097"
+       id="text1640"><tspan
+         id="tspan1638"
+         style="text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.1452"
+         x="213.06145"
+         y="209.43097">org.json:</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.41471px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:6.13664;stroke-linecap:round;stroke-linejoin:bevel"
+       x="213.41267"
+       y="215.7516"
+       id="text1644"><tspan
+         id="tspan1642"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:6.13664"
+         x="213.41267"
+         y="215.7516">json</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.31064px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.88536;stroke-linecap:round;stroke-linejoin:bevel"
+       x="213.02931"
+       y="222.09138"
+       id="text1648"><tspan
+         id="tspan1646"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#002060;fill-opacity:1;stroke:none;stroke-width:4.88536"
+         x="213.02931"
+         y="222.09138">(optional)</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.41471px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664;stroke-linecap:round;stroke-linejoin:bevel"
+     x="46.29528"
+     y="136.64949"
+     id="text948"><tspan
+       id="tspan946"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664"
+       x="46.29528"
+       y="136.64949">JsonSmart</tspan><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664"
+       x="46.29528"
+       y="143.41788"
+       id="tspan1145">JsonProvider</tspan></text>
+  <g
+     id="g8042"
+     transform="translate(44.939449,-30.607237)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.41471px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664;stroke-linecap:round;stroke-linejoin:bevel"
+       x="71.99958"
+       y="167.25673"
+       id="text2950"><tspan
+         id="tspan2946"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664"
+         x="71.99958"
+         y="167.25673">Gson</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664"
+         x="71.99958"
+         y="174.02512"
+         id="tspan2948">JsonProvider</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.41471px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664;stroke-linecap:round;stroke-linejoin:bevel"
+     x="187.64227"
+     y="136.64949"
+     id="text3636"><tspan
+       id="tspan3632"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664"
+       x="187.64227"
+       y="136.64949">JacksonJsonNode</tspan><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664"
+       x="187.64227"
+       y="143.41788"
+       id="tspan3634">JsonProvider</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.41471px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664;stroke-linecap:round;stroke-linejoin:bevel"
+     x="258.28601"
+     y="136.64949"
+     id="text4736"><tspan
+       id="tspan4732"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664"
+       x="258.28601"
+       y="136.64949">JsonOrg</tspan><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.13664"
+       x="258.28601"
+       y="143.41788"
+       id="tspan4734">JsonProvider</tspan></text>
+  <g
+     id="g8037"
+     transform="translate(44.939449,-31.136404)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.1473px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.9669;stroke-linecap:round;stroke-linejoin:bevel"
+       x="107.35634"
+       y="120.41662"
+       id="text5077"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.9669"
+         x="107.35634"
+         y="120.41662"
+         id="tspan5075">JsonProvider</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.39984;stroke-linecap:round;stroke-linejoin:bevel"
+       x="107.06717"
+       y="113.5444"
+       id="text5779"><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.39984"
+         x="107.06717"
+         y="113.5444"
+         id="tspan5777">&lt;&lt;interface&gt;&gt;</tspan></text>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.32861px;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.03906;stroke-linecap:round;stroke-linejoin:bevel"
+     x="258.36685"
+     y="49.141483"
+     id="text2950-3"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans';-inkscape-font-specification:'Open Sans Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.03906"
+       x="258.36685"
+       y="49.141483"
+       id="tspan2948-5">JsonMergeOption</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.8587px;font-family:'Open Sans', 'Open Sans_MSFontService', sans-serif;-inkscape-font-specification:'Open Sans, Open Sans_MSFontService, sans-serif Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.63983;stroke-linecap:round;stroke-linejoin:bevel"
+     x="152.34927"
+     y="23.215563"
+     id="text9398"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:'Open Sans', 'Open Sans_MSFontService', sans-serif;-inkscape-font-specification:'Open Sans, Open Sans_MSFontService, sans-serif Bold';text-align:center;text-anchor:middle;fill:#700000;fill-opacity:1;stroke:none;stroke-width:6.63983"
+       x="152.34927"
+       y="23.215563"
+       id="tspan9396">JsonMerger&lt;T&gt;</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.99739px;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.66367;stroke-linecap:round;stroke-linejoin:bevel"
+     x="97.631348"
+     y="34.708164"
+     id="text10078"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.66367"
+       x="97.631348"
+       y="34.708164"
+       id="tspan10076">- provider : JsonProvider</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.99739px;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.66367;stroke-linecap:round;stroke-linejoin:bevel"
+     x="97.631348"
+     y="46.070469"
+     id="text20608"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.66367"
+       x="97.631348"
+       y="46.070469"
+       id="tspan20606">+ JsonMerger(JsonProvider)</tspan><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:monospace;-inkscape-font-specification:monospace;text-align:start;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:5.66367"
+       x="97.631348"
+       y="52.317204"
+       id="tspan20740">+ merge(T, T, JsonMergeOption[]) : T</tspan></text>
 </svg>
