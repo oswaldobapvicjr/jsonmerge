@@ -72,25 +72,32 @@ The Project supports the most popular JSON providers available in the community 
 #### Using json-smart as JSON Provider
 
 ```java
+import net.minidev.json.JSONObject;
+...
 JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonSmartJsonProvider());
 ````
 
 #### Using Gson as JSON Provider
 
 ```java
+import com.google.gson.JsonObject;
+...
 JsonMerger<JsonObject> merger = new JsonMerger<>(new GsonJsonProvider());
 ````
 
-
 #### Using Jackson as JSON Provider
 
 ```java
+import com.fasterxml.jackson.databind.JsonNode;
+...
 JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider());
 ````
 
-#### Using Jackson as JSON Provider
+#### Using json.org as JSON Provider
 
 ```java
+import org.json.JSONObject;
+...
 JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonOrgJsonProvider());
 ````
 
