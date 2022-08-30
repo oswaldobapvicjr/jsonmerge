@@ -67,6 +67,8 @@ The Project supports the most popular JSON providers available in the community 
 
 ![Supported JSON providers](resources/jsonmerge%20-%20Json%20Providers%20diagram%20-%201.0-A.svg)
 
+> :warning: **IMPORTANT:** JSON Merge does **NOT** supply the dependencies tagged as **"optional"** to avoid the burden of unintended transitive dependencies in your application. These dependencies must be resolved by your application if required.
+
 ### How to use
 
 #### Using json-smart as JSON Provider
