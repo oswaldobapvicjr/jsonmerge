@@ -56,7 +56,7 @@ This is particularly useful to define distinct elements during the merge of an a
 }
 ```
 
-
+> ℹ️ [Find more examples in the wiki.](https://github.com/oswaldobapvicjr/jsonmerge/wiki/Examples/)
 
 
 ## Use your favorite JSON Provider
@@ -71,21 +71,17 @@ The Project supports the most popular JSON providers available in the community 
 
 #### Using json-smart as JSON Provider
 
+> :bulb: The choice for those looking for simplicity and good performance
+
 ```java
 import net.minidev.json.JSONObject;
 ...
 JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonSmartJsonProvider());
 ````
 
-#### Using Gson as JSON Provider
-
-```java
-import com.google.gson.JsonObject;
-...
-JsonMerger<JsonObject> merger = new JsonMerger<>(new GsonJsonProvider());
-````
-
 #### Using Jackson as JSON Provider
+
+> :bulb: The #1 JSON library in Maven Central
 
 ```java
 import com.fasterxml.jackson.databind.JsonNode;
@@ -93,7 +89,19 @@ import com.fasterxml.jackson.databind.JsonNode;
 JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider());
 ````
 
+#### Using Gson as JSON Provider
+
+> :bulb: Google implementation with enhanced conversion capabilities
+
+```java
+import com.google.gson.JsonObject;
+...
+JsonMerger<JsonObject> merger = new JsonMerger<>(new GsonJsonProvider());
+````
+
 #### Using json.org as JSON Provider
+
+> :bulb: The reference implementation for Java
 
 ```java
 import org.json.JSONObject;
