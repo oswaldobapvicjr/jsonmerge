@@ -58,7 +58,8 @@ import net.obvj.performetrics.Stopwatch;
  * </ul>
  * <p>
  * <b>Note: </b> The first JSON document passed is always considered to have higher
- * precedence than the second one in {@link #merge(T, T, JsonMergeOption[])}.
+ * precedence than the second one in
+ * {@link JsonMergeOption#merge(T, T, JsonMergeOption[])}.
  * <p>
  * For advanced merge options, refer to {@link JsonMergeOption}.
  *
