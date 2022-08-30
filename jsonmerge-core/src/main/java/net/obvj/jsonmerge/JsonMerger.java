@@ -38,27 +38,29 @@ import net.obvj.performetrics.Stopwatch;
 /**
  * Combines two JSON documents.
  * <p>
- * The operation is provider-agnostic and depends on a specialized {@link JsonProvider}
+ * The operation is provider-agnostic and relies on a specialized {@link JsonProvider}
  * which must be specified via constructor.
  * <p>
  * The resulting JSON document from the merge operation shall contain all exclusive
- * objects from source documents. In case of key collision (i.e., the same key appears in
- * both documents), the following rules will be applied:
+ * objects from source documents. And in case of key collision (i.e., the same key appears
+ * in both documents), the following rules will be applied:
  * <ul>
- * <li>for simple values, such as strings, numbers and boolean values, the value from the
+ * <li>For simple values, such as strings, numbers and boolean values, the value from the
  * highest-precedence JSON document will be selected;</li>
- * <li>if the value is a JSON object in <b>both</b> JSON sources, the two objects will be
- * merged recursively; if the types are not compatible (e.g.: JSON object in one side and
- * simple value or JSON array in the other), then a copy of the object from the
- * highest-precedence document will be selected as fallback;</li>
- * <li>if the value is a JSON array in <b>both</b> JSON documents, then all elements from
- * both two arrays will be copied <b>distinctively</b> (i.e., repeated elements will not
- * be copied to the resulting JSON); if the types are not compatible (e.g.: JSON array in
+ * <li>If the value is a JSON object in <b>both</b> documents, the two objects will be
+ * merged recursively;</li>
+ * <li>If the value is a JSON array in <b>both</b> documents, then all <b>distinct</b>
+ * elements (i.e., not repeated ones) will be copied to the resulting array, unless a
+ * different {@link JsonMergeOption} is provided specifically for that array path;</li>
+ * <li>If the types are <b>incompatible</b> in the source JSON documents (e.g.: array in
  * one side and simple value or complex object in the other), then a copy of the object
  * from the highest-precedence document will be selected as fallback</li>
  * </ul>
  * <p>
- * <b>Note: </b> For advanced merge options, refer to {@link JsonMergeOption}.
+ * <b>Note: </b> The first JSON document passed is always considered to have higher
+ * precedence than the second one in {@link #merge(T, T)}.
+ * <p>
+ * For advanced merge options, refer to {@link JsonMergeOption}.
  *
  * @param <T> the type that represents the actual JSON document at the specified
  *            {@link JsonProvider}

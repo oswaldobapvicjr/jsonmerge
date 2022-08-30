@@ -42,18 +42,18 @@ import net.obvj.jsonmerge.util.JsonPathExpression;
  * <blockquote>
  *
  * <pre>
- * {@code MergeOption.onPath("$.parameters")}
+ * {@code JsonMergeOption.onPath("$.parameters")}
  * {@code         .findObjectsIdentifiedBy("name")}
  * {@code         .thenPickTheHigherPrecedenceOne();}
  *
- * {@code MergeOption.onPath("$.files")}
+ * {@code JsonMergeOption.onPath("$.files")}
  * {@code         .findObjectsIdentifiedBy("id", "version")}
  * {@code         .thenDoADeepMerge();}
  *
- * {@code MergeOption.onPath("$.files")}
+ * {@code JsonMergeOption.onPath("$.files")}
  * {@code         .addDistinctObjectsOnly();}
  *
- * {@code MergeOption.onPath("$.files")}
+ * {@code JsonMergeOption.onPath("$.files")}
  * {@code         .addAll();}
  * </pre>
  *
