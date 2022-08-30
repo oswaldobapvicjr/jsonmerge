@@ -38,7 +38,7 @@ import net.obvj.jsonmerge.util.JsonPathExpression;
  * merge option.
  * <p>
  * Examples:
- * <p>
+ *
  * <blockquote>
  *
  * <pre>
