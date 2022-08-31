@@ -28,6 +28,8 @@ import net.obvj.jsonmerge.util.JsonParseException;
  * An abstraction that represents a JSON provider (for example: Jackson, Gson, etc.)
  * defining common operations for all implementations.
  *
+ * @param <T> the type that represents an actual JSON object at the {@code JsonProvider}
+ *
  * @author oswaldo.bapvic.jr (Oswaldo Junior)
  * @since 1.0.0
  */
