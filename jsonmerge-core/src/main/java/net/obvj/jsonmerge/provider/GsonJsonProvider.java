@@ -16,6 +16,9 @@
 
 package net.obvj.jsonmerge.provider;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
@@ -40,7 +43,7 @@ import com.google.gson.JsonObject;
  * @see com.google.gson.JsonObject
  * @see com.google.gson.JsonArray
  */
-public class GsonJsonProvider implements JsonProvider
+public class GsonJsonProvider extends AbstractJsonProvider<JsonObject>
 {
     private final Gson gson = new Gson();
 
@@ -57,6 +60,13 @@ public class GsonJsonProvider implements JsonProvider
     JsonElement toJsonElement(final Object object)
     {
         return object instanceof JsonElement ? (JsonElement) object : gson.toJsonTree(object);
+    }
+
+    @Override
+    JsonObject doParse(InputStream inputStream)
+    {
+        Reader reader = new InputStreamReader(inputStream);
+        return gson.fromJson(reader, JsonObject.class);
     }
 
     @Override

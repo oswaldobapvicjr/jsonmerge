@@ -19,9 +19,6 @@ package net.obvj.jsonmerge;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -53,37 +50,9 @@ class JsonMergerGsonJsonProviderTest extends JsonMergerTest<JsonObject>
     private final Gson gson = new Gson();
 
     @Override
-    JsonProvider getProvider()
+    JsonProvider<JsonObject> getProvider()
     {
         return new GsonJsonProvider();
-    }
-
-    @Override
-    JsonObject fromString(String string)
-    {
-        try
-        {
-            return gson.fromJson(string, JsonObject.class);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to parse JSON string", e);
-        }
-    }
-
-    @Override
-    JsonObject fromFile(String path)
-    {
-        try
-        {
-            URL resource = JsonMerger.class.getClassLoader().getResource(path);
-            Reader reader = new InputStreamReader(resource.openStream());
-            return gson.fromJson(reader, JsonObject.class);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to load JSON file", e);
-        }
     }
 
     @Override

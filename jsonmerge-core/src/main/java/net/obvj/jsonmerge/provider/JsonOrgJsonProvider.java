@@ -16,6 +16,7 @@
 
 package net.obvj.jsonmerge.provider;
 
+import java.io.InputStream;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
@@ -29,6 +30,7 @@ import java.util.stream.StreamSupport;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * A specialized {@link JsonProvider} implementation for {@code json.org}.
@@ -40,7 +42,7 @@ import org.json.JSONObject;
  * @see org.json.JSONObject
  * @see org.json.JSONArray
  */
-public class JsonOrgJsonProvider implements JsonProvider
+public class JsonOrgJsonProvider extends AbstractJsonProvider<JSONObject>
 {
 
     private JSONObject toJsonObject(final Object jsonObject)
@@ -51,6 +53,13 @@ public class JsonOrgJsonProvider implements JsonProvider
     private JSONArray toJsonArray(final Object jsonArray)
     {
         return (JSONArray) jsonArray;
+    }
+
+    @Override
+    JSONObject doParse(InputStream inputStream)
+    {
+        JSONTokener tokener = new JSONTokener(inputStream);
+        return new JSONObject(tokener);
     }
 
     @Override

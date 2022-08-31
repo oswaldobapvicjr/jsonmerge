@@ -19,12 +19,10 @@ package net.obvj.jsonmerge;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
@@ -50,38 +48,9 @@ class JsonMergerJsonOrgJsonProviderTest extends JsonMergerTest<JSONObject>
     private static ParseContext context = JsonPath.using(configuration);
 
     @Override
-    JsonProvider getProvider()
+    JsonProvider<JSONObject> getProvider()
     {
         return new JsonOrgJsonProvider();
-    }
-
-    @Override
-    JSONObject fromString(String string)
-    {
-        try
-        {
-            JSONTokener tokener = new JSONTokener(string);
-            return new JSONObject(tokener);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to parse JSON string", e);
-        }
-    }
-
-    @Override
-    JSONObject fromFile(String path)
-    {
-        try
-        {
-            URL resource = JsonMergerTest.class.getClassLoader().getResource(path);
-            JSONTokener tokener = new JSONTokener(resource.openStream());
-            return new JSONObject(tokener);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to load JSON file", e);
-        }
     }
 
     @Override

@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
@@ -41,7 +42,7 @@ class JacksonJsonNodeJsonProviderTest
         ARRAY1.add("element2");
     }
 
-    private JsonProvider provider = new JacksonJsonNodeJsonProvider();
+    private JsonProvider<JsonNode> provider = new JacksonJsonNodeJsonProvider();
 
     @Test
     void newJsonArray_emptyJsonArray()

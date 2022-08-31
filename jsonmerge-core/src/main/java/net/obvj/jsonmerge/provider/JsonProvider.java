@@ -16,20 +16,47 @@
 
 package net.obvj.jsonmerge.provider;
 
+import java.io.InputStream;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import net.obvj.jsonmerge.util.JsonParseException;
+
 /**
  * An abstraction that represents a JSON provider (for example: Jackson, Gson, etc.)
  * defining common operations for all implementations.
  *
+ * @param <T> the type that represents an actual JSON object at the {@code JsonProvider}
+ *
  * @author oswaldo.bapvic.jr (Oswaldo Junior)
  * @since 1.0.0
  */
-public interface JsonProvider
+public interface JsonProvider<T>
 {
+
+    /**
+     * Deserializes a JSON string into a JSON object.
+     *
+     * @param string the source string
+     * @return a JSON object of the type defined by this provider
+     * @throws NullPointerException if the specified string is null
+     * @throws JsonParseException   in the specified string is an invalid JSON
+     * @since 1.1.0
+     */
+    T parse(String string);
+
+    /**
+     * Deserializes a JSON from a specified {@code InputStream}.
+     *
+     * @param inputStream the source input stream
+     * @return a JSON object of the type defined by this provider
+     * @throws JsonParseException in case of invalid JSON or any other exception raised by the
+     *                            actual provider during parsing of the input stream
+     * @since 1.1.0
+     */
+    T parse(InputStream inputStream);
 
     /**
      * Checks if the specified object is a JSON object for this provider.

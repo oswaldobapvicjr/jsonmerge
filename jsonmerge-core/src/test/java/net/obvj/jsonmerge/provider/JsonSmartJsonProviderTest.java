@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import org.junit.jupiter.api.Test;
 
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 
 /**
  * Unit tests for the {@link JsonSmartJsonProvider} class.
@@ -41,7 +42,7 @@ class JsonSmartJsonProviderTest
         ARRAY1.add("element2");
     }
 
-    private JsonProvider provider = new JsonSmartJsonProvider();
+    private JsonProvider<JSONObject> provider = new JsonSmartJsonProvider();
 
     @Test
     void newJsonArray_emptyJsonArray()

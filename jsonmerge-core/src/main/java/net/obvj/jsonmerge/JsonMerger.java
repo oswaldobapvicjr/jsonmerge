@@ -19,6 +19,7 @@ package net.obvj.jsonmerge;
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
+import static net.obvj.jsonmerge.util.JsonPathExpression.ROOT;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +76,7 @@ public class JsonMerger<T>
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonMerger.class);
 
-    private final JsonProvider jsonProvider;
+    private final JsonProvider<T> jsonProvider;
 
     /**
      * Creates a new JSON Merger for a specific provider.
@@ -83,7 +84,7 @@ public class JsonMerger<T>
      * @param jsonProvider the {@link JsonProvider} to use; not {@code null}
      * @throws NullPointerException if the specified JsonProvider is null
      */
-    public JsonMerger(JsonProvider jsonProvider)
+    public JsonMerger(JsonProvider<T> jsonProvider)
     {
         this.jsonProvider = requireNonNull(jsonProvider, "The JsonProvider cannot be null");
     }
@@ -107,7 +108,7 @@ public class JsonMerger<T>
     public T merge(T json1, T json2, JsonMergeOption... mergeOptions)
     {
         Map<JsonPathExpression, JsonMergeOption> options = parseMergeOptions(mergeOptions);
-        JsonPartMerger merger = new JsonPartMerger(jsonProvider, JsonPathExpression.ROOT, options);
+        JsonPartMerger<T> merger = new JsonPartMerger<>(jsonProvider, ROOT, options);
         LOGGER.info("Merging JSON documents...");
 
         Stopwatch stopwatch = Stopwatch.createStarted(Type.WALL_CLOCK_TIME);
@@ -117,9 +118,9 @@ public class JsonMerger<T>
         return result;
     }
 
-    private static class JsonPartMerger
+    private static class JsonPartMerger<T>
     {
-        private final JsonProvider jsonProvider;
+        private final JsonProvider<T> jsonProvider;
         private final JsonPathExpression absolutePath;
         private final Map<JsonPathExpression, JsonMergeOption> options;
 
@@ -132,7 +133,7 @@ public class JsonMerger<T>
          *                     root JSON object}; not {@code null}
          * @param options      a map storing custom merge options by path; not {@code null}
          */
-        private JsonPartMerger(JsonProvider jsonProvider, JsonPathExpression absolutePath,
+        private JsonPartMerger(JsonProvider<T> jsonProvider, JsonPathExpression absolutePath,
                 Map<JsonPathExpression, JsonMergeOption> options)
         {
             this.jsonProvider = requireNonNull(jsonProvider, "The JsonProvider cannot be null");
@@ -167,13 +168,13 @@ public class JsonMerger<T>
 
                 if (jsonProvider.isJsonObject(value1))
                 {
-                    JsonPartMerger merger = new JsonPartMerger(jsonProvider,
+                    JsonPartMerger<T> merger = new JsonPartMerger<>(jsonProvider,
                             absolutePath.appendChild(key), options);
                     jsonProvider.put(result, key, merger.mergeSafely(value1, value2));
                 }
                 else if (jsonProvider.isJsonArray(value1))
                 {
-                    JsonPartMerger merger = new JsonPartMerger(jsonProvider,
+                    JsonPartMerger<T> merger = new JsonPartMerger<>(jsonProvider,
                             absolutePath.appendChild(key), options);
                     jsonProvider.put(result, key, merger.mergeArray(value1, value2));
                 }
@@ -335,7 +336,7 @@ public class JsonMerger<T>
                 if (pathOption.isDeepMerge() && matchingObjectIndex >= 0)
                 {
                     Object matchingObject = jsonProvider.get(array, matchingObjectIndex);
-                    JsonPartMerger merger = new JsonPartMerger(jsonProvider,
+                    JsonPartMerger<T> merger = new JsonPartMerger<>(jsonProvider,
                             absolutePath.appendIndex(matchingObjectIndex), options);
                     // The object already in the array is the higher-precedence one on the merge
                     Object merged = merger.merge(matchingObject, object);

@@ -19,12 +19,10 @@ package net.obvj.jsonmerge;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
-import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.ParseContext;
@@ -38,7 +36,7 @@ import net.obvj.jsonmerge.provider.JacksonJsonNodeJsonProvider;
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
  */
-class JsonMergerJacksonJsonNodeJsonProviderTest extends JsonMergerTest<ObjectNode>
+class JsonMergerJacksonJsonNodeJsonProviderTest extends JsonMergerTest<JsonNode>
 {
 
     private static Configuration configuration = Configuration.builder()
@@ -54,34 +52,7 @@ class JsonMergerJacksonJsonNodeJsonProviderTest extends JsonMergerTest<ObjectNod
     }
 
     @Override
-    ObjectNode fromString(String string)
-    {
-        try
-        {
-            return new JsonMapper().readValue(string, ObjectNode.class);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to parse JSON string", e);
-        }
-    }
-
-    @Override
-    ObjectNode fromFile(String path)
-    {
-        try
-        {
-            URL resource = JsonMerger.class.getClassLoader().getResource(path);
-            return new JsonMapper().readValue(resource.openStream(), ObjectNode.class);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to load JSON file", e);
-        }
-    }
-
-    @Override
-    Object get(ObjectNode object, String jsonPath)
+    Object get(JsonNode object, String jsonPath)
     {
         return context.parse(object).read(jsonPath);
     }
@@ -93,13 +64,13 @@ class JsonMergerJacksonJsonNodeJsonProviderTest extends JsonMergerTest<ObjectNod
     }
 
     @Override
-    void assertArray(List<?> expected, ObjectNode result, String jsonPath)
+    void assertArray(List<?> expected, JsonNode result, String jsonPath)
     {
         assertArray(expected, result, jsonPath, true);
     }
 
     @Override
-    void assertArray(List<?> expected, ObjectNode result, String jsonPath, boolean exactSize)
+    void assertArray(List<?> expected, JsonNode result, String jsonPath, boolean exactSize)
     {
         ArrayNode array = (ArrayNode) get(result, jsonPath);
         assertArray(expected, array, exactSize);

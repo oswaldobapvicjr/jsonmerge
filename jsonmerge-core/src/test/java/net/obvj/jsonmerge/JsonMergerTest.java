@@ -20,6 +20,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static net.obvj.jsonmerge.JsonMergeOption.onPath;
 
+import java.net.URL;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -155,11 +156,7 @@ abstract class JsonMergerTest<O>
      * Utility methods - START
      */
 
-    abstract JsonProvider getProvider();
-
-    abstract O fromString(String string);
-
-    abstract O fromFile(String path);
+    abstract JsonProvider<O> getProvider();
 
     abstract Object get(O object, String jsonPath);
 
@@ -168,6 +165,25 @@ abstract class JsonMergerTest<O>
     abstract void assertArray(List<?> expected, O result, String jsonPath);
 
     abstract void assertArray(List<?> expected, O result, String jsonPath, boolean exactSize);
+
+    private O fromString(String string)
+    {
+        return getProvider().parse(string);
+    }
+
+    private O fromFile(String path)
+    {
+        try
+        {
+            URL resource = JsonMerger.class.getClassLoader().getResource(path);
+            return getProvider().parse(resource.openStream());
+        }
+        catch (Exception exception)
+        {
+            throw new AssertionError("Unable to load JSON file", exception);
+        }
+    }
+
 
     /*
      * Test methods - START

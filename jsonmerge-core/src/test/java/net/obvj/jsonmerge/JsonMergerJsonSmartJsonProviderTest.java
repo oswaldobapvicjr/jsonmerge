@@ -19,7 +19,6 @@ package net.obvj.jsonmerge;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.net.URL;
 import java.util.List;
 
 import com.jayway.jsonpath.Configuration;
@@ -29,7 +28,6 @@ import com.jayway.jsonpath.spi.mapper.JsonSmartMappingProvider;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
 import net.obvj.jsonmerge.provider.JsonProvider;
 import net.obvj.jsonmerge.provider.JsonSmartJsonProvider;
 
@@ -49,38 +47,9 @@ class JsonMergerJsonSmartJsonProviderTest extends JsonMergerTest<JSONObject>
     private static ParseContext context = JsonPath.using(configuration);
 
     @Override
-    JsonProvider getProvider()
+    JsonProvider<JSONObject> getProvider()
     {
         return new JsonSmartJsonProvider();
-    }
-
-    @Override
-    JSONObject fromString(String string)
-    {
-        try
-        {
-            JSONParser parser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
-            return parser.parse(string, JSONObject.class);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to parse JSON string", e);
-        }
-    }
-
-    @Override
-    JSONObject fromFile(String path)
-    {
-        try
-        {
-            JSONParser parser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
-            URL resource = JsonMergerTest.class.getClassLoader().getResource(path);
-            return parser.parse(resource.openStream(), JSONObject.class);
-        }
-        catch (Exception e)
-        {
-            throw new AssertionError("Unable to load JSON file", e);
-        }
     }
 
     @Override
