@@ -43,7 +43,7 @@ import com.google.gson.JsonObject;
  * @see com.google.gson.JsonObject
  * @see com.google.gson.JsonArray
  */
-public class GsonJsonProvider implements JsonProvider<JsonObject>
+public class GsonJsonProvider extends AbstractJsonProvider<JsonObject>
 {
     private final Gson gson = new Gson();
 

@@ -38,7 +38,7 @@ import net.minidev.json.parser.ParseException;
  * @see net.minidev.json.JSONObject
  * @see net.minidev.json.JSONArray
  */
-public class JsonSmartJsonProvider implements JsonProvider<JSONObject>
+public class JsonSmartJsonProvider extends AbstractJsonProvider<JSONObject>
 {
 
     private JSONObject toJsonObject(final Object jsonObject)

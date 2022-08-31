@@ -16,13 +16,13 @@
 
 package net.obvj.jsonmerge.provider;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
+
+import net.obvj.jsonmerge.util.JsonParseException;
 
 /**
  * An abstraction that represents a JSON provider (for example: Jackson, Gson, etc.)
@@ -34,27 +34,27 @@ import java.util.stream.Stream;
 public interface JsonProvider<T>
 {
 
-    default T parse(String string)
-    {
-        Objects.requireNonNull(string, "The string to parse must not be null");
-        InputStream inputStream = new ByteArrayInputStream(string.getBytes());
-        return parse(inputStream);
-    }
+    /**
+     * Deserializes a JSON string into a JSON object.
+     *
+     * @param string the source string
+     * @return a JSON object of the type defined by this provider
+     * @throws NullPointerException if the specified string is null
+     * @throws JsonParseException   in the specified string is an invalid JSON
+     * @since 1.1.0
+     */
+    T parse(String string);
 
-    default T parse(InputStream inputStream)
-    {
-        try
-        {
-            return doParse(inputStream);
-        }
-        catch (Exception exception)
-        {
-            // TODO Replace with another one
-            throw new RuntimeException(exception);
-        }
-    }
-
-    T doParse(InputStream inputStream) throws Exception;
+    /**
+     * Deserializes a JSON from a specified {@code InputStream}.
+     *
+     * @param inputStream the source input stream
+     * @return a JSON object of the type defined by this provider
+     * @throws JsonParseException in case of invalid JSON or any other exception raised by the
+     *                            actual provider during parsing of the input stream
+     * @since 1.1.0
+     */
+    T parse(InputStream inputStream);
 
     /**
      * Checks if the specified object is a JSON object for this provider.

@@ -48,7 +48,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * @see ObjectNode
  * @see ArrayNode
  */
-public class JacksonJsonNodeJsonProvider implements JsonProvider<JsonNode>
+public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider<JsonNode>
 {
     private ObjectNode toJsonObject(final Object jsonObject)
     {

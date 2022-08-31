@@ -42,7 +42,7 @@ import org.json.JSONTokener;
  * @see org.json.JSONObject
  * @see org.json.JSONArray
  */
-public class JsonOrgJsonProvider implements JsonProvider<JSONObject>
+public class JsonOrgJsonProvider extends AbstractJsonProvider<JSONObject>
 {
 
     private JSONObject toJsonObject(final Object jsonObject)
