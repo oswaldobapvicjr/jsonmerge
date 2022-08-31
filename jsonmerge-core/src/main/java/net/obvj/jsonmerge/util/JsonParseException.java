@@ -18,7 +18,6 @@ package net.obvj.jsonmerge.util;
 
 /**
  * An exception raised in case of issues during parsing of a JSON string.
- * <p>
  *
  * @author oswaldo.bapvic.jr
  * @since 1.1.0
