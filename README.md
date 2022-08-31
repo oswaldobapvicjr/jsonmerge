@@ -73,7 +73,7 @@ The Project supports the most popular JSON providers available in the community 
 
 #### Using json-smart as JSON Provider
 
-> :bulb: The choice for those looking for simplicity and good performance
+> The choice for those looking for simplicity and good performance
 
 ```java
 import net.minidev.json.JSONObject;
@@ -83,7 +83,7 @@ JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonSmartJsonProvider());
 
 #### Using Jackson as JSON Provider
 
-> :bulb: The #1 JSON library in Maven Central
+> The #1 JSON library in Maven Central
 
 ```java
 import com.fasterxml.jackson.databind.JsonNode;
@@ -93,7 +93,7 @@ JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider()
 
 #### Using Gson as JSON Provider
 
-> :bulb: Google implementation with enhanced conversion capabilities
+> Google implementation with enhanced conversion capabilities
 
 ```java
 import com.google.gson.JsonObject;
@@ -103,7 +103,7 @@ JsonMerger<JsonObject> merger = new JsonMerger<>(new GsonJsonProvider());
 
 #### Using json.org as JSON Provider
 
-> :bulb: The reference implementation for Java
+> The reference implementation for Java
 
 ```java
 import org.json.JSONObject;
