@@ -16,6 +16,8 @@
 
 package net.obvj.jsonmerge.provider;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -27,8 +29,11 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -45,7 +50,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  * @see ObjectNode
  * @see ArrayNode
  */
-public class JacksonJsonNodeJsonProvider implements JsonProvider
+public class JacksonJsonNodeJsonProvider implements JsonProvider<JsonNode>
 {
     private ObjectNode toJsonObject(final Object jsonObject)
     {
@@ -55,6 +60,20 @@ public class JacksonJsonNodeJsonProvider implements JsonProvider
     private ArrayNode toJsonArray(final Object jsonArray)
     {
         return (ArrayNode) jsonArray;
+    }
+
+    @Override
+    public JsonNode parse(InputStream inputStream)
+    {
+        try
+        {
+            return new JsonMapper().readValue(inputStream, JsonNode.class);
+        }
+        catch (IOException exception)
+        {
+            // TODO Replace this with a new exception
+            throw new RuntimeException(exception);
+        }
     }
 
     /**

@@ -16,6 +16,8 @@
 
 package net.obvj.jsonmerge.provider;
 
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -23,6 +25,8 @@ import java.util.stream.Stream;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 
 /**
  * A specialized {@link JsonProvider} implementation for {@code json-smart}.
@@ -34,7 +38,7 @@ import net.minidev.json.JSONObject;
  * @see net.minidev.json.JSONObject
  * @see net.minidev.json.JSONArray
  */
-public class JsonSmartJsonProvider implements JsonProvider
+public class JsonSmartJsonProvider implements JsonProvider<JSONObject>
 {
 
     private JSONObject toJsonObject(final Object jsonObject)
@@ -45,6 +49,21 @@ public class JsonSmartJsonProvider implements JsonProvider
     private JSONArray toJsonArray(final Object jsonArray)
     {
         return (JSONArray) jsonArray;
+    }
+
+    @Override
+    public JSONObject parse(InputStream inputStream)
+    {
+        JSONParser parser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
+        try
+        {
+            return parser.parse(inputStream, JSONObject.class);
+        }
+        catch (UnsupportedEncodingException | ParseException e)
+        {
+            // TODO Replace with more specific exception
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

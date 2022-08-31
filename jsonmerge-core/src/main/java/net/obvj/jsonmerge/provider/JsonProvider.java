@@ -16,7 +16,10 @@
 
 package net.obvj.jsonmerge.provider;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -28,8 +31,17 @@ import java.util.stream.Stream;
  * @author oswaldo.bapvic.jr (Oswaldo Junior)
  * @since 1.0.0
  */
-public interface JsonProvider
+public interface JsonProvider<T>
 {
+
+    default T parse(String string)
+    {
+        Objects.requireNonNull(string, "The string to parse must not be null");
+        InputStream inputStream = new ByteArrayInputStream(string.getBytes());
+        return parse(inputStream);
+    }
+
+    T parse(InputStream inputStream);
 
     /**
      * Checks if the specified object is a JSON object for this provider.
