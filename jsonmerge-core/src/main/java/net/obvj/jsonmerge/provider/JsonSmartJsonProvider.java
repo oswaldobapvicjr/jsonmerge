@@ -52,7 +52,7 @@ public class JsonSmartJsonProvider extends AbstractJsonProvider<JSONObject>
     }
 
     @Override
-    public JSONObject doParse(InputStream inputStream) throws UnsupportedEncodingException, ParseException
+    JSONObject doParse(InputStream inputStream) throws UnsupportedEncodingException, ParseException
     {
         JSONParser parser = new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE);
         return parser.parse(inputStream, JSONObject.class);

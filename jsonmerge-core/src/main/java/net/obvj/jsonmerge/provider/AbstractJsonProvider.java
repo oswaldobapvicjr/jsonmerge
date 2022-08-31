@@ -59,7 +59,6 @@ public abstract class AbstractJsonProvider<T> implements JsonProvider<T>
      * @return a JSON object of the type defined by this provider
      * @throws Exception in case of issues raised by the actual provider during parsing of the
      *                   input stream
-     * @since 1.1.0
      */
     abstract T doParse(InputStream inputStream) throws Exception;
 

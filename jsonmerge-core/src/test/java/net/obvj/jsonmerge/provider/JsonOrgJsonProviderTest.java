@@ -19,11 +19,14 @@ package net.obvj.jsonmerge.provider;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static java.util.Arrays.*;
-import static net.obvj.junit.utils.matchers.AdvancedMatchers.containsAll;
+import static net.obvj.junit.utils.matchers.AdvancedMatchers.*;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+
+import net.obvj.jsonmerge.util.JsonParseException;
 
 /***
  * Unit tests for the {@link JsonOrgJsonProvider}.
@@ -61,7 +64,12 @@ class JsonOrgJsonProviderTest
             + "  ]\n"
             + "}");
 
-    private JsonProvider provider = new JsonOrgJsonProvider();
+    private static final String INVALID_JSON = "{\n"
+            + "  \"key\": \"value1\",\n"
+            + "  \"key\": \"value2\",\n"
+            + "}";
+
+    private JsonProvider<JSONObject> provider = new JsonOrgJsonProvider();
 
     @Test
     void newJsonArray_emptyJsonArray()
@@ -143,6 +151,15 @@ class JsonOrgJsonProviderTest
         StringBuilder sb = new StringBuilder();
         provider.stream(ARRAY1).forEach(sb::append);
         assertThat(sb.toString(), containsAll("element1", "element2"));
+    }
+
+    @Test
+    void parse_invalidJson_jsonParseException()
+    {
+        assertThat(() -> provider.parse(INVALID_JSON),
+                throwsException(JsonParseException.class)
+                        .withMessageContaining("Duplicate key \"key\"")
+                        .withCause(JSONException.class));
     }
 
 }

@@ -61,7 +61,7 @@ public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider<JsonNode>
     }
 
     @Override
-    public JsonNode doParse(InputStream inputStream) throws IOException
+    JsonNode doParse(InputStream inputStream) throws IOException
     {
         return new JsonMapper().readValue(inputStream, JsonNode.class);
     }

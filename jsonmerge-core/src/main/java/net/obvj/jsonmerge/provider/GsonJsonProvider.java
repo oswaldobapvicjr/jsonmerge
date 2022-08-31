@@ -63,7 +63,7 @@ public class GsonJsonProvider extends AbstractJsonProvider<JsonObject>
     }
 
     @Override
-    public JsonObject doParse(InputStream inputStream)
+    JsonObject doParse(InputStream inputStream)
     {
         Reader reader = new InputStreamReader(inputStream);
         return gson.fromJson(reader, JsonObject.class);
