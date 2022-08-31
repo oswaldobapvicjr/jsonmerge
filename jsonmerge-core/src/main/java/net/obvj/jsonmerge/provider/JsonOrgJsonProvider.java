@@ -56,7 +56,7 @@ public class JsonOrgJsonProvider implements JsonProvider<JSONObject>
     }
 
     @Override
-    public JSONObject parse(InputStream inputStream)
+    public JSONObject doParse(InputStream inputStream)
     {
         JSONTokener tokener = new JSONTokener(inputStream);
         return new JSONObject(tokener);

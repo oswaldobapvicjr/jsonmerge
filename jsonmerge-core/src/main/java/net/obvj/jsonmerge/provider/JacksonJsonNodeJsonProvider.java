@@ -29,8 +29,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -63,17 +61,9 @@ public class JacksonJsonNodeJsonProvider implements JsonProvider<JsonNode>
     }
 
     @Override
-    public JsonNode parse(InputStream inputStream)
+    public JsonNode doParse(InputStream inputStream) throws IOException
     {
-        try
-        {
-            return new JsonMapper().readValue(inputStream, JsonNode.class);
-        }
-        catch (IOException exception)
-        {
-            // TODO Replace this with a new exception
-            throw new RuntimeException(exception);
-        }
+        return new JsonMapper().readValue(inputStream, JsonNode.class);
     }
 
     /**

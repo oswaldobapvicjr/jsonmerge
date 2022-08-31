@@ -63,7 +63,7 @@ public class GsonJsonProvider implements JsonProvider<JsonObject>
     }
 
     @Override
-    public JsonObject parse(InputStream inputStream)
+    public JsonObject doParse(InputStream inputStream)
     {
         Reader reader = new InputStreamReader(inputStream);
         return gson.fromJson(reader, JsonObject.class);

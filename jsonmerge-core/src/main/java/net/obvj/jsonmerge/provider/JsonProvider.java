@@ -41,7 +41,20 @@ public interface JsonProvider<T>
         return parse(inputStream);
     }
 
-    T parse(InputStream inputStream);
+    default T parse(InputStream inputStream)
+    {
+        try
+        {
+            return doParse(inputStream);
+        }
+        catch (Exception exception)
+        {
+            // TODO Replace with another one
+            throw new RuntimeException(exception);
+        }
+    }
+
+    T doParse(InputStream inputStream) throws Exception;
 
     /**
      * Checks if the specified object is a JSON object for this provider.
