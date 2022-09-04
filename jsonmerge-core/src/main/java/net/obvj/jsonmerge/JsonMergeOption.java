@@ -62,7 +62,7 @@ import net.obvj.jsonmerge.util.JsonPathExpression;
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
  */
-public class JsonMergeOption
+public final class JsonMergeOption
 {
     private static final String TO_STRING_FORMAT = "JsonMergeOption (path=%s, keys=%s, deepMerge=%s, distinctObjectsOnly=%s)";
 
@@ -232,7 +232,43 @@ public class JsonMergeOption
      * <p>
      * A {@code JsonPath} expression can be specified using either dot- or bracket-notation,
      * but complex expressions containing filters, script, subscript, or union operations, are
-     * not supported.
+     * not fully supported.
+     *
+     * <h4>Examples of valid expressions:</h4>
+     * <h5>Using dot-notation:</h5>
+     * <ul>
+     * <li>{@code $.sites}</li>
+     * <li>{@code $.sites.*.users}</li>
+     * <li>{@code $.sites.*.users.*.preferences}</li>
+     * </ul>
+     * <h5>Using bracket-notation:</h5>
+     * <ul>
+     * <li>{@code $['sites']}</li>
+     * <li>{@code $['sites'][*]['users']}</li>
+     * <li>{@code $['sites'][*]['users'][*]['preferences']}</li>
+     * </ul>
+     * <h5>Sample JSON:</h5>
+     *
+     * <pre>
+     * {
+     *   "sites": [
+     *     {
+     *       "id": "europe-1",
+     *       "users": [
+     *         {
+     *           "email": "camillelawson@zolarex.com",
+     *           "preferences": [
+     *             {
+     *               "key": "theme",
+     *               "value": "light"
+     *             }
+     *           ]
+     *         }
+     *       ]
+     *     }
+     *   ]
+     * }
+     * </pre>
      *
      * @param jsonPath a {@code JsonPath} expression that identifies the document part that
      *                 should receive special handling during the merge; not empty

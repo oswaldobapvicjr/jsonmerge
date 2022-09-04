@@ -19,6 +19,7 @@ package net.obvj.jsonmerge;
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
+import static net.obvj.jsonmerge.JsonMergeOption.DEFAULT;
 import static net.obvj.jsonmerge.util.JsonPathExpression.ROOT;
 
 import java.util.HashMap;
@@ -26,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 import org.slf4j.Logger;
@@ -76,6 +78,8 @@ public class JsonMerger<T>
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonMerger.class);
 
+    private static final Pattern REMOVABLE_PATH_PARTS = Pattern.compile("\\[[0-9]*\\]");
+
     private final JsonProvider<T> jsonProvider;
 
     /**
@@ -123,7 +127,6 @@ public class JsonMerger<T>
         private final JsonProvider<T> jsonProvider;
         private final JsonPathExpression absolutePath;
         private final Map<JsonPathExpression, JsonMergeOption> options;
-
 
         /**
          * Creates a new {@link JsonPartMerger} for an absolute path.
@@ -256,6 +259,11 @@ public class JsonMerger<T>
             Object result = jsonProvider.newJsonArray(array1);
 
             JsonMergeOption pathOption = getMergeOption();
+            if (DEFAULT == pathOption)
+            {
+                LOGGER.debug("Applying default options on path: {}", absolutePath);
+            }
+
             List<String> keys = pathOption.getKeys();
             if (!keys.isEmpty())
             {
@@ -287,7 +295,11 @@ public class JsonMerger<T>
          */
         private JsonMergeOption getMergeOption()
         {
-            return options.getOrDefault(absolutePath, JsonMergeOption.DEFAULT);
+            // TODO Extract to a method in JsonPathExpression
+            String comparableOption = REMOVABLE_PATH_PARTS.matcher(absolutePath.toString())
+                    .replaceAll("[*]");
+            JsonPathExpression comparablePath = new JsonPathExpression(comparableOption);
+            return options.getOrDefault(comparablePath, DEFAULT);
         }
 
         private void addObjectToArray(Object array, Object object, JsonMergeOption pathOption)

@@ -1,0 +1,117 @@
+{
+  "sites": [
+    {
+      "id": "latinamerica-1",
+      "users": [
+        {
+          "name": "Camille Lawson",
+          "email": "camillelawson@zolarex.com",
+          "balance": "$114.06",
+          "registered": "2017-10-09T09:42:34 +03:00",
+          "friends": [],
+          "preferences": [
+            {
+              "key": "theme",
+              "value": "light"
+            }
+          ]
+        },
+        {
+          "name": "Morrow Rasmussen",
+          "email": "morrowrasmussen@dogspa.com",
+          "balance": "$1,012.01",
+          "registered": "2022-03-17T01:42:09 +03:00",
+          "friends": [],
+          "preferences": [
+            {
+              "key": "language",
+              "value": "pt-BR"
+            },
+            {
+              "key": "timeZone",
+              "value": "BRT"
+            }
+          ]
+        },
+        {
+          "name": "Johnnie Alvarado",
+          "email": "johnniealvarado@accupharm.com",
+          "balance": "$1,998.74",
+          "registered": "2017-06-05T04:47:57 +03:00",
+          "friends": [
+            {
+              "id": "6314d076c9443da96738312f",
+              "name": "Bertie Skinner"
+            },
+            {
+              "id": "6314d076c9443da96738312f",
+              "name": "Morrow Rasmussen"
+            }
+          ],
+          "preferences": [
+            {
+              "key": "language",
+              "value": "en-US"
+            },
+            {
+              "key": "timeZone",
+              "value": "UTC"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "europe-1",
+      "users": [
+        {
+          "name": "Ethel Zimmerman",
+          "email": "ethelzimmerman@lingoage.com",
+          "balance": "$0.67",
+          "registered": "2018-04-23T05:39:39 +03:00",
+          "friends": [
+            {
+              "id": "6314d076c9443da96738312f",
+              "name": "Bertie Skinner"
+            }
+          ],
+          "preferences": []
+        },
+        {
+          "name": "Nikki Hamilton",
+          "email": "nikkihamilton@isodrive.com",
+          "balance": "$1,160.43",
+          "registered": "2020-08-21T10:26:43 +03:00",
+          "friends": [
+            {
+              "id": "6314d07643846f3ed55abbb6",
+              "name": "Riley Barr"
+            },
+            {
+              "id": "6314d0762f38388c5fdfe4e5",
+              "name": "Solis English"
+            },
+            {
+              "id": "6314d076794dd55311bfbf38",
+              "name": "Velma Burton"
+            }
+          ],
+          "preferences": [
+            {
+              "key": "language",
+              "value": "es-ES"
+            },
+            {
+              "key": "timeZone",
+              "value": "CET"
+            },
+            {
+              "key": "theme",
+              "value": "dark"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
