@@ -36,6 +36,7 @@
         <json-org.version>20220320</json-org.version>
         <gson.version>2.9.1</gson.version>
         <jackson.version>2.13.3</jackson.version>
+        <vertx.version>4.3.3</vertx.version>
     </properties>
 
     <dependencies>
@@ -78,6 +79,13 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-core</artifactId>
+            <version>${vertx.version}</version>
             <optional>true</optional>
         </dependency>
 
