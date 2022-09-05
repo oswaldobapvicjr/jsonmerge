@@ -19,6 +19,7 @@ package net.obvj.jsonmerge;
 import static java.util.Arrays.stream;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toMap;
+import static net.obvj.jsonmerge.JsonMergeOption.DEFAULT;
 import static net.obvj.jsonmerge.util.JsonPathExpression.ROOT;
 
 import java.util.HashMap;
@@ -123,7 +124,6 @@ public class JsonMerger<T>
         private final JsonProvider<T> jsonProvider;
         private final JsonPathExpression absolutePath;
         private final Map<JsonPathExpression, JsonMergeOption> options;
-
 
         /**
          * Creates a new {@link JsonPartMerger} for an absolute path.
@@ -256,6 +256,11 @@ public class JsonMerger<T>
             Object result = jsonProvider.newJsonArray(array1);
 
             JsonMergeOption pathOption = getMergeOption();
+            if (DEFAULT == pathOption)
+            {
+                LOGGER.debug("Applying default options on path: {}", absolutePath);
+            }
+
             List<String> keys = pathOption.getKeys();
             if (!keys.isEmpty())
             {
@@ -287,7 +292,8 @@ public class JsonMerger<T>
          */
         private JsonMergeOption getMergeOption()
         {
-            return options.getOrDefault(absolutePath, JsonMergeOption.DEFAULT);
+            JsonPathExpression cleanPath = absolutePath.cleanUp();
+            return options.getOrDefault(cleanPath, DEFAULT);
         }
 
         private void addObjectToArray(Object array, Object object, JsonMergeOption pathOption)

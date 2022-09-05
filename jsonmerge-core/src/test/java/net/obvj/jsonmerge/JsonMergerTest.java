@@ -162,6 +162,11 @@ abstract class JsonMergerTest<O>
 
     abstract void assertElement(Object expected, Object actual);
 
+    private void assertElement(Object expected, O result, String jsonPath)
+    {
+        assertArray(asList(expected), result, jsonPath);
+    }
+
     abstract void assertArray(List<?> expected, O result, String jsonPath);
 
     abstract void assertArray(List<?> expected, O result, String jsonPath, boolean exactSize);
@@ -286,7 +291,7 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
                 onPath("$.agents").findObjectsIdentifiedBy("class")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json3Agent1", "Json3Agent2"), result, "$.agents[*].description");
@@ -297,7 +302,7 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_4), fromString(JSON_3),
                 onPath("$.agents").findObjectsIdentifiedBy("class")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json4Agent1", "Json3Agent2"), result, "$.agents[*].description");
@@ -345,7 +350,7 @@ abstract class JsonMergerTest<O>
     void merge_json8HighWithJson9LowAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_8), fromString(JSON_9),
-                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
+                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHighestPrecedenceOne());
 
         assertArray(asList("Json8Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
@@ -355,7 +360,7 @@ abstract class JsonMergerTest<O>
     void merge_json8LowWithJson9HighAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
-                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
+                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHighestPrecedenceOne());
 
         assertArray(asList("Json9Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
@@ -366,7 +371,7 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
                 onPath("$.array").findObjectsIdentifiedBy("unknown")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         // No exception expected, but the merge will consider no distinct key
         assertArray(asList("Json9Value1", "Json8Value1"), result,
@@ -380,7 +385,7 @@ abstract class JsonMergerTest<O>
                 fromFile("testfiles/drive2.json"),
                 fromFile("testfiles/drive1.json"),
                 onPath("$.files").findObjectsIdentifiedBy("id", "version")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
@@ -436,7 +441,7 @@ abstract class JsonMergerTest<O>
                 fromFile("testfiles/drive1.json"),
                 fromFile("testfiles/drive2.json"),
                 onPath("$.files").findObjectsIdentifiedBy("id", "version")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
@@ -474,5 +479,109 @@ abstract class JsonMergerTest<O>
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].keywords[*]");
         assertArray(asList(Boolean.TRUE), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d'&&@.version=='2')].readOnly");
+    }
+
+    @Test
+    void merge_jsonFilesUsers_success()
+    {
+        O result = merger.merge(fromFile("testfiles/users1.json"),
+                fromFile("testfiles/users2.json"),
+                onPath("$.sites").findObjectsIdentifiedBy("id").thenDoADeepMerge(),
+                onPath("$.sites[*].users").findObjectsIdentifiedBy("name").thenDoADeepMerge(),
+                onPath("$.sites[*].users[*].friends").addDistinctObjectsOnly(),
+                onPath("$.sites[*].users[*].preferences").findObjectsIdentifiedBy("key")
+                        .thenPickTheHighestPrecedenceOne());
+
+        // ----------------------------
+        // Camille Lawson
+        // ----------------------------
+
+        assertElement("$2,114.65", result, // users1
+                "$..users[?(@.name=='Camille Lawson')].balance");
+
+        // preferences
+        assertElement("pt-BR", result, // users1
+                "$..users[?(@.name=='Camille Lawson')].preferences[?(@.key=='language')].value");
+        assertElement("BRT", result, // users1
+                "$..users[?(@.name=='Camille Lawson')].preferences[?(@.key=='timeZone')].value");
+        assertElement("light high contrast", result, // users1
+                "$..users[?(@.name=='Camille Lawson')].preferences[?(@.key=='theme')].value");
+
+        // ----------------------------
+        // Morrow Rasmussen
+        // ----------------------------
+
+        assertElement("$1,683.27", result, // users1
+                "$..users[?(@.name=='Morrow Rasmussen')].balance");
+
+        // friends
+        assertArray(asList("Atkins Lang"), result, // users1
+                "$..users[?(@.name=='Morrow Rasmussen')].friends[*].name");
+
+        // preferences
+        assertElement("pt-BR", result, // users2
+                "$..users[?(@.name=='Morrow Rasmussen')].preferences[?(@.key=='language')].value");
+        assertElement("BRT", result, // users2
+                "$..users[?(@.name=='Morrow Rasmussen')].preferences[?(@.key=='timeZone')].value");
+        assertElement("dark", result, // users1
+                "$..users[?(@.name=='Morrow Rasmussen')].preferences[?(@.key=='theme')].value");
+
+        // ----------------------------
+        // Johnnie Alvarado
+        // ----------------------------
+
+        assertElement("$1,493.14", result, // users1
+                "$..users[?(@.name=='Johnnie Alvarado')].balance");
+
+        // friends
+        assertArray(asList("Bertie Skinner", "Morrow Rasmussen"), result, // merged
+                "$..users[?(@.name=='Johnnie Alvarado')].friends[*].name");
+
+        // preferences
+        assertElement("es-CO", result, // users1
+                "$..users[?(@.name=='Johnnie Alvarado')].preferences[?(@.key=='language')].value");
+        assertElement("COT", result, // users1
+                "$..users[?(@.name=='Johnnie Alvarado')].preferences[?(@.key=='timeZone')].value");
+        assertElement("light", result, // users1
+                "$..users[?(@.name=='Johnnie Alvarado')].preferences[?(@.key=='theme')].value");
+
+        // ----------------------------
+        // Ethel Zimmerman
+        // ----------------------------
+
+        assertElement("$1,078.67", result, // users1
+                "$..users[?(@.name=='Ethel Zimmerman')].balance");
+
+        // friends
+        assertArray(asList("Grant Knox", "Bertie Skinner"), result, // merged
+                "$..users[?(@.name=='Ethel Zimmerman')].friends[*].name");
+
+        // preferences
+        assertElement("en-GB", result, // users1
+                "$..users[?(@.name=='Ethel Zimmerman')].preferences[?(@.key=='language')].value");
+        assertElement("UTC", result, // users1
+                "$..users[?(@.name=='Ethel Zimmerman')].preferences[?(@.key=='timeZone')].value");
+        assertElement("light high contrast", result, // users1
+                "$..users[?(@.name=='Ethel Zimmerman')].preferences[?(@.key=='theme')].value");
+
+        // ----------------------------
+        // Nikki Hamilton
+        // ----------------------------
+
+        assertElement("$1,160.43", result, // users2
+                "$..users[?(@.name=='Nikki Hamilton')].balance");
+
+        // friends
+        assertArray(asList("Riley Barr", "Solis English", "Velma Burton"), result, // users2
+                "$..users[?(@.name=='Nikki Hamilton')].friends[*].name");
+
+        // preferences
+        assertElement("es-ES", result, // users2
+                "$..users[?(@.name=='Nikki Hamilton')].preferences[?(@.key=='language')].value");
+        assertElement("CET", result, // users2
+                "$..users[?(@.name=='Nikki Hamilton')].preferences[?(@.key=='timeZone')].value");
+        assertElement("dark", result, // users2
+                "$..users[?(@.name=='Nikki Hamilton')].preferences[?(@.key=='theme')].value");
+
     }
 }

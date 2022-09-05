@@ -1,0 +1,105 @@
+{
+  "sites": [
+    {
+      "id": "latinamerica-1",
+      "users": [
+        {
+          "name": "Camille Lawson",
+          "email": "camillelawson@zolarex.com",
+          "balance": "$2,114.65",
+          "registered": "2017-10-09T09:42:34 +03:00",
+          "friends": [],
+          "preferences": [
+            {
+              "key": "language",
+              "value": "pt-BR"
+            },
+            {
+              "key": "timeZone",
+              "value": "BRT"
+            },
+            {
+              "key": "theme",
+              "value": "light high contrast"
+            }
+          ]
+        },
+        {
+          "name": "Morrow Rasmussen",
+          "email": "morrowrasmussen@dogspa.com",
+          "balance": "$1,683.27",
+          "registered": "2022-03-17T01:42:09 +03:00",
+          "friends": [
+            {
+              "id": "6314d076247b278eba5a7a51",
+              "name": "Atkins Lang"
+            }
+          ],
+          "preferences": [
+            {
+              "key": "theme",
+              "value": "dark"
+            }
+          ]
+        },
+        {
+          "name": "Johnnie Alvarado",
+          "email": "johnniealvarado@accupharm.com",
+          "balance": "$1,493.14",
+          "registered": "2017-06-05T04:47:57 +03:00",
+          "friends": [
+            {
+              "id": "6314d076c9443da96738312f",
+              "name": "Bertie Skinner"
+            }
+          ],
+          "preferences": [
+            {
+              "key": "language",
+              "value": "es-CO"
+            },
+            {
+              "key": "timeZone",
+              "value": "COT"
+            },
+            {
+              "key": "theme",
+              "value": "light"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "europe-1",
+      "users": [
+        {
+          "name": "Ethel Zimmerman",
+          "email": "ethelzimmerman@lingoage.com",
+          "balance": "$1,078.67",
+          "registered": "2018-04-23T05:39:39 +03:00",
+          "friends": [
+            {
+              "id": "6314d076fe642f76eb8706ee",
+              "name": "Grant Knox"
+            }
+          ],
+          "preferences": [
+            {
+              "key": "language",
+              "value": "en-GB"
+            },
+            {
+              "key": "timeZone",
+              "value": "UTC"
+            },
+            {
+              "key": "theme",
+              "value": "light high contrast"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
