@@ -62,7 +62,7 @@ import net.obvj.jsonmerge.util.JsonPathExpression;
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
  */
-public class JsonMergeOption
+public final class JsonMergeOption
 {
     private static final String TO_STRING_FORMAT = "JsonMergeOption (path=%s, keys=%s, deepMerge=%s, distinctObjectsOnly=%s)";
 
@@ -232,7 +232,51 @@ public class JsonMergeOption
      * <p>
      * A {@code JsonPath} expression can be specified using either dot- or bracket-notation,
      * but complex expressions containing filters, script, subscript, or union operations, are
-     * not supported.
+     * not fully supported.
+     * <p>
+     * <b>Examples of valid expressions:</b>
+     * <ul>
+     * <li>Using dot-notation
+     *
+     * <pre>
+     * $.sites
+     * $.sites[*].users
+     * $.sites[*].users[*].preferences
+     * </pre>
+     *
+     * </li>
+     * <li>Using bracket-notation
+     *
+     * <pre>
+     * $['sites']
+     * $['sites'][*]['users']
+     * $['sites'][*]['users'][*]['preferences']
+     * </pre>
+     *
+     * </li>
+     * </ul>
+     * <b>Sample JSON:</b>
+     *
+     * <pre>
+     * {
+     *   "sites": [
+     *     {
+     *       "id": "europe-1",
+     *       "users": [
+     *         {
+     *           "email": "camillelawson@zolarex.com",
+     *           "preferences": [
+     *             {
+     *               "key": "theme",
+     *               "value": "light"
+     *             }
+     *           ]
+     *         }
+     *       ]
+     *     }
+     *   ]
+     * }
+     * </pre>
      *
      * @param jsonPath a {@code JsonPath} expression that identifies the document part that
      *                 should receive special handling during the merge; not empty
@@ -243,6 +287,7 @@ public class JsonMergeOption
      * @throws InvalidPathException     if the specified {@code JsonPath} expression is
      *                                  invalid
      * @since 1.1.0
+     * @see JsonPathExpression
      */
     public static Builder onPath(String jsonPath)
     {
@@ -251,8 +296,10 @@ public class JsonMergeOption
     }
 
     /**
-     * @return a expression that represents a specific path of the JSON document that should
-     *         receive special handling during the merge; not empty
+     * Returns a {@code JsonPath} expression that represents a specific path of the JSON
+     * document to receive special handling during the merge
+     *
+     * @return a {@link JsonPathExpression}; not null
      * @since 1.1.0
      */
     public JsonPathExpression getPath()
@@ -261,8 +308,10 @@ public class JsonMergeOption
     }
 
     /**
-     * @return a list of keys to be considered for distinct JSON objects identification inside
-     *         the array represented by {@link #getPath()}; not null
+     * Returns a list of keys to be considered for distinct JSON objects identification inside
+     * the array represented by {@link #getPath()}.
+     *
+     * @return a list containing keys, or an empty list; never null
      * @since 1.1.0
      */
     public List<String> getKeys()
@@ -271,8 +320,10 @@ public class JsonMergeOption
     }
 
     /**
-     * @return a flag indicating whether or not to do a deep merge of the elements inside the
-     *         document path represented by {@link #getPath()}.
+     * Returns a flag indicating whether or not to do a deep merge of the elements inside the
+     * document path represented by {@link #getPath()}.
+     *
+     * @return a flag indicating whether or not to do a deep merge of the path
      * @since 1.1.0
      */
     public boolean isDeepMerge()
@@ -281,8 +332,10 @@ public class JsonMergeOption
     }
 
     /**
-     * @return a flag to determine that duplicate objects should not be added during the merge
-     *         of the document path represented by {@link #getPath()}.
+     * Returns a flag indicating whether or not to check for duplicate objects before adding
+     * them during the merge of the array path represented by {@link #getPath()}.
+     *
+     * @return a flag indicating whether or not to avoid duplicate objects during the merge
      * @since 1.1.0
      */
     public boolean isDistinctObjectsOnly()
@@ -400,13 +453,13 @@ public class JsonMergeOption
         }
 
         /**
-         * Tells the algorithm to pick the higher precedence object when two objects identified by
-         * the same key(s) are found in both JSON documents at the path defined for the
+         * Tells the algorithm to pick the highest precedence object when two objects identified
+         * by the same key(s) are found in both JSON documents at the path defined for the
          * {@code JsonMergeOption}.
          *
          * @return a finalized {@link JsonMergeOption}
          */
-        public JsonMergeOption thenPickTheHigherPrecedenceOne()
+        public JsonMergeOption thenPickTheHighestPrecedenceOne()
         {
             return new JsonMergeOption(path, keys, false, DEFAULT_DISTINCT_OBJECTS_ONLY);
         }

@@ -93,15 +93,25 @@ class JsonPathExpressionTest
     @Test
     void appendKey_emptyValue_sameExpression()
     {
-        JsonPathExpression expression1 = new JsonPathExpression("$.agent.class");
-        assertSame(expression1, expression1.appendChild(""));
+        JsonPathExpression expression = new JsonPathExpression("$.agent.class");
+        assertSame(expression, expression.appendChild(""));
     }
 
     @Test
     void append_emptyValue_sameExpression()
     {
-        JsonPathExpression expression1 = new JsonPathExpression("$.agent.class");
-        assertSame(expression1, expression1.append(""));
+        JsonPathExpression expression = new JsonPathExpression("$.agent.class");
+        assertSame(expression, expression.append(""));
+    }
+
+    @Test
+    void cleanup_success()
+    {
+        assertEquals(new JsonPathExpression("$.foo[*].bar[*].baz"),
+                new JsonPathExpression("$.foo[0].bar[1].baz").cleanUp());
+
+        JsonPathExpression unchangeableExpression = new JsonPathExpression("$.foo.bar.baz");
+        assertEquals(unchangeableExpression, unchangeableExpression.cleanUp());
     }
 
     @Test
