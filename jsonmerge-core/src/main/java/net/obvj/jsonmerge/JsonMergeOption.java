@@ -453,13 +453,13 @@ public final class JsonMergeOption
         }
 
         /**
-         * Tells the algorithm to pick the higher precedence object when two objects identified by
-         * the same key(s) are found in both JSON documents at the path defined for the
+         * Tells the algorithm to pick the highest precedence object when two objects identified
+         * by the same key(s) are found in both JSON documents at the path defined for the
          * {@code JsonMergeOption}.
          *
          * @return a finalized {@link JsonMergeOption}
          */
-        public JsonMergeOption thenPickTheHigherPrecedenceOne()
+        public JsonMergeOption thenPickTheHighestPrecedenceOne()
         {
             return new JsonMergeOption(path, keys, false, DEFAULT_DISTINCT_OBJECTS_ONLY);
         }

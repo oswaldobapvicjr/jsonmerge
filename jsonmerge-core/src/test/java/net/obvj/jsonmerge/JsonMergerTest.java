@@ -291,7 +291,7 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_3), fromString(JSON_4),
                 onPath("$.agents").findObjectsIdentifiedBy("class")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json3Agent1", "Json3Agent2"), result, "$.agents[*].description");
@@ -302,7 +302,7 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_4), fromString(JSON_3),
                 onPath("$.agents").findObjectsIdentifiedBy("class")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         assertElement(Boolean.TRUE, get(result, "enabled")); // from JSON_4
         assertArray(asList("Json4Agent1", "Json3Agent2"), result, "$.agents[*].description");
@@ -350,7 +350,7 @@ abstract class JsonMergerTest<O>
     void merge_json8HighWithJson9LowAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_8), fromString(JSON_9),
-                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
+                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHighestPrecedenceOne());
 
         assertArray(asList("Json8Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
@@ -360,7 +360,7 @@ abstract class JsonMergerTest<O>
     void merge_json8LowWithJson9HighAndDistinctKeyAndPickTheHigherPrecedenceOne_success()
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
-                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHigherPrecedenceOne());
+                onPath("$.array").findObjectsIdentifiedBy("name").thenPickTheHighestPrecedenceOne());
 
         assertArray(asList("Json9Value1"), result, "$.array[?(@.name=='name1')].value");
         assertArray(asList("element1", "element2"), result, "$.array[*]", false);
@@ -371,7 +371,7 @@ abstract class JsonMergerTest<O>
     {
         O result = merger.merge(fromString(JSON_9), fromString(JSON_8),
                 onPath("$.array").findObjectsIdentifiedBy("unknown")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         // No exception expected, but the merge will consider no distinct key
         assertArray(asList("Json9Value1", "Json8Value1"), result,
@@ -385,7 +385,7 @@ abstract class JsonMergerTest<O>
                 fromFile("testfiles/drive2.json"),
                 fromFile("testfiles/drive1.json"),
                 onPath("$.files").findObjectsIdentifiedBy("id", "version")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
@@ -441,7 +441,7 @@ abstract class JsonMergerTest<O>
                 fromFile("testfiles/drive1.json"),
                 fromFile("testfiles/drive2.json"),
                 onPath("$.files").findObjectsIdentifiedBy("id", "version")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         assertArray(asList("1", "2", "3"), result,
                 "$.files[?(@.id=='d2b638be-40d2-4965-906e-291521f8a19d')].version");
@@ -490,7 +490,7 @@ abstract class JsonMergerTest<O>
                 onPath("$.sites[*].users").findObjectsIdentifiedBy("name").thenDoADeepMerge(),
                 onPath("$.sites[*].users[*].friends").addDistinctObjectsOnly(),
                 onPath("$.sites[*].users[*].preferences").findObjectsIdentifiedBy("key")
-                        .thenPickTheHigherPrecedenceOne());
+                        .thenPickTheHighestPrecedenceOne());
 
         // ----------------------------
         // Camille Lawson
