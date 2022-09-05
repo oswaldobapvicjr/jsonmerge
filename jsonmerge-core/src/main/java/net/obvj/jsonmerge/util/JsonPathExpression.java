@@ -28,6 +28,8 @@ import com.jayway.jsonpath.JsonPath;
  *
  * @author oswaldo.bapvic.jr
  * @since 1.0.0
+ *
+ * @see <a href="https://goessner.net/articles/JsonPath/">JSONPath - XPath for JSON</a>
  */
 public class JsonPathExpression
 {
