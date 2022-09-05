@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Function;
-import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 import org.slf4j.Logger;
@@ -77,8 +76,6 @@ import net.obvj.performetrics.Stopwatch;
 public class JsonMerger<T>
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonMerger.class);
-
-    private static final Pattern REMOVABLE_PATH_PARTS = Pattern.compile("\\[[0-9]*\\]");
 
     private final JsonProvider<T> jsonProvider;
 
@@ -295,11 +292,8 @@ public class JsonMerger<T>
          */
         private JsonMergeOption getMergeOption()
         {
-            // TODO Extract to a method in JsonPathExpression
-            String comparableOption = REMOVABLE_PATH_PARTS.matcher(absolutePath.toString())
-                    .replaceAll("[*]");
-            JsonPathExpression comparablePath = new JsonPathExpression(comparableOption);
-            return options.getOrDefault(comparablePath, DEFAULT);
+            JsonPathExpression cleanPath = absolutePath.cleanUp();
+            return options.getOrDefault(cleanPath, DEFAULT);
         }
 
         private void addObjectToArray(Object array, Object object, JsonMergeOption pathOption)

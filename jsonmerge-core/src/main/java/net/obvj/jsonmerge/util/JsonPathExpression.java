@@ -17,6 +17,7 @@
 package net.obvj.jsonmerge.util;
 
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -42,6 +43,9 @@ public class JsonPathExpression
 
     private static final String CHILD_TO_EXPRESSION_PATTERN = "['%s']";
     private static final String INDEX_TO_EXPRESSION_PATTERN = "[%d]";
+
+    private static final Pattern CLEANUP_REPLACEABLE_PARTS = Pattern.compile("\\[[0-9]*\\]");
+    private static final String CLEANUP_REPLACEMENT = "[*]";
 
     private final JsonPath jsonPath;
 
@@ -113,6 +117,27 @@ public class JsonPathExpression
         }
         String currentPath = toString();
         return new JsonPathExpression(currentPath + expression);
+    }
+
+    /**
+     * Performs a cleanup of the path associated with this {@code JsonPathExpression}..
+     * <p>
+     * During cleanup, arrays indexes are replaced with a wildcard character.
+     * <p>
+     * For example:
+     *
+     * <pre>
+     * new JsonPathExpression("$['foo'][0]['bar'][1]").cleanup(); // returns: $['foo'][*]['bar'][*]
+     * </pre>
+     *
+     * @return a new {@code JsonPathExpression} from the cleanup of this one
+     * @since 1.1.0
+     */
+    public JsonPathExpression cleanUp()
+    {
+        String newPath = CLEANUP_REPLACEABLE_PARTS.matcher(jsonPath.getPath())
+                .replaceAll(CLEANUP_REPLACEMENT);
+        return new JsonPathExpression(newPath);
     }
 
     /**
