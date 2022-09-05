@@ -57,11 +57,45 @@ public class StringUtils
      */
     public static String requireNonBlankAndTrim(String string, String message)
     {
-        if (org.apache.commons.lang3.StringUtils.isBlank(string))
+        if (isBlank(string))
         {
             throw new IllegalArgumentException(message);
         }
         return string.trim();
+    }
+
+    /**
+     * Checks if a {@code CharSequence} is empty ("") or null.
+     *
+     * @param charSequence the {@code CharSequence} to check, may be null
+     * @return {@code true} if the {@code CharSequence} is empty or null
+     * @since 1.1.0
+     */
+    public static boolean isEmpty(CharSequence charSequence)
+    {
+        return charSequence == null || charSequence.length() == 0;
+    }
+
+    /**
+     * Checks if a {@code CharSequence} is empty (""), null or whitespace only.
+     *
+     * @param charSequence the {@code CharSequence} to check, may be null
+     * @return {@code true} if the {@code CharSequence} is null, empty or whitespace only
+     * @since 1.1.0
+     */
+    public static boolean isBlank(CharSequence charSequence)
+    {
+        if (!isEmpty(charSequence))
+        {
+            for (int i = 0; i < charSequence.length(); i++)
+            {
+                if (!Character.isWhitespace(charSequence.charAt(i)))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }
