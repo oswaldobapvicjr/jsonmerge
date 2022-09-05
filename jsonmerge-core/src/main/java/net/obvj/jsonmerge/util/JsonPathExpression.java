@@ -120,9 +120,9 @@ public class JsonPathExpression
     }
 
     /**
-     * Performs a cleanup of the path associated with this {@code JsonPathExpression}..
+     * Performs a cleanup of the path associated with this {@code JsonPathExpression}.
      * <p>
-     * During cleanup, arrays indexes are replaced with a wildcard character.
+     * During cleanup, arrays indexes are replaced with a wildcard character ({@code *}).
      * <p>
      * For example:
      *
