@@ -16,6 +16,7 @@
 
 package net.obvj.jsonmerge.provider;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map.Entry;
 import java.util.Objects;
@@ -44,6 +45,8 @@ import io.vertx.core.json.JsonObject;
 public class VertxJsonProvider extends AbstractJsonProvider<JsonObject>
 {
 
+    private static final int BUFFER_SIZE = 4096;
+
     private JsonObject toJsonObject(final Object jsonObject)
     {
         return (JsonObject) jsonObject;
@@ -61,10 +64,35 @@ public class VertxJsonProvider extends AbstractJsonProvider<JsonObject>
     }
 
     @Override
-    JsonObject doParse(InputStream inputStream)
+    JsonObject doParse(InputStream inputStream) throws IOException
     {
-        return null;
+        return new JsonObject(toBuffer(inputStream));
     }
+
+    private static Buffer toBuffer(InputStream inputStream) throws IOException
+    {
+        Buffer buffer = Buffer.buffer();
+        if (inputStream != null)
+        {
+            int read;
+            byte[] data = new byte[BUFFER_SIZE];
+            while ((read = inputStream.read(data, 0, data.length)) != -1)
+            {
+                if (read == data.length)
+                {
+                    buffer.appendBytes(data);
+                }
+                else
+                {
+                    byte[] slice = new byte[read];
+                    System.arraycopy(data, 0, slice, 0, slice.length);
+                    buffer.appendBytes(slice);
+                }
+            }
+        }
+        return buffer;
+    }
+
 
     @Override
     public boolean isJsonObject(final Object object)
@@ -177,7 +205,8 @@ public class VertxJsonProvider extends AbstractJsonProvider<JsonObject>
     @Override
     public boolean arrayContains(final Object jsonArray, final Object element)
     {
-        return toJsonArray(jsonArray).contains(element);
+        Object searcheable = isJsonObject(element) ? toJsonObject(element).getMap() : element;
+        return toJsonArray(jsonArray).getList().contains(searcheable);
     }
 
     @Override
