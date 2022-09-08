@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import io.vertx.core.buffer.Buffer;
+import io.vertx.core.json.DecodeException;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 
@@ -57,12 +58,21 @@ public class VertxJsonProvider extends AbstractJsonProvider<JsonObject>
         return (JsonArray) jsonArray;
     }
 
+    /**
+     * @throws DecodeException in case of invalid JSON
+     */
     @Override
     public JsonObject parse(String string)
     {
         return new JsonObject(string);
     }
 
+    /**
+     * @throws DecodeException in case of invalid JSON
+     * @throws IOException     if the first byte cannot be read for any reason other than end
+     *                         of file, or if the input stream has been closed, or if some
+     *                         other I/O error occurs
+     */
     @Override
     JsonObject doParse(InputStream inputStream) throws IOException
     {
