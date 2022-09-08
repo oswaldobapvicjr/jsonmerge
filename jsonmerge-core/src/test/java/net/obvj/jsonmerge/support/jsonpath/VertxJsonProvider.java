@@ -17,10 +17,7 @@
 package net.obvj.jsonmerge.support.jsonpath;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import com.jayway.jsonpath.spi.json.AbstractJsonProvider;
 
@@ -59,13 +56,13 @@ public class VertxJsonProvider extends AbstractJsonProvider
     @Override
     public Object createArray()
     {
-        return internal.newJsonArray();
+        return new JsonArray();
     }
 
     @Override
     public Object createMap()
     {
-        return internal.newJsonObject();
+        return new JsonObject();
     }
 
     @Override
@@ -77,7 +74,7 @@ public class VertxJsonProvider extends AbstractJsonProvider
     @Override
     public Object getArrayIndex(Object obj, int idx)
     {
-        return internal.get(obj, idx);
+        return toJsonArray(obj).getValue(idx);
     }
 
     @Override
@@ -97,7 +94,7 @@ public class VertxJsonProvider extends AbstractJsonProvider
         {
             return UNDEFINED;
         }
-        return internal.get(obj, key);
+        return toJsonObject(obj).getValue(key);
     }
 
     @Override
@@ -150,7 +147,7 @@ public class VertxJsonProvider extends AbstractJsonProvider
     @Override
     public boolean isMap(Object obj)
     {
-        return internal.isJsonObject(obj);
+        return obj instanceof JsonObject || obj instanceof Map;
     }
 
     @Override
