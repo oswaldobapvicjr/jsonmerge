@@ -92,4 +92,10 @@ class JsonMergerJacksonJsonNodeJsonProviderTest extends JsonMergerTest<JsonNode>
         });
     }
 
+    @Override
+    Class<JsonNode> getObjectType()
+    {
+        return JsonNode.class;
+    }
+
 }

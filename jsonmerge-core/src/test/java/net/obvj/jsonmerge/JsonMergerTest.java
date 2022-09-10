@@ -19,6 +19,7 @@ package net.obvj.jsonmerge;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static net.obvj.jsonmerge.JsonMergeOption.onPath;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.net.URL;
 import java.util.List;
@@ -189,10 +190,18 @@ abstract class JsonMergerTest<O>
         }
     }
 
+    abstract Class<O> getObjectType();
 
     /*
      * Test methods - START
      */
+
+    @Test
+    void constructor_validType_validProvider()
+    {
+        JsonMerger<O> merger = new JsonMerger<O>(getObjectType());
+        assertEquals(getProvider(), merger.getJsonProvider());
+    }
 
     @Test
     void merge_json1HighWithJson2LowDefaultOption_success()

@@ -86,4 +86,10 @@ class JsonMergerJsonSmartJsonProviderTest extends JsonMergerTest<JSONObject>
         assertTrue(array.containsAll(expected));
     }
 
+    @Override
+    Class<JSONObject> getObjectType()
+    {
+        return JSONObject.class;
+    }
+
 }

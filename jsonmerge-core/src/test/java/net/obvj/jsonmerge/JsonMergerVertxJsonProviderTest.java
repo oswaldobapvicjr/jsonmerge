@@ -88,4 +88,10 @@ class JsonMergerVertxJsonProviderTest extends JsonMergerTest<JsonObject>
         }
     }
 
+    @Override
+    Class<JsonObject> getObjectType()
+    {
+        return JsonObject.class;
+    }
+
 }

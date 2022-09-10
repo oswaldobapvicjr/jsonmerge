@@ -17,6 +17,7 @@
 package net.obvj.jsonmerge.provider;
 
 import static net.obvj.junit.utils.matchers.AdvancedMatchers.containsAll;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -72,6 +73,19 @@ class JsonSmartJsonProviderTest
         StringBuilder sb = new StringBuilder();
         provider.stream(ARRAY1).forEach(sb::append);
         assertThat(sb.toString(), containsAll("element1", "element2"));
+    }
+
+    @Test
+    void equals_sameClass_true()
+    {
+        assertThat(provider.equals(new JsonSmartJsonProvider()), equalTo(true));
+    }
+
+    @Test
+    void equals_nullOrAnotherClass_false()
+    {
+        assertThat(provider.equals(null), equalTo(false));
+        assertThat(provider.equals(new Object()), equalTo(false));
     }
 
 }

@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.obvj.jsonmerge.provider.JsonProvider;
+import net.obvj.jsonmerge.provider.JsonProviderFactory;
 import net.obvj.jsonmerge.util.JsonPathExpression;
 import net.obvj.performetrics.Counter.Type;
 import net.obvj.performetrics.Stopwatch;
@@ -90,6 +91,29 @@ public class JsonMerger<T>
         this.jsonProvider = requireNonNull(jsonProvider, "The JsonProvider cannot be null");
     }
 
+    /**
+     * Creates a new JSON Merger for a specific JSON object type.
+     * <p>
+     * For example:
+     * <ul>
+     * <li>{@code JSONObject.class} for {@code json-smart}</li>
+     * <li>{@code JsonObject.class} for {@code Gson}</li>
+     * <li>{@code JsonNode.class} for {@code Jackson}</li>
+     * </ul>
+     *
+     * @param jsonObjectType the class that represents a JSON document on a
+     *                       {@code JsonProvider}; not null
+     *
+     * @throws NullPointerException     if the specified {@code jsonObjectType} is null
+     * @throws IllegalArgumentException if no {@link JsonProvider} found for the specified
+     *                                  {@code jsonObjectType}
+     * @since 1.2.0
+     */
+    public JsonMerger(Class<T> jsonObjectType)
+    {
+        this(JsonProviderFactory.instance().getByType(jsonObjectType));
+    }
+
     private static Map<JsonPathExpression, JsonMergeOption> parseMergeOptions(
             JsonMergeOption[] mergeOptions)
     {
@@ -117,6 +141,15 @@ public class JsonMerger<T>
 
         LOGGER.info("Operation finished in {}", stopwatch.elapsedTime());
         return result;
+    }
+
+    /**
+     * @return the {@link JsonProvider} associated with this merger.
+     * @since 1.2.0
+     */
+    JsonProvider<T> getJsonProvider()
+    {
+        return jsonProvider;
     }
 
     private static class JsonPartMerger<T>
