@@ -46,8 +46,8 @@ import io.vertx.core.json.JsonObject;
 public class VertxJsonProvider extends AbstractJsonProvider<JsonObject>
 {
 
-    private static final int BUFFER_SIZE = 4096;
-
+    private static final int DEFAULT_BUFFER_SIZE = 8192;
+    
     private JsonObject toJsonObject(final Object jsonObject)
     {
         return (JsonObject) jsonObject;
@@ -85,7 +85,7 @@ public class VertxJsonProvider extends AbstractJsonProvider<JsonObject>
         if (inputStream != null)
         {
             int read;
-            byte[] data = new byte[BUFFER_SIZE];
+            byte[] data = new byte[DEFAULT_BUFFER_SIZE];
             while ((read = inputStream.read(data, 0, data.length)) != -1)
             {
                 if (read == data.length)
