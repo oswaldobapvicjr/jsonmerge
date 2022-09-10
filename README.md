@@ -65,7 +65,7 @@ The algorithm implemented by **JSON Merge** is provider-agnostic. The actual rea
 
 The Project supports the most popular JSON providers available in the community today.
 
-![Supported JSON providers](resources/jsonmerge%20-%20Json%20Providers%20diagram%20-%201.0-A.svg)
+![Supported JSON providers](resources/jsonmerge%20-%20Json%20Providers%20diagram%20-%201.2-A.svg)
 
 > :warning: **IMPORTANT:** JSON Merge does **NOT** supply the dependencies tagged as **"optional"** to avoid the burden of unintended transitive dependencies in your application. These dependencies must be resolved by your application if required.
 
@@ -81,16 +81,6 @@ import net.minidev.json.JSONObject;
 JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonSmartJsonProvider());
 ````
 
-#### Using Jackson as JSON Provider
-
-> The #1 JSON library in Maven Central
-
-```java
-import com.fasterxml.jackson.databind.JsonNode;
-...
-JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider());
-````
-
 #### Using Gson as JSON Provider
 
 > Google implementation with enhanced conversion capabilities
@@ -99,6 +89,16 @@ JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider()
 import com.google.gson.JsonObject;
 ...
 JsonMerger<JsonObject> merger = new JsonMerger<>(new GsonJsonProvider());
+````
+
+#### Using Jackson as JSON Provider
+
+> The #1 JSON library in Maven Central
+
+```java
+import com.fasterxml.jackson.databind.JsonNode;
+...
+JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider());
 ````
 
 #### Using json.org as JSON Provider
@@ -111,6 +111,15 @@ import org.json.JSONObject;
 JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonOrgJsonProvider());
 ````
 
+#### Using Vert.x as JSON Provider
+
+> Vert.x is a reactive programming toolkit used by 1K+ projects which uses a dedicated JSON object implementation.
+
+```java
+import io.vertx.core.json.JsonObject;
+...
+JsonMerger<JsonObject> merger = new JsonMerger<>(new VertxJsonProvider());
+````
 
 ## Downloading
 
