@@ -30,6 +30,12 @@ import com.google.gson.JsonObject;
 
 import net.minidev.json.JSONObject;
 
+/**
+ * Test methods for {@link JsonProviderFactory}.
+ *
+ * @author oswaldo.bapvic.jr
+ * @since 1.2.0
+ */
 class JsonProviderFactoryTest
 {
     private JsonProviderFactory factory = JsonProviderFactory.instance();

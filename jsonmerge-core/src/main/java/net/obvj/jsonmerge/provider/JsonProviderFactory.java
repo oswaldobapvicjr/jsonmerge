@@ -32,6 +32,7 @@ public final class JsonProviderFactory
 
     private static final JsonProviderFactory INSTANCE = new JsonProviderFactory();
 
+    // Associates each class name with the assignable JsonProvider
     private static final Map<String, Supplier<JsonProvider<?>>> PROVIDERS = new HashMap<>();
 
     static

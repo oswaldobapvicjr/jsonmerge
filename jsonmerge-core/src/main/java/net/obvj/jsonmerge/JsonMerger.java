@@ -133,7 +133,7 @@ public class JsonMerger<T>
     public T merge(T json1, T json2, JsonMergeOption... mergeOptions)
     {
         Map<JsonPathExpression, JsonMergeOption> options = parseMergeOptions(mergeOptions);
-        JsonPartMerger<T> merger = new JsonPartMerger<>(getJsonProvider(), ROOT, options);
+        JsonPartMerger<T> merger = new JsonPartMerger<>(jsonProvider, ROOT, options);
         LOGGER.info("Merging JSON documents...");
 
         Stopwatch stopwatch = Stopwatch.createStarted(Type.WALL_CLOCK_TIME);
