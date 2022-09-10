@@ -18,8 +18,10 @@ package net.obvj.jsonmerger.testdrive;
 
 import static net.obvj.jsonmerge.JsonMergeOption.onPath;
 
-import io.vertx.core.json.JsonObject;
+import org.json.JSONObject;
+
 import net.obvj.jsonmerge.JsonMerger;
+import net.obvj.jsonmerge.provider.JsonOrgJsonProvider;
 import net.obvj.jsonmerge.provider.JsonProvider;
 import net.obvj.jsonmerge.provider.VertxJsonProvider;
 
@@ -29,13 +31,13 @@ import net.obvj.jsonmerge.provider.VertxJsonProvider;
  * @author oswaldo.bapvic.jr
  * @since 1.2.0
  */
-public class JsonMergerVertxTestDrive
+public class JsonMergerJsonOrgTestDrive
 {
     public static void main(String[] args)
     {
-        JsonProvider<JsonObject> provider = new VertxJsonProvider();
+        JsonProvider<JSONObject> provider = new JsonOrgJsonProvider();
 
-        JsonObject json1 = provider.parse("{\n"
+        JSONObject json1 = provider.parse("{\n"
                 + "  \"firstName\": \"John\",\n"
                 + "  \"lastName\": \"Doe\",\n"
                 + "  \"phoneNumbers\": [\n"
@@ -50,7 +52,7 @@ public class JsonMergerVertxTestDrive
                 + "  ]\n"
                 + "}");
 
-        JsonObject json2 = provider.parse("{\n"
+        JSONObject json2 = provider.parse("{\n"
                 + "  \"firstName\": \"John\",\n"
                 + "  \"lastName\": \"Doe\",\n"
                 + "  \"age\": 26,\n"
@@ -62,11 +64,11 @@ public class JsonMergerVertxTestDrive
                 + "  ]\n"
                 + "}");
 
-        JsonMerger<JsonObject> merger = new JsonMerger<>(JsonObject.class);
+        JsonMerger<JSONObject> merger = new JsonMerger<>(JSONObject.class);
 
-        JsonObject merged = merger.merge(json1, json2,
+        JSONObject merged = merger.merge(json1, json2,
                 onPath("phoneNumbers").findObjectsIdentifiedBy("type").thenDoADeepMerge());
 
-        System.out.println(merged.encodePrettily());
+        System.out.println(merged.toString(2));
     }
 }

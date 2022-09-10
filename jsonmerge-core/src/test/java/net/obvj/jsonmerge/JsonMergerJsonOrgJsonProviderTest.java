@@ -95,4 +95,10 @@ class JsonMergerJsonOrgJsonProviderTest extends JsonMergerTest<JSONObject>
 
     }
 
+    @Override
+    Class<JSONObject> getObjectType()
+    {
+        return JSONObject.class;
+    }
+
 }

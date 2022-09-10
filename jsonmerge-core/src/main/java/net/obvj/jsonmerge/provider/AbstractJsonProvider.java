@@ -70,4 +70,10 @@ public abstract class AbstractJsonProvider<T> implements JsonProvider<T>
      */
     abstract T doParse(InputStream inputStream) throws Exception;
 
+    @Override
+    public boolean equals(Object other)
+    {
+        return other != null && this.getClass().equals(other.getClass());
+    }
+
 }
