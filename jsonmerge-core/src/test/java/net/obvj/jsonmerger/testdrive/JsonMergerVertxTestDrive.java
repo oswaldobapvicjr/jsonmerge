@@ -16,12 +16,19 @@
 
 package net.obvj.jsonmerger.testdrive;
 
-import static net.obvj.jsonmerge.JsonMergeOption.*;
+import static net.obvj.jsonmerge.JsonMergeOption.onPath;
+
 import io.vertx.core.json.JsonObject;
 import net.obvj.jsonmerge.JsonMerger;
 import net.obvj.jsonmerge.provider.JsonProvider;
 import net.obvj.jsonmerge.provider.VertxJsonProvider;
 
+/**
+ * Test-drive class for {@link JsonMerger} using the {@link VertxJsonProvider}.
+ *
+ * @author oswaldo.bapvic.jr
+ * @since 1.2.0
+ */
 public class JsonMergerVertxTestDrive
 {
     public static void main(String[] args)
