@@ -31,6 +31,10 @@ import net.obvj.jsonmerge.util.JsonParseException;
 public abstract class AbstractJsonProvider<T> implements JsonProvider<T>
 {
 
+    /**
+     * @throws JsonParseException in case of invalid JSON or any other exception raised by the
+     *                            actual provider during parsing of the input stream
+     */
     @Override
     public T parse(String string)
     {
@@ -39,6 +43,10 @@ public abstract class AbstractJsonProvider<T> implements JsonProvider<T>
         return parse(inputStream);
     }
 
+    /**
+     * @throws JsonParseException in case of invalid JSON or any other exception raised by the
+     *                            actual provider during parsing of the input stream
+     */
     @Override
     public T parse(InputStream inputStream)
     {
