@@ -78,7 +78,8 @@ The Project supports the most popular JSON providers available in the community 
 ```java
 import net.minidev.json.JSONObject;
 ...
-JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonSmartJsonProvider());
+JsonMerger<JSONObject> merger = new JsonMerger<>(JSONObject.class);
+                       /* or... new JsonMerger<>(new JsonSmartJsonProvider()); */
 ````
 
 #### Using Gson as JSON Provider
@@ -88,7 +89,8 @@ JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonSmartJsonProvider());
 ```java
 import com.google.gson.JsonObject;
 ...
-JsonMerger<JsonObject> merger = new JsonMerger<>(new GsonJsonProvider());
+JsonMerger<JsonObject> merger = new JsonMerger<>(JsonObject.class);
+                       /* or... new JsonMerger<>(new GsonJsonProvider()); */
 ````
 
 #### Using Jackson as JSON Provider
@@ -98,7 +100,9 @@ JsonMerger<JsonObject> merger = new JsonMerger<>(new GsonJsonProvider());
 ```java
 import com.fasterxml.jackson.databind.JsonNode;
 ...
-JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider());
+JsonMerger<JsonNode> merger = new JsonMerger<>(JsonNode.class);
+                     /* or... new JsonMerger<>(new JacksonJsonNodeJsonProvider()); */
+
 ````
 
 #### Using json.org as JSON Provider
@@ -108,17 +112,19 @@ JsonMerger<JsonNode> merger = new JsonMerger<>(new JacksonJsonNodeJsonProvider()
 ```java
 import org.json.JSONObject;
 ...
-JsonMerger<JSONObject> merger = new JsonMerger<>(new JsonOrgJsonProvider());
+JsonMerger<JSONObject> merger = new JsonMerger<>(JSONObject.class);
+                       /* or... new JsonMerger<>(new JsonOrgJsonProvider()); */
 ````
 
 #### Using Vert.x as JSON Provider
 
-> Vert.x is a reactive programming toolkit used by 1K+ projects which uses a dedicated JSON object implementation.
+> Vert.x is a reactive programming toolkit used by 1K+ projects which uses a dedicated JSON implementation
 
 ```java
 import io.vertx.core.json.JsonObject;
 ...
-JsonMerger<JsonObject> merger = new JsonMerger<>(new VertxJsonProvider());
+JsonMerger<JsonObject> merger = new JsonMerger<>(JsonObject.class);
+                       /* or... new JsonMerger<>(new VertxJsonProvider()); */
 ````
 
 ## Downloading
