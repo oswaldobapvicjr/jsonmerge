@@ -138,7 +138,7 @@ public class JsonMerger<T>
         LOGGER.info("Merging JSON documents...");
 
         Stopwatch stopwatch = Stopwatch.createStarted(Type.WALL_CLOCK_TIME);
-        T result = (T) merger.merge(json1, json2);
+        T result = merger.merge(json1, json2);
 
         LOGGER.info("Operation finished in {}", stopwatch.elapsedTime());
         return result;
@@ -206,7 +206,7 @@ public class JsonMerger<T>
          * @param json2 the lowest-precedence JSON object
          * @return a combination of the two JSON objects
          */
-        private Object merge(Object json1, Object json2)
+        private T merge(Object json1, Object json2)
         {
             LOGGER.debug("Merging object on path: {}", absolutePath);
 
@@ -215,7 +215,7 @@ public class JsonMerger<T>
                 return jsonProvider.newJsonObject(json1);
             }
 
-            Object result = jsonProvider.newJsonObject();
+            T result = jsonProvider.newJsonObject();
 
             // First iterate through the first json
             for (Entry<String, Object> entry : jsonProvider.entrySet(json1))

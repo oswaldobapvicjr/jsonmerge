@@ -97,13 +97,13 @@ public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider<JsonNode>
     }
 
     @Override
-    public Object newJsonObject()
+    public JsonNode newJsonObject()
     {
         return JsonNodeFactory.instance.objectNode();
     }
 
     @Override
-    public Object newJsonObject(final Object sourceJsonObject)
+    public JsonNode newJsonObject(final Object sourceJsonObject)
     {
         return JsonNodeFactory.instance.objectNode().setAll(toJsonObject(sourceJsonObject));
     }
@@ -120,6 +120,7 @@ public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider<JsonNode>
         return JsonNodeFactory.instance.arrayNode().addAll(toJsonArray(sourceJsonArray));
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public Set<Entry<String, Object>> entrySet(final Object jsonObject)
     {
@@ -189,6 +190,7 @@ public class JacksonJsonNodeJsonProvider extends AbstractJsonProvider<JsonNode>
         return stream(jsonArray).anyMatch(element::equals);
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Stream<Object> stream(final Object jsonArray)
     {

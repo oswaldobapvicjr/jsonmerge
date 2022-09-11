@@ -77,13 +77,13 @@ public class JsonSmartJsonProvider extends AbstractJsonProvider<JSONObject>
     }
 
     @Override
-    public Object newJsonObject()
+    public JSONObject newJsonObject()
     {
         return new JSONObject();
     }
 
     @Override
-    public Object newJsonObject(final Object sourceJsonObject)
+    public JSONObject newJsonObject(final Object sourceJsonObject)
     {
         return new JSONObject((JSONObject) sourceJsonObject);
     }

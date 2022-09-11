@@ -88,13 +88,13 @@ public class GsonJsonProvider extends AbstractJsonProvider<JsonObject>
     }
 
     @Override
-    public Object newJsonObject()
+    public JsonObject newJsonObject()
     {
         return new JsonObject();
     }
 
     @Override
-    public Object newJsonObject(final Object sourceJsonObject)
+    public JsonObject newJsonObject(final Object sourceJsonObject)
     {
         JsonObject json = new JsonObject();
         toJsonObject(sourceJsonObject).entrySet()
@@ -116,6 +116,7 @@ public class GsonJsonProvider extends AbstractJsonProvider<JsonObject>
         return array;
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Set<Entry<String, Object>> entrySet(final Object jsonObject)
     {
@@ -183,6 +184,7 @@ public class GsonJsonProvider extends AbstractJsonProvider<JsonObject>
         return toJsonArray(jsonArray).contains(toJsonElement(element));
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public Stream<Object> stream(final Object jsonArray)
     {

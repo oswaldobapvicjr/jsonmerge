@@ -47,7 +47,7 @@ public class VertxJsonProvider extends AbstractJsonProvider<JsonObject>
 {
 
     private static final int DEFAULT_BUFFER_SIZE = 8192;
-    
+
     private JsonObject toJsonObject(final Object jsonObject)
     {
         return (JsonObject) jsonObject;
@@ -123,13 +123,13 @@ public class VertxJsonProvider extends AbstractJsonProvider<JsonObject>
     }
 
     @Override
-    public Object newJsonObject()
+    public JsonObject newJsonObject()
     {
         return new JsonObject();
     }
 
     @Override
-    public Object newJsonObject(final Object sourceJsonObject)
+    public JsonObject newJsonObject(final Object sourceJsonObject)
     {
         JsonObject json = new JsonObject();
         toJsonObject(sourceJsonObject).forEach(entry -> json.put(entry.getKey(), entry.getValue()));

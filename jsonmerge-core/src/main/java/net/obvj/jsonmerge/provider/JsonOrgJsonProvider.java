@@ -81,13 +81,13 @@ public class JsonOrgJsonProvider extends AbstractJsonProvider<JSONObject>
     }
 
     @Override
-    public Object newJsonObject()
+    public JSONObject newJsonObject()
     {
         return new JSONObject();
     }
 
     @Override
-    public Object newJsonObject(final Object sourceJsonObject)
+    public JSONObject newJsonObject(final Object sourceJsonObject)
     {
         JSONObject source = toJsonObject(sourceJsonObject);
         JSONObject target = new JSONObject();

@@ -73,6 +73,7 @@ public final class JsonProviderFactory
      * @throws IllegalArgumentException if no {@link JsonProvider} found for the specified
      *                                  {@code jsonObjectType}
      */
+    @SuppressWarnings("unchecked")
     public <T> JsonProvider<T> getByType(final Class<T> jsonObjectType)
     {
         Objects.requireNonNull(jsonObjectType, "The search type must not be null");

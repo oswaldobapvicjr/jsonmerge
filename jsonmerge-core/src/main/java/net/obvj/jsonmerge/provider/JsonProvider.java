@@ -93,7 +93,7 @@ public interface JsonProvider<T>
      *
      * @return a new, empty JSON object
      */
-    Object newJsonObject();
+    T newJsonObject();
 
     /**
      * Creates a new provider-specific JSON object with the contents of a preset JSON object.
@@ -104,7 +104,7 @@ public interface JsonProvider<T>
      * @param sourceJsonObject the JSON whose contents are to be copied; not {@code null}
      * @return a new JSON object with the contents of the source JSON object
      */
-    Object newJsonObject(final Object sourceJsonObject);
+    T newJsonObject(final Object sourceJsonObject);
 
     /**
      * Creates a provider-specific JSON array.
