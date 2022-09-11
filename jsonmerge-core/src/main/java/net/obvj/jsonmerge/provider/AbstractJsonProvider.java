@@ -33,8 +33,7 @@ public abstract class AbstractJsonProvider<T> implements JsonProvider<T>
 
     /**
      * @throws NullPointerException if the specified string is null
-     * @throws JsonParseException   in case of invalid JSON or any other exception raised by
-     *                              the actual provider during parsing of the specified string
+     * @throws JsonParseException   if the specified string is an invalid JSON
      */
     @Override
     public T parse(String string)

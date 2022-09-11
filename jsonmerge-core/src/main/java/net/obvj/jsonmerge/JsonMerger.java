@@ -154,9 +154,7 @@ public class JsonMerger<T>
      * @return a new JSON document from the combination of {@code json1} and {@code json2}
      *
      * @throws NullPointerException if one of the specified strings is null
-     * @throws JsonParseException   in case of invalid JSON or any other exception raised by
-     *                              the actual provider during parsing of the specified JSON
-     *                              strings
+     * @throws JsonParseException   if one of the the specified strings is an invalid JSON
      * @since 1.2.0
      */
     public T merge(String json1, String json2, JsonMergeOption... mergeOptions)
