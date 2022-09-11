@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import net.obvj.jsonmerge.provider.JsonProvider;
 import net.obvj.jsonmerge.provider.JsonProviderFactory;
+import net.obvj.jsonmerge.util.JsonParseException;
 import net.obvj.jsonmerge.util.JsonPathExpression;
 import net.obvj.performetrics.Counter.Type;
 import net.obvj.performetrics.Stopwatch;
@@ -141,6 +142,32 @@ public class JsonMerger<T>
 
         LOGGER.info("Operation finished in {}", stopwatch.elapsedTime());
         return result;
+    }
+
+    /**
+     * Decodes the specified JSON strings and then combines them.
+     *
+     * @param json1        the first JSON document; this object will have higher precedence
+     *                     than the other one in case of key collision
+     * @param json2        the second JSON document (lower precedence object)
+     * @param mergeOptions an array of options on how to merge the documents (optional)
+     * @return a new JSON document from the combination of {@code json1} and {@code json2}
+     *
+     * @throws NullPointerException if one of the specified strings is null
+     * @throws JsonParseException   in case of invalid JSON or any other exception raised by
+     *                              the actual provider during parsing of the specified JSON
+     *                              strings
+     * @since 1.2.0
+     */
+    public T merge(String json1, String json2, JsonMergeOption... mergeOptions)
+    {
+        LOGGER.info("Parsing the first JSON...");
+        T jsonObject1 = jsonProvider.parse(json1);
+
+        LOGGER.info("Parsing the second JSON...");
+        T jsonObject2 = jsonProvider.parse(json2);
+
+        return merge(jsonObject1, jsonObject2, mergeOptions);
     }
 
     /**

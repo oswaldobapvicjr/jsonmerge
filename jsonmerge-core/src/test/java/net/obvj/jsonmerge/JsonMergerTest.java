@@ -219,6 +219,21 @@ abstract class JsonMergerTest<O>
     }
 
     @Test
+    void merge_json1HighWithJson2LowBothPassedAsStringsAndNoMergeOption_success()
+    {
+        O result = merger.merge(JSON_1, JSON_2);
+
+        assertElement("value1", get(result, "string")); // from JSON_1
+        assertElement("alt1", get(result, "alt")); // from JSON_1
+        assertElement(9876, get(result, "number")); // from JSON_2
+        assertArray(EXPECTED_JSON_1_JSON_2_ARRAY_DISTINCT, result, "array");
+
+        assertElement("Json1ObjectA", get(result, "$.object.a")); // from JSON_1
+        assertElement("Json1ObjectB", get(result, "$.object.b")); // from JSON_1
+        assertElement("Json2ObjectC", get(result, "$.object.c")); // from JSON_2
+    }
+
+    @Test
     void merge_json1LowWithJson2HighDefaultOption_success()
     {
         O result = merger.merge(fromString(JSON_2), fromString(JSON_1));
@@ -250,6 +265,20 @@ abstract class JsonMergerTest<O>
     void merge_json1HighWithJson2LowWithOptionAddAllOnArray_success()
     {
         O result = merger.merge(fromString(JSON_1), fromString(JSON_2),
+                JsonMergeOption.onPath("array").addAll());
+
+        assertElement(1, get(result, "$.array[0]"));
+        assertElement(2, get(result, "$.array[1]"));
+        assertElement(3, get(result, "$.array[2]"));
+        assertElement(3, get(result, "$.array[3]"));
+        assertElement(4, get(result, "$.array[4]"));
+        assertElement(5, get(result, "$.array[5]"));
+    }
+
+    @Test
+    void merge_json1HighWithJson2LowBothPassedAsStringsWithOptionAddAllOnArray_success()
+    {
+        O result = merger.merge(JSON_1, JSON_2,
                 JsonMergeOption.onPath("array").addAll());
 
         assertElement(1, get(result, "$.array[0]"));
