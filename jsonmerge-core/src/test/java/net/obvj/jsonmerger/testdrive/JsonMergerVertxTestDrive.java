@@ -20,7 +20,6 @@ import static net.obvj.jsonmerge.JsonMergeOption.onPath;
 
 import io.vertx.core.json.JsonObject;
 import net.obvj.jsonmerge.JsonMerger;
-import net.obvj.jsonmerge.provider.JsonProvider;
 import net.obvj.jsonmerge.provider.VertxJsonProvider;
 
 /**
