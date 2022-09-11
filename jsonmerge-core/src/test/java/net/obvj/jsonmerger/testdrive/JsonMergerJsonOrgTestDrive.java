@@ -21,8 +21,6 @@ import static net.obvj.jsonmerge.JsonMergeOption.onPath;
 import org.json.JSONObject;
 
 import net.obvj.jsonmerge.JsonMerger;
-import net.obvj.jsonmerge.provider.JsonOrgJsonProvider;
-import net.obvj.jsonmerge.provider.JsonProvider;
 import net.obvj.jsonmerge.provider.VertxJsonProvider;
 
 /**
@@ -35,9 +33,7 @@ public class JsonMergerJsonOrgTestDrive
 {
     public static void main(String[] args)
     {
-        JsonProvider<JSONObject> provider = new JsonOrgJsonProvider();
-
-        JSONObject json1 = provider.parse("{\n"
+        String json1 = "{\n"
                 + "  \"firstName\": \"John\",\n"
                 + "  \"lastName\": \"Doe\",\n"
                 + "  \"phoneNumbers\": [\n"
@@ -50,9 +46,9 @@ public class JsonMergerJsonOrgTestDrive
                 + "      \"number\": \"9876-5432-1000\"\n"
                 + "    }\n"
                 + "  ]\n"
-                + "}");
+                + "}";
 
-        JSONObject json2 = provider.parse("{\n"
+        String json2 = "{\n"
                 + "  \"firstName\": \"John\",\n"
                 + "  \"lastName\": \"Doe\",\n"
                 + "  \"age\": 26,\n"
@@ -62,7 +58,7 @@ public class JsonMergerJsonOrgTestDrive
                 + "      \"number\": \"0123-4567-8910\"\n"
                 + "    }\n"
                 + "  ]\n"
-                + "}");
+                + "}";
 
         JsonMerger<JSONObject> merger = new JsonMerger<>(JSONObject.class);
 

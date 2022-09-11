@@ -33,9 +33,7 @@ public class JsonMergerVertxTestDrive
 {
     public static void main(String[] args)
     {
-        JsonProvider<JsonObject> provider = new VertxJsonProvider();
-
-        JsonObject json1 = provider.parse("{\n"
+        String json1 = "{\n"
                 + "  \"firstName\": \"John\",\n"
                 + "  \"lastName\": \"Doe\",\n"
                 + "  \"phoneNumbers\": [\n"
@@ -48,9 +46,9 @@ public class JsonMergerVertxTestDrive
                 + "      \"number\": \"9876-5432-1000\"\n"
                 + "    }\n"
                 + "  ]\n"
-                + "}");
+                + "}";
 
-        JsonObject json2 = provider.parse("{\n"
+        String json2 = "{\n"
                 + "  \"firstName\": \"John\",\n"
                 + "  \"lastName\": \"Doe\",\n"
                 + "  \"age\": 26,\n"
@@ -60,7 +58,7 @@ public class JsonMergerVertxTestDrive
                 + "      \"number\": \"0123-4567-8910\"\n"
                 + "    }\n"
                 + "  ]\n"
-                + "}");
+                + "}";
 
         JsonMerger<JsonObject> merger = new JsonMerger<>(JsonObject.class);
 

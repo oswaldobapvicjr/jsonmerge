@@ -32,8 +32,8 @@ public abstract class AbstractJsonProvider<T> implements JsonProvider<T>
 {
 
     /**
-     * @throws JsonParseException in case of invalid JSON or any other exception raised by the
-     *                            actual provider during parsing of the input stream
+     * @throws NullPointerException if the specified string is null
+     * @throws JsonParseException   if the specified string is an invalid JSON
      */
     @Override
     public T parse(String string)
@@ -70,6 +70,18 @@ public abstract class AbstractJsonProvider<T> implements JsonProvider<T>
      */
     abstract T doParse(InputStream inputStream) throws Exception;
 
+    /**
+     * Indicates whether the specified {@code JsonProvider} is "equal to" this one, with an
+     * equivalence relation based on the actual provider class.
+     * <p>
+     * So, two instances of the same {@code JsonProvider} subclass will always be considered
+     * "equal", for the implementations shall maintain no particular state or dedicated
+     * instance data.
+     *
+     * @param other the reference object with which to compare
+     * @return {@code true} if this object is the same as the other; {@code false} otherwise
+     * @since 1.2.0
+     */
     @Override
     public boolean equals(Object other)
     {

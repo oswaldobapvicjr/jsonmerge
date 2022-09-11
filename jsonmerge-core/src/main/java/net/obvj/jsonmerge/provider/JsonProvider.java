@@ -42,7 +42,7 @@ public interface JsonProvider<T>
      * @param string the source string
      * @return a JSON object of the type defined by this provider
      * @throws NullPointerException if the specified string is null
-     * @throws JsonParseException   in the specified string is an invalid JSON
+     * @throws JsonParseException   if the specified string is an invalid JSON
      * @since 1.1.0
      */
     T parse(String string);
