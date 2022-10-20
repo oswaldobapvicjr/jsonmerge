@@ -16,11 +16,9 @@
 
 package net.obvj.jsonmerge.provider;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 /**
  * A factory that creates {@link JsonProvider} instances for specified JSON object types.
