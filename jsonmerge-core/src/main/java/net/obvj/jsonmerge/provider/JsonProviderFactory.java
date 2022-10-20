@@ -19,7 +19,6 @@ package net.obvj.jsonmerge.provider;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Supplier;
 
 /**
  * A factory that creates {@link JsonProvider} instances for specified JSON object types.
@@ -33,16 +32,16 @@ public final class JsonProviderFactory
     private static final JsonProviderFactory INSTANCE = new JsonProviderFactory();
 
     // Associates each class name with the assignable JsonProvider
-    private static final Map<String, Supplier<JsonProvider<?>>> PROVIDERS = new HashMap<>();
+    private static final Map<String, Class<? extends JsonProvider<?>>> PROVIDERS = new HashMap<>();
 
     static
     {
-        PROVIDERS.put("net.minidev.json.JSONObject", JsonSmartJsonProvider::new);
-        PROVIDERS.put("com.google.gson.JsonObject", GsonJsonProvider::new);
-        PROVIDERS.put("com.fasterxml.jackson.databind.JsonNode", JacksonJsonNodeJsonProvider::new);
-        PROVIDERS.put("com.fasterxml.jackson.databind.node.ObjectNode", JacksonJsonNodeJsonProvider::new);
-        PROVIDERS.put("org.json.JSONObject", JsonOrgJsonProvider::new);
-        PROVIDERS.put("io.vertx.core.json.JsonObject", VertxJsonProvider::new);
+        PROVIDERS.put("net.minidev.json.JSONObject", JsonSmartJsonProvider.class);
+        PROVIDERS.put("com.google.gson.JsonObject", GsonJsonProvider.class);
+        PROVIDERS.put("com.fasterxml.jackson.databind.JsonNode", JacksonJsonNodeJsonProvider.class);
+        PROVIDERS.put("com.fasterxml.jackson.databind.node.ObjectNode", JacksonJsonNodeJsonProvider.class);
+        PROVIDERS.put("org.json.JSONObject", JsonOrgJsonProvider.class);
+        PROVIDERS.put("io.vertx.core.json.JsonObject", VertxJsonProvider.class);
     }
 
     /**
@@ -72,18 +71,33 @@ public final class JsonProviderFactory
      * @throws NullPointerException     if the specified {@code jsonObjectType} is null
      * @throws IllegalArgumentException if no {@link JsonProvider} found for the specified
      *                                  {@code jsonObjectType}
+     * @throws IllegalStateException    if unable to instantiate the target
+     *                                  {@link JsonProvider}
      */
-    @SuppressWarnings("unchecked")
     public <T> JsonProvider<T> getByType(final Class<T> jsonObjectType)
     {
-        Objects.requireNonNull(jsonObjectType, "The search type must not be null");
+        return getByType(PROVIDERS, jsonObjectType);
+    }
+
+    @SuppressWarnings("unchecked")
+    <T> JsonProvider<T> getByType(final Map<String, Class<? extends JsonProvider<?>>> map,
+            final Class<T> jsonObjectType)
+    {
+        Objects.requireNonNull(jsonObjectType, "The type must not be null");
         String className = jsonObjectType.getCanonicalName();
-        Supplier<JsonProvider<?>> supplier = PROVIDERS.get(className);
-        if (supplier == null)
+        Class<? extends JsonProvider<?>> providerClass = map.get(className);
+        if (providerClass == null)
         {
             throw new IllegalArgumentException("No JsonProvider available for " + className);
         }
-        return (JsonProvider<T>) supplier.get();
+        try
+        {
+            return (JsonProvider<T>) providerClass.getDeclaredConstructor().newInstance();
+        }
+        catch (ReflectiveOperationException exception)
+        {
+            throw new IllegalStateException(exception);
+        }
     }
 
 }
