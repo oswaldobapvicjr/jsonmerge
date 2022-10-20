@@ -16,6 +16,7 @@
 
 package net.obvj.jsonmerge.provider;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -33,16 +34,16 @@ public final class JsonProviderFactory
     private static final JsonProviderFactory INSTANCE = new JsonProviderFactory();
 
     // Associates each class name with the assignable JsonProvider
-    private static final Map<String, Supplier<JsonProvider<?>>> PROVIDERS = new HashMap<>();
+    private static final Map<String, Class<? extends JsonProvider<?>>> PROVIDERS = new HashMap<>();
 
     static
     {
-        PROVIDERS.put("net.minidev.json.JSONObject", JsonSmartJsonProvider::new);
-        PROVIDERS.put("com.google.gson.JsonObject", GsonJsonProvider::new);
-        PROVIDERS.put("com.fasterxml.jackson.databind.JsonNode", JacksonJsonNodeJsonProvider::new);
-        PROVIDERS.put("com.fasterxml.jackson.databind.node.ObjectNode", JacksonJsonNodeJsonProvider::new);
-        PROVIDERS.put("org.json.JSONObject", JsonOrgJsonProvider::new);
-        PROVIDERS.put("io.vertx.core.json.JsonObject", VertxJsonProvider::new);
+        PROVIDERS.put("net.minidev.json.JSONObject", JsonSmartJsonProvider.class);
+        PROVIDERS.put("com.google.gson.JsonObject", GsonJsonProvider.class);
+        PROVIDERS.put("com.fasterxml.jackson.databind.JsonNode", JacksonJsonNodeJsonProvider.class);
+        PROVIDERS.put("com.fasterxml.jackson.databind.node.ObjectNode", JacksonJsonNodeJsonProvider.class);
+        PROVIDERS.put("org.json.JSONObject", JsonOrgJsonProvider.class);
+        PROVIDERS.put("io.vertx.core.json.JsonObject", VertxJsonProvider.class);
     }
 
     /**
@@ -78,12 +79,19 @@ public final class JsonProviderFactory
     {
         Objects.requireNonNull(jsonObjectType, "The search type must not be null");
         String className = jsonObjectType.getCanonicalName();
-        Supplier<JsonProvider<?>> supplier = PROVIDERS.get(className);
+        Class<? extends JsonProvider<?>> supplier = PROVIDERS.get(className);
         if (supplier == null)
         {
             throw new IllegalArgumentException("No JsonProvider available for " + className);
         }
-        return (JsonProvider<T>) supplier.get();
+        try
+        {
+            return (JsonProvider<T>) supplier.getDeclaredConstructor().newInstance();
+        }
+        catch (ReflectiveOperationException exception)
+        {
+            throw new IllegalArgumentException(exception);
+        }
     }
 
 }
