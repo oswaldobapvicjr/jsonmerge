@@ -71,24 +71,32 @@ public final class JsonProviderFactory
      * @throws NullPointerException     if the specified {@code jsonObjectType} is null
      * @throws IllegalArgumentException if no {@link JsonProvider} found for the specified
      *                                  {@code jsonObjectType}
+     * @throws IllegalStateException    if unable to instantiate the target
+     *                                  {@link JsonProvider}
      */
-    @SuppressWarnings("unchecked")
     public <T> JsonProvider<T> getByType(final Class<T> jsonObjectType)
     {
-        Objects.requireNonNull(jsonObjectType, "The search type must not be null");
+        return getByType(PROVIDERS, jsonObjectType);
+    }
+
+    @SuppressWarnings("unchecked")
+    <T> JsonProvider<T> getByType(final Map<String, Class<? extends JsonProvider<?>>> map,
+            final Class<T> jsonObjectType)
+    {
+        Objects.requireNonNull(jsonObjectType, "The type must not be null");
         String className = jsonObjectType.getCanonicalName();
-        Class<? extends JsonProvider<?>> supplier = PROVIDERS.get(className);
-        if (supplier == null)
+        Class<? extends JsonProvider<?>> providerClass = map.get(className);
+        if (providerClass == null)
         {
             throw new IllegalArgumentException("No JsonProvider available for " + className);
         }
         try
         {
-            return (JsonProvider<T>) supplier.getDeclaredConstructor().newInstance();
+            return (JsonProvider<T>) providerClass.getDeclaredConstructor().newInstance();
         }
         catch (ReflectiveOperationException exception)
         {
-            throw new IllegalArgumentException(exception);
+            throw new IllegalStateException(exception);
         }
     }
 

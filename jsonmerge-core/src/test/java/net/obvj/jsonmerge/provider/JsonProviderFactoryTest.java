@@ -22,6 +22,15 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertSame;
 
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -69,7 +78,17 @@ class JsonProviderFactoryTest
     void getByType_null_npeWithProperMessage()
     {
         assertThat(() -> factory.getByType(null), throwsException(NullPointerException.class)
-                .withMessage("The search type must not be null"));
+                .withMessage("The type must not be null"));
+    }
+
+    @Test
+    void getByType_illegalReflectiveOperationException_illegalArgumentException()
+    {
+        Map<String, Class<? extends JsonProvider<?>>> providers = new HashMap<>();
+        providers.put("java.lang.Object", BadJsonProvider.class);
+        assertThat(() -> factory.getByType(providers, Object.class),
+                throwsException(IllegalStateException.class)
+                        .withCause(InvocationTargetException.class));
     }
 
     @Test
