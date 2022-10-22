@@ -104,7 +104,7 @@ public class Main implements Callable<Integer>
         String result = parseAndMerge();
 
         log.info("Generating output file {} ...", target);
-        Files.writeString(target, result);
+        Files.write(target, result.getBytes());
 
         log.info("Success");
         return 0;
