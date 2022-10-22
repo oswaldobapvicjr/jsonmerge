@@ -78,6 +78,7 @@
 
     <modules>
         <module>jsonmerge-core</module>
+        <module>jsonmerge-cli</module>
     </modules>
 
     <dependencies>
@@ -101,13 +102,6 @@
             <groupId>net.obvj</groupId>
             <artifactId>junit-utils</artifactId>
             <version>${junit-utils.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
             <scope>test</scope>
         </dependency>
 
