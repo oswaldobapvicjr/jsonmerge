@@ -1,0 +1,9 @@
+{
+  "keyA": "valueA",
+  "params": [ 
+    {
+      "key": "key1",
+      "value": "value1"
+    }
+  ]
+}

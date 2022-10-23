@@ -19,11 +19,10 @@ package net.obvj.jsonmerge.cli;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 
 import net.obvj.jsonmerge.JsonMergeOption;
+import picocli.CommandLine;
 
 /**
  * Unit tests for the {@link Main} class.
@@ -33,21 +32,23 @@ import net.obvj.jsonmerge.JsonMergeOption;
  */
 class MainTest
 {
-    Main main = new Main();
+    private Main main = new Main();
+    private CommandLine commandLine = new CommandLine(main);
 
     @Test
-    void parseJsonMergeOption_oneKey_success()
+    void parseJsonMergeOptions_oneKey_success()
     {
-        assertThat(main.parseJsonMergeOption(Map.entry("path1", "key1")), equalTo(JsonMergeOption
-                .onPath("path1").findObjectsIdentifiedBy("key1").thenDoADeepMerge()));
+        commandLine.parseArgs("-dpath1=key1", "file1", "file2");
+        assertThat(main.parseJsonMergeOptions(), equalTo(new JsonMergeOption[] { JsonMergeOption
+                .onPath("path1").findObjectsIdentifiedBy("key1").thenDoADeepMerge() }));
     }
 
     @Test
-    void parseJsonMergeOption_twoKeys_success()
+    void parseJsonMergeOptions_twoKeys_success()
     {
-        assertThat(main.parseJsonMergeOption(Map.entry("path1", "key1,key2")),
-                equalTo(JsonMergeOption.onPath("path1").findObjectsIdentifiedBy("key1", "key2")
-                        .thenDoADeepMerge()));
+        commandLine.parseArgs("-dpath1=key1,key2", "file1", "file2");
+        assertThat(main.parseJsonMergeOptions(), equalTo(new JsonMergeOption[] { JsonMergeOption
+                .onPath("path1").findObjectsIdentifiedBy("key1", "key2").thenDoADeepMerge() }));
     }
 
 }

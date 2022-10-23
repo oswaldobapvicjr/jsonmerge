@@ -127,7 +127,7 @@ public class Main implements Callable<Integer>
         return toString(result);
     }
 
-    private JsonMergeOption[] parseJsonMergeOptions()
+    JsonMergeOption[] parseJsonMergeOptions()
     {
         return distinctKeys.entrySet().stream()
                 .map(this::parseJsonMergeOption)
