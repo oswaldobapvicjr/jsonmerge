@@ -45,7 +45,7 @@ import picocli.CommandLine.Parameters;
  * Usage:
  *
  * <pre>
- * {@code Main [-hp] -t <result.json> [-d <path=key>]... <FILE1> <FILE2>}
+ * {@code Main [-hp] -t <target> [-d <exp=key>]... <FILE1> <FILE2>}
  * </pre>
  *
  * @author oswaldo.bapvic.jr
@@ -98,6 +98,11 @@ public class Main implements Callable<Integer>
 
     private Logger log = LoggerFactory.getLogger(Main.class);
 
+    /**
+     * Executes the CLI logic.
+     *
+     * @return the exit code to be handled by the CLI framework
+     */
     @Override
     public Integer call() throws Exception
     {
@@ -134,7 +139,7 @@ public class Main implements Callable<Integer>
                 .toArray(JsonMergeOption[]::new);
     }
 
-    JsonMergeOption parseJsonMergeOption(Entry<String, String> entry)
+    private JsonMergeOption parseJsonMergeOption(Entry<String, String> entry)
     {
         JsonMergeOption mergeOption = JsonMergeOption.onPath(entry.getKey())
                 .findObjectsIdentifiedBy(split(entry.getValue()))
@@ -148,11 +153,14 @@ public class Main implements Callable<Integer>
         return string.split(",");
     }
 
-    String toString(JsonObject json)
+    private String toString(JsonObject json)
     {
         return gsonBuilder.create().toJson(json);
     }
 
+    /**
+     * @param args the command line arguments to parse
+     */
     public static void main(String[] args)
     {
         System.exit(new CommandLine(new Main()).execute(args));

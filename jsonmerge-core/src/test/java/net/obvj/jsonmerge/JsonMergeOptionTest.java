@@ -22,7 +22,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -81,15 +81,15 @@ class JsonMergeOptionTest
     @Test
     void equals_null_false()
     {
-        assertNotEquals(null, JsonMergeOption.onPath("pathB").addDistinctObjectsOnly());
+        assertFalse(JsonMergeOption.onPath("pathB").addDistinctObjectsOnly().equals(null));
     }
 
     @Test
     void equals_differentObjects_false()
     {
         JsonMergeOption option = JsonMergeOption.onPath("pathC").addAll();
-        assertNotEquals(JsonMergeOption.onPath("pathD").addAll(), option);
-        assertNotEquals(new Object(), option);
+        assertFalse(option.equals(JsonMergeOption.onPath("pathD").addAll()));
+        assertFalse(option.equals(new Object()));
     }
 
     @Test
