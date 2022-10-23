@@ -80,12 +80,6 @@
             <artifactId>vertx-core</artifactId>
             <version>${vertx.version}</version>
             <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.netty</groupId>
-                    <artifactId>netty-handler</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
     </dependencies>
