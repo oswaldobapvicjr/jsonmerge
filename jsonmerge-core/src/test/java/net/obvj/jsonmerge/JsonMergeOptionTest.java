@@ -20,6 +20,14 @@ import static java.util.Collections.emptyList;
 import static net.obvj.junit.utils.matchers.AdvancedMatchers.containsAll;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -52,6 +60,47 @@ class JsonMergeOptionTest
         assertThat(JsonMergeOption.DEFAULT.getKeys(), equalTo(emptyList()));
         assertThat(JsonMergeOption.DEFAULT.isDeepMerge(), equalTo(false));
         assertThat(JsonMergeOption.DEFAULT.isDistinctObjectsOnly(), equalTo(true));
+    }
+
+    @Test
+    void equals_similarObjects_true()
+    {
+        assertEquals(
+                JsonMergeOption.onPath("path1").findObjectsIdentifiedBy("key1").thenDoADeepMerge(),
+                JsonMergeOption.onPath("path1").findObjectsIdentifiedBy("key2")
+                        .thenPickTheHighestPrecedenceOne());
+    }
+
+    @Test
+    void equals_sameObject_true()
+    {
+        JsonMergeOption option = JsonMergeOption.onPath("pathA").addAll();
+        assertEquals(option, option);
+    }
+
+    @Test
+    void equals_null_false()
+    {
+        assertNotEquals(null, JsonMergeOption.onPath("pathB").addDistinctObjectsOnly());
+    }
+
+    @Test
+    void equals_differentObjects_false()
+    {
+        JsonMergeOption option = JsonMergeOption.onPath("pathC").addAll();
+        assertNotEquals(JsonMergeOption.onPath("pathD").addAll(), option);
+        assertNotEquals(new Object(), option);
+    }
+
+    @Test
+    void equals_similarObjectsInAHashSet_noRepeatedElements()
+    {
+        List<JsonMergeOption> list = Arrays.asList(JsonMergeOption.onPath("pathE").addAll(),
+                JsonMergeOption.onPath("pathE").addDistinctObjectsOnly());
+        Set<JsonMergeOption> set = new HashSet<>(list);
+
+        assertEquals(1, set.size());
+        assertTrue(set.containsAll(list));
     }
 
 }

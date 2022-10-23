@@ -21,6 +21,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -124,8 +125,8 @@ class MainTest
     void execute_validFiles_targetFileGeneratedSuccessfully() throws IOException
     {
         assertThat(commandLine.execute(ARG_TARGET_FILE, ARG_FILE1, ARG_FILE2), equalTo(0));
-        assertThat(Files.readAllBytes(Path.of(TARGET_FILE)),
-                equalTo(MERGE_JSON1_JSON2_COMPACT.getBytes()));
+        Path targetFile = FileSystems.getDefault().getPath(TARGET_FILE);
+        assertThat(Files.readAllBytes(targetFile), equalTo(MERGE_JSON1_JSON2_COMPACT.getBytes()));
     }
 
 }

@@ -356,12 +356,24 @@ public final class JsonMergeOption
         return String.format(TO_STRING_FORMAT, path, keys, deepMerge, distinctObjectsOnly);
     }
 
+    /**
+     * Returns a hash code value for the object.
+     *
+     * @since 1.2.0
+     */
     @Override
     public int hashCode()
     {
-        return Objects.hash(path, keys);
+        return Objects.hash(path);
     }
 
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * <p>
+     * Two {@code JsonMergeOption}s will be considered equal if they share the same path.
+     *
+     * @since 1.2.0
+     */
     @Override
     public boolean equals(Object object)
     {
@@ -369,7 +381,7 @@ public final class JsonMergeOption
         if (object == null) return false;
         if (getClass() != object.getClass()) return false;
         JsonMergeOption other = (JsonMergeOption) object;
-        return Objects.equals(path, other.path) && Objects.equals(keys, other.keys);
+        return Objects.equals(path, other.path);
     }
 
     /**
