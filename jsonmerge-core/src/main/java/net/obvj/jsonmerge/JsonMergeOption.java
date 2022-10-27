@@ -23,6 +23,7 @@ import static net.obvj.jsonmerge.util.StringUtils.requireNonBlankAndTrim;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import com.jayway.jsonpath.InvalidPathException;
 
@@ -353,6 +354,34 @@ public final class JsonMergeOption
     public String toString()
     {
         return String.format(TO_STRING_FORMAT, path, keys, deepMerge, distinctObjectsOnly);
+    }
+
+    /**
+     * Returns a hash code value for the object.
+     *
+     * @since 1.2.0
+     */
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(path);
+    }
+
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * <p>
+     * Two {@code JsonMergeOption}s will be considered equal if they share the same path.
+     *
+     * @since 1.2.0
+     */
+    @Override
+    public boolean equals(Object object)
+    {
+        if (this == object) return true;
+        if (object == null) return false;
+        if (getClass() != object.getClass()) return false;
+        JsonMergeOption other = (JsonMergeOption) object;
+        return Objects.equals(path, other.path);
     }
 
     /**
