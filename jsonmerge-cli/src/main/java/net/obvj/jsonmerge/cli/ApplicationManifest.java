@@ -61,7 +61,7 @@ public class ApplicationManifest
     static String parseCommandName(Manifest manifest)
     {
         return String.format("jsonmerge-cli-%s.jar",
-                defaultIfNull(manifest.getMainAttributes(), "AppVersion", "<version>"));
+                defaultIfNull(manifest.getMainAttributes(), "Application-Version", "<version>"));
     }
 
     private static String defaultIfNull(Attributes attributes, String key, String defaultValue)
