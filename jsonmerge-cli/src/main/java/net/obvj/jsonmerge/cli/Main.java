@@ -16,6 +16,8 @@
 
 package net.obvj.jsonmerge.cli;
 
+import static net.obvj.jsonmerge.cli.ApplicationManifest.*;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -51,9 +53,8 @@ import picocli.CommandLine.Parameters;
  * @author oswaldo.bapvic.jr
  * @since 1.2.0
  */
-@Command(name = "jsonmerge-cli-1.2.0.jar",
-         separator = " ",
-         usageHelpWidth = 85,
+@Command(separator = " ",
+         usageHelpWidth = 90,
          parameterListHeading = "\nParameters:\n\n",
          optionListHeading = "\nOptions:\n\n")
 public class Main implements Callable<Integer>
@@ -144,7 +145,7 @@ public class Main implements Callable<Integer>
         JsonMergeOption mergeOption = JsonMergeOption.onPath(entry.getKey())
                 .findObjectsIdentifiedBy(split(entry.getValue()))
                 .thenDoADeepMerge();
-        log.info("{}", mergeOption);
+        log.info("Parsed {}", mergeOption);
         return mergeOption;
     }
 
@@ -163,7 +164,7 @@ public class Main implements Callable<Integer>
      */
     public static void main(String[] args)
     {
-        System.exit(new CommandLine(new Main()).execute(args));
+        System.exit(new CommandLine(new Main()).setCommandName(COMMAND_NAME).execute(args));
     }
 
 }

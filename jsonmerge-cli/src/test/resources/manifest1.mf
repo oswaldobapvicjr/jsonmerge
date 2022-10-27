@@ -1,0 +1,2 @@
+AppVersion: 1.0.0
+Main-Class: net.obvj.jsonmerge.cli.Main
