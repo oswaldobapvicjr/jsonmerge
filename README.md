@@ -135,7 +135,7 @@ If you are using Maven, add **JSON Merge** as a dependency to your pom.xml file:
 <dependency>
     <groupId>net.obvj</groupId>
     <artifactId>jsonmerge</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
