@@ -127,20 +127,49 @@ JsonMerger<JsonObject> merger = new JsonMerger<>(JsonObject.class);
                        /* or... new JsonMerger<>(new VertxJsonProvider()); */
 ````
 
+## JSON Merge CLI
+
+This is a command-line tool for merging JSON files directly from the terminal.
+
+```help
+$ java -jar jsonmerge-cli-1.2.0.jar --help
+
+Usage: jsonmerge-cli-1.2.0.jar [-hp] [-t <target>] [-d <exp=key>]... <FILE1> <FILE2>
+
+Parameters:
+
+      <FILE1>                The first file to merge
+      <FILE2>                The second file to merge
+
+Options:
+
+  -d, --distinct <exp=key>   Defines one or more distinct keys inside a child path
+                             For example: -d $.agents=name
+                                          -d $.files=id,version
+  -h, --help                 Displays a help message
+  -p, --pretty               Generates a well-formatted result file
+  -t, --target <target>      The target file name (default: result.json)
+```
+
 ## Downloading
 
-If you are using Maven, add **JSON Merge** as a dependency to your pom.xml file:
+### JSON Merge Core
+
+If you are using Maven, add `jsonmerge-core` as a dependency in your `pom.xml` file:
 
 ```xml
 <dependency>
     <groupId>net.obvj</groupId>
-    <artifactId>jsonmerge</artifactId>
+    <artifactId>jsonmerge-core</artifactId>
     <version>1.2.0</version>
 </dependency>
 ```
 
-If you use other dependency management systems (such as Gradle, Grape, Ivy, etc.) click [here](https://maven-badges.herokuapp.com/maven-central/net.obvj/jsonmerge).
+> If you use other dependency management systems (such as Gradle, Grape, Ivy, etc.) click [here](https://maven-badges.herokuapp.com/maven-central/net.obvj/jsonmerge-core).
 
+### JSON Merge CLI
+
+To use **JSON Merge CLI**, [download the latest version here](https://repo1.maven.org/maven2/net/obvj/jsonmerge-cli/1.2.0/jsonmerge-cli-1.2.0.jar) (JRE 8+ required).
 
 ## Contributing
 
