@@ -74,7 +74,7 @@
 
         <!-- Test dependencies -->
         <junit.version>5.8.2</junit.version>
-        <junit-utils.version>1.3.1</junit-utils.version>
+        <junit-utils.version>1.4.0</junit-utils.version>
         <logback.version>1.2.10</logback.version>
         
     </properties>
