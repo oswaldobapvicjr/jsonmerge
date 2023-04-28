@@ -20,7 +20,7 @@
 
     <groupId>net.obvj</groupId>
     <artifactId>jsonmerge</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.2.1</version>
     <packaging>pom</packaging>
 
     <name>JSON Merge</name>
@@ -51,7 +51,7 @@
         <url>https://obvj.net/jsonmerge</url>
         <connection>scm:git:git://github.com/oswaldobapvicjr/jsonmerge.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/oswaldobapvicjr/jsonmerge.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>jsonmerge-1.2.1</tag>
     </scm>
 
     <issueManagement>
