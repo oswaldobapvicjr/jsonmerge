@@ -33,7 +33,7 @@
         <performetrics.version>2.4.0</performetrics.version>
         <json-path.version>2.8.0</json-path.version>
         <json-smart.version>2.5.0</json-smart.version>
-        <json-org.version>20230227</json-org.version>
+        <json-org.version>20231013</json-org.version>
         <jackson.version>2.15.2</jackson.version>
         <vertx.version>4.4.6</vertx.version>
     </properties>
