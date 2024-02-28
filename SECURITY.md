@@ -2,12 +2,10 @@
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 1.2.1   | :white_check_mark: |
-| 1.2.0   | :x: |
-| 1.1.0   | :x: |
-| 1.0.0   | :x: |
+| Version   | JDK version(s) | Supported          |
+| --------- | -------------- | ------------------ |
+| **1.2.1** | 8, 11, 17, 21  | :white_check_mark: |
+| < 1.2.1   | n/a            | :x:                |
 
 ## Reporting a Vulnerability
 
