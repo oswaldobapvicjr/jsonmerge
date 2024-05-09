@@ -47,7 +47,7 @@ import picocli.CommandLine.Parameters;
  * Usage:
  *
  * <pre>
- * {@code Main [-hp] -t <target> [-d <exp=key>]... <FILE1> <FILE2>}
+ * {@code Main [-hp] [-t <target>] [-d <exp=key>]... <FILE1> <FILE2>}
  * </pre>
  *
  * @author oswaldo.bapvic.jr
