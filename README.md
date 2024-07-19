@@ -16,18 +16,18 @@ A utility for merging JSON objects that supports **fine options** and **multiple
  
 ## How it works
 
-Simply pass two previously loaded JSON documents to be merged. The resulting JSON shall contain all exclusive objects from source documents. And in case of key collision (i.e., the same key appears in both documents), the following rules will be applied:
+Pass two previously loaded JSON documents to be merged. The resulting JSON shall contain all exclusive objects from source documents. In case of key collision (i.e., the same key appears in both documents), the following rules will be applied:
 
-- For **simple values**, such as strings, numbers and boolean values, the value from the highest-precedence JSON document will be selected
+- For **simple values**, such as strings, numbers, and boolean values, the value from the highest-precedence JSON document will be selected
 - If the value is a **JSON object** in both documents, the two objects will be merged recursively
-- If the value is a **JSON array** in both documents, then all distinct elements (i.e., not repeated ones) will be copied to the resulting array, unless a  custom `JsonMergeOption` is provided specifically for that array path
-- If the types are **incompatible** in the source JSON documents (e.g.: array in one side and simple value or complex object in the other), then a copy of the object from the highest-precedence document will be selected as fallback
+- If the value is a **JSON array** in both documents, then all distinct elements (i.e., not repeated ones) will be copied to the resulting array unless a  custom `JsonMergeOption` is provided specifically for that array path
+- If the types are **incompatible** in the source JSON documents (e.g.: array on one side and simple value or complex object on the other), then a copy of the object from the highest-precedence document will be selected as a fallback
 
 > ℹ️ **Note:** The first JSON document is always considered to have **higher precedence** than the second one.
 
 
 
-## Define custom behavior for children elements
+## Define custom behavior for child elements
 
 The operation accepts an arbitrary number of options for parts of the document defined by [JSONPath Expressions](https://goessner.net/articles/JsonPath/index.html#e2).
 
@@ -67,7 +67,7 @@ The Project supports the most popular JSON providers available in the community 
 
 ![Supported JSON providers](resources/jsonmerge%20-%20Json%20Providers%20diagram%20-%201.2-A.svg)
 
-> :warning: **IMPORTANT:** JSON Merge does **NOT** supply the dependencies tagged as **"optional"** to avoid the burden of unintended transitive dependencies in your application. These dependencies must be resolved by your application if required.
+> :warning: **IMPORTANT:** JSON Merge does **NOT** supply the dependencies tagged as **"optional"** to avoid the burden of unintended transitive dependencies in your application. Your application must resolve these dependencies if required.
 
 ### How to use
 
@@ -132,9 +132,9 @@ JsonMerger<JsonObject> merger = new JsonMerger<>(JsonObject.class);
 This is a command-line tool for merging JSON files directly from the terminal.
 
 ```help
-$ java -jar jsonmerge-cli-1.2.2.jar --help
+$ java -jar jsonmerge-cli-1.2.3.jar --help
 
-Usage: jsonmerge-cli-1.2.2.jar [-hp] [-t <target>] [-d <exp=key>]... <FILE1> <FILE2>
+Usage: jsonmerge-cli-1.2.3.jar [-hp] [-t <target>] [-d <exp=key>]... <FILE1> <FILE2>
 
 Parameters:
 
@@ -161,7 +161,7 @@ If you are using Maven, add `jsonmerge-core` as a dependency in your `pom.xml` f
 <dependency>
     <groupId>net.obvj</groupId>
     <artifactId>jsonmerge-core</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
 </dependency>
 ```
 
@@ -169,7 +169,7 @@ If you are using Maven, add `jsonmerge-core` as a dependency in your `pom.xml` f
 
 ### JSON Merge CLI
 
-To use **JSON Merge CLI**, [download the latest version here](https://repo1.maven.org/maven2/net/obvj/jsonmerge-cli/1.2.2/jsonmerge-cli-1.2.2.jar) (JRE 8+ required).
+To use **JSON Merge CLI**, [download the latest version here](https://repo1.maven.org/maven2/net/obvj/jsonmerge-cli/1.2.3/jsonmerge-cli-1.2.3.jar) (JRE 8+ required).
 
 ## Contributing
 
