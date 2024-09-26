@@ -35,7 +35,7 @@
         <json-smart.version>2.5.1</json-smart.version>
         <json-org.version>20240303</json-org.version>
         <jackson.version>2.17.2</jackson.version>
-        <vertx.version>4.5.9</vertx.version>
+        <vertx.version>4.5.10</vertx.version>
     </properties>
 
     <dependencies>
