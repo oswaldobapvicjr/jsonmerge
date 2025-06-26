@@ -132,9 +132,9 @@ JsonMerger<JsonObject> merger = new JsonMerger<>(JsonObject.class);
 This is a command-line tool for merging JSON files directly from the terminal.
 
 ```help
-$ java -jar jsonmerge-cli-1.2.3.jar --help
+$ java -jar jsonmerge-cli-1.2.4.jar --help
 
-Usage: jsonmerge-cli-1.2.3.jar [-hp] [-t <target>] [-d <exp=key>]... <FILE1> <FILE2>
+Usage: jsonmerge-cli-1.2.4.jar [-hp] [-t <target>] [-d <exp=key>]... <FILE1> <FILE2>
 
 Parameters:
 
@@ -161,7 +161,7 @@ If you are using Maven, add `jsonmerge-core` as a dependency in your `pom.xml` f
 <dependency>
     <groupId>net.obvj</groupId>
     <artifactId>jsonmerge-core</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
 </dependency>
 ```
 
@@ -169,7 +169,7 @@ If you are using Maven, add `jsonmerge-core` as a dependency in your `pom.xml` f
 
 ### JSON Merge CLI
 
-To use **JSON Merge CLI**, [download the latest version here](https://repo1.maven.org/maven2/net/obvj/jsonmerge-cli/1.2.3/jsonmerge-cli-1.2.3.jar) (JRE 8+ required).
+To use **JSON Merge CLI**, [download the latest version here](https://repo1.maven.org/maven2/net/obvj/jsonmerge-cli/1.2.4/jsonmerge-cli-1.2.4.jar) (JRE 8+ required).
 
 ## Contributing
 
