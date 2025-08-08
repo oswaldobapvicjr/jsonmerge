@@ -1,5 +1,6 @@
 # JSON Merge
 
+[![Java 8+](https://img.shields.io/badge/Java-8%2B-blue.svg)](https://openjdk.java.net/)
 [![License](https://img.shields.io/badge/license-apache%202.0-brightgreen.svg)](https://opensource.org/licenses/Apache-2.0)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/oswaldobapvicjr/jsonmerge/maven.yml?branch=main)](https://github.com/oswaldobapvicjr/jsonmerge/actions/workflows/maven.yml)
 [![Coverage](https://img.shields.io/codecov/c/github/oswaldobapvicjr/jsonmerge)](https://codecov.io/gh/oswaldobapvicjr/jsonmerge)
