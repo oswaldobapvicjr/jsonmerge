@@ -66,7 +66,65 @@ The algorithm implemented by **JSON Merge** is provider-agnostic. The actual rea
 
 The Project supports the most popular JSON providers available in the community today.
 
-![Supported JSON providers](resources/jsonmerge%20-%20Json%20Providers%20diagram%20-%201.2-A.svg)
+```mermaid
+---
+  config:
+    class:
+      hideEmptyMembersBox: true
+      hierarchicalNamespaces: false
+---
+classDiagram
+    class JsonMerger~T~ {
+        - JsonProvider provider
+        + JsonMerger(Class~T~)
+        + JsonMerger(JsonProvider~T~)
+        + merge(T, T, JsonMergeOption[]) T
+    }
+
+    class JsonProvider <<interface>> {}
+    class JsonSmartJsonProvider {}
+    class GsonJsonProvider {}
+    class JacksonJsonNodeJsonProvider {}
+    class JsonOrgJsonProvider {}
+    class VertxJsonProvider {}
+
+    %% Core Relationships
+    JsonMerger --> JsonProvider
+
+    %% Interface Implementations
+    JsonProvider <|-- JsonSmartJsonProvider
+    JsonProvider <|-- GsonJsonProvider
+    JsonProvider <|-- JacksonJsonNodeJsonProvider
+    JsonProvider <|-- JsonOrgJsonProvider
+    JsonProvider <|-- VertxJsonProvider
+
+    %% Target Dependencies
+    namespace net.minidev {
+        class json-smart <<provided>> {}
+    }
+
+    namespace com.google.code.gson {
+        class gson <<optional>> {}
+    }
+
+    namespace com.fasterxml.jackson.core {
+        class jackson-databind <<optional>> {}
+    }
+
+    namespace org.json {
+        class json <<optional>> {}
+    }
+
+    namespace io.vertx {
+        class vertx-core <<optional>> {}
+    }
+
+    JsonSmartJsonProvider --> json-smart
+    GsonJsonProvider ..> gson
+    JacksonJsonNodeJsonProvider ..> jackson-databind
+    JsonOrgJsonProvider ..> json
+    VertxJsonProvider ..> vertx-core
+```
 
 > :warning: **IMPORTANT:** JSON Merge does **NOT** supply the dependencies tagged as **"optional"** to avoid the burden of unintended transitive dependencies in your application. Your application must resolve these dependencies if required.
 
