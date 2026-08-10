@@ -75,13 +75,13 @@ The Project supports the most popular JSON providers available in the community 
 ---
 classDiagram
     class JsonMerger~T~ {
-        - JsonProvider provider
+        - provider : JsonProvider
         + JsonMerger(Class~T~)
         + JsonMerger(JsonProvider~T~)
         + merge(T, T, JsonMergeOption[]) T
     }
 
-    class JsonProvider <<interface>> {}
+    class JsonProvider &lt;&lt;interface&gt;&gt; {}
     class JsonSmartJsonProvider {}
     class GsonJsonProvider {}
     class JacksonJsonNodeJsonProvider {}
@@ -100,23 +100,23 @@ classDiagram
 
     %% Target Dependencies
     namespace net.minidev {
-        class json-smart <<provided>> {}
+        class json-smart &lt;&lt;provided&gt;&gt; {}
     }
 
     namespace com.google.code.gson {
-        class gson <<optional>> {}
+        class gson &lt;&lt;optional&gt;&gt; {}
     }
 
     namespace com.fasterxml.jackson.core {
-        class jackson-databind <<optional>> {}
+        class jackson-databind &lt;&lt;optional&gt;&gt; {}
     }
 
     namespace org.json {
-        class json <<optional>> {}
+        class json &lt;&lt;optional&gt;&gt; {}
     }
 
     namespace io.vertx {
-        class vertx-core <<optional>> {}
+        class vertx-core &lt;&lt;optional&gt;&gt; {}
     }
 
     JsonSmartJsonProvider --> json-smart
